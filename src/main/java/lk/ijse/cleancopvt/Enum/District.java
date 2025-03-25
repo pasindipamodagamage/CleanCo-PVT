@@ -1,0 +1,30 @@
+package lk.ijse.cleanco.Enum;
+
+public enum District {
+    None,
+    Ampara,
+    Anuradhapura,
+    Badulla,
+    Batticaloa,
+    Colombo,
+    Galle,
+    Gampaha,
+    Hambantota,
+    Jaffna,
+    Kalutara,
+    Kandy,
+    Kilinochchi,
+    Kurunegala,
+    Mannar,
+    Matara,
+    Moneragala,
+    Mullaitivu,
+    Nuwara_Eliya,
+    Polonnaruwa,
+    Puttalam,
+    Ratnapura,
+    Trincomalee,
+    Vavuniya,
+    Matale,
+    Kegalle
+}
