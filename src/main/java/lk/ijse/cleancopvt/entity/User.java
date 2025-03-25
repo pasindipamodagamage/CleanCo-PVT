@@ -1,9 +1,9 @@
-package lk.ijse.cleanco.Entity;
+package lk.ijse.cleancopvt.entity;
 
 import jakarta.persistence.*;
-import lk.ijse.cleanco.Embedded.Address;
-import lk.ijse.cleanco.Embedded.Name;
-import lk.ijse.cleanco.Enum.Role;
+import lk.ijse.cleancopvt.Embedded.Address;
+import lk.ijse.cleancopvt.Embedded.Name;
+import lk.ijse.cleancopvt.Enum.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

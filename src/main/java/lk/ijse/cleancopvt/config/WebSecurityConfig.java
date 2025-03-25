@@ -1,6 +1,6 @@
-package org.example.springwithjwt.config;
+package lk.ijse.cleancopvt.config;
 
-import org.example.springwithjwt.service.impl.UserServiceImpl;
+import lk.ijse.cleancopvt.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

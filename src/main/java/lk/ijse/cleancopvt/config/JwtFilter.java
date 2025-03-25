@@ -1,4 +1,4 @@
-package org.example.springwithjwt.config;
+package lk.ijse.cleancopvt.config;
 
 
 import io.jsonwebtoken.Claims;
@@ -7,8 +7,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.springwithjwt.service.impl.UserServiceImpl;
-import org.example.springwithjwt.util.JwtUtil;
+import lk.ijse.cleancopvt.service.impl.UserServiceImpl;
+import lk.ijse.cleancopvt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

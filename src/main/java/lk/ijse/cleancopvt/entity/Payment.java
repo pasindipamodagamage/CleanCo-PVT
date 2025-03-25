@@ -1,9 +1,10 @@
-package lk.ijse.cleanco.Entity;
+package lk.ijse.cleancopvt.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lk.ijse.cleanco.Enum.PaymentStatus;
-import lombok.*;
+import lk.ijse.cleancopvt.Enum.PaymentStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 @Entity

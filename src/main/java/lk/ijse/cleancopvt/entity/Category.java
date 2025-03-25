@@ -1,4 +1,4 @@
-package lk.ijse.cleanco.Entity;
+package lk.ijse.cleancopvt.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

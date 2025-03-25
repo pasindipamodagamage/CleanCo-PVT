@@ -1,19 +1,16 @@
-package lk.ijse.cleanco.Embedded;
+package lk.ijse.cleancopvt.Embedded;
 
 import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Embeddable
 public class Name {
-
-//    @NotNull(message = "First Name cannot be null")
     private String firstName;
-
-//    @NotNull(message = "Last Name cannot be null")
     private String lastName;
 
 }

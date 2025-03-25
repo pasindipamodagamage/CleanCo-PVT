@@ -1,6 +1,6 @@
-package org.example.springwithjwt.repo;
+package lk.ijse.cleancopvt.repo;
 
-import org.example.springwithjwt.entity.User;
+import lk.ijse.cleancopvt.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

@@ -1,9 +1,9 @@
-package org.example.springwithjwt.util;
+package lk.ijse.cleancopvt.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.example.springwithjwt.dto.UserDTO;
+import lk.ijse.cleancopvt.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,8 +1,7 @@
-package lk.ijse.cleanco.Entity;
+package lk.ijse.cleancopvt.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lk.ijse.cleanco.Enum.Rating;
+import lk.ijse.cleancopvt.Enum.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package org.example.springwithjwt.util;
+package lk.ijse.cleancopvt.util;
 
 public class VarList {
     public static final int Continue = 100;

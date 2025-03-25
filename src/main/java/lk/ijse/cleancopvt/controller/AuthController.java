@@ -1,12 +1,14 @@
-package org.example.springwithjwt.controller;
+package lk.ijse.cleancopvt.controller;
 
+import jakarta.validation.Valid;
+import lk.ijse.cleancopvt.dto.AuthDTO;
+import lk.ijse.cleancopvt.dto.ResponseDTO;
+import lk.ijse.cleancopvt.dto.UserDTO;
+import lk.ijse.cleancopvt.service.UserService;
+import lk.ijse.cleancopvt.service.impl.UserServiceImpl;
+import lk.ijse.cleancopvt.util.JwtUtil;
 
-import org.example.springwithjwt.dto.AuthDTO;
-import org.example.springwithjwt.dto.ResponseDTO;
-import org.example.springwithjwt.dto.UserDTO;
-import org.example.springwithjwt.service.impl.UserServiceImpl;
-import org.example.springwithjwt.util.JwtUtil;
-import org.example.springwithjwt.util.VarList;
+import lk.ijse.cleancopvt.util.VarList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,8 +1,7 @@
-package org.example.springwithjwt.service;
+package lk.ijse.cleancopvt.service;
 
 
-import org.example.springwithjwt.dto.UserDTO;
-
+import lk.ijse.cleancopvt.dto.UserDTO;
 
 public interface UserService {
     int saveUser(UserDTO userDTO);

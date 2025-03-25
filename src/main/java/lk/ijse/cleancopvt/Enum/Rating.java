@@ -1,4 +1,4 @@
-package lk.ijse.cleanco.Enum;
+package lk.ijse.cleancopvt.Enum;
 
 public enum Rating {
     ONE(1),

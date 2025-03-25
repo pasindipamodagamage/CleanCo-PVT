@@ -1,4 +1,4 @@
-package org.example.springwithjwt.dto;
+package lk.ijse.cleancopvt.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,8 +1,10 @@
-package lk.ijse.cleanco.Entity;
+package lk.ijse.cleancopvt.entity;
 
 import jakarta.persistence.*;
-import lk.ijse.cleanco.Enum.BookingStatus;
-import lombok.*;
+import lk.ijse.cleancopvt.Enum.BookingStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

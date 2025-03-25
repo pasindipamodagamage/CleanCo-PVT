@@ -1,8 +1,10 @@
-package lk.ijse.cleanco.Entity;
+package lk.ijse.cleancopvt.entity;
 
 import jakarta.persistence.*;
-import lk.ijse.cleanco.Enum.ServiceType;
-import lombok.*;
+import lk.ijse.cleancopvt.Enum.ServiceType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class ServicesSet {
     private String serviceName;
 
     @Enumerated(EnumType.STRING)
-    private ServiceType serviceType=ServiceType.GENERAL_CLEAN;
+    private lk.ijse.cleancopvt.Enum.ServiceType serviceType=ServiceType.GENERAL_CLEAN;
 
     private String description;
 //    private String duration;

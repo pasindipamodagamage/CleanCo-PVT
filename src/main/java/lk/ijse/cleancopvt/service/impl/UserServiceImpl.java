@@ -1,10 +1,10 @@
-package org.example.springwithjwt.service.impl;
+package lk.ijse.cleancopvt.service.impl;
 
-import org.example.springwithjwt.dto.UserDTO;
-import org.example.springwithjwt.entity.User;
-import org.example.springwithjwt.repo.UserRepository;
-import org.example.springwithjwt.service.UserService;
-import org.example.springwithjwt.util.VarList;
+import lk.ijse.cleancopvt.dto.UserDTO;
+import lk.ijse.cleancopvt.entity.User;
+import lk.ijse.cleancopvt.repo.UserRepository;
+import lk.ijse.cleancopvt.service.UserService;
+import lk.ijse.cleancopvt.util.VarList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
         return authorities;
     }
 
