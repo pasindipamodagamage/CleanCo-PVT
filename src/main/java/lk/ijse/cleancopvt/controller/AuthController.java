@@ -1,14 +1,14 @@
 package lk.ijse.cleancopvt.controller;
 
-import jakarta.validation.Valid;
+
 import lk.ijse.cleancopvt.dto.AuthDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
 import lk.ijse.cleancopvt.dto.UserDTO;
-import lk.ijse.cleancopvt.service.UserService;
 import lk.ijse.cleancopvt.service.impl.UserServiceImpl;
 import lk.ijse.cleancopvt.util.JwtUtil;
 
 import lk.ijse.cleancopvt.util.VarList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,9 +19,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/auth")
 public class AuthController {
 
+    @Autowired
     private final JwtUtil jwtUtil;
+
+    @Autowired
     private final AuthenticationManager authenticationManager;
+
+    @Autowired
     private final UserServiceImpl userService;
+
+    @Autowired
     private final ResponseDTO responseDTO;
 
     //constructor injection

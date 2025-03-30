@@ -24,8 +24,10 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
+
     @Autowired
     private UserServiceImpl userService;
+
     @Value("${jwt.secret}")
     private String secretKey;
 

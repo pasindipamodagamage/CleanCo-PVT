@@ -7,6 +7,7 @@ import lk.ijse.cleancopvt.dto.UserDTO;
 import lk.ijse.cleancopvt.service.UserService;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.VarList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,23 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
+    @Autowired
     private final UserService userService;
+
+    @Autowired
     private final JwtUtil jwtUtil;
 
+    @Autowired
+    private final ResponseDTO responseDTO;
+
     //constructor injection
-    public UserController(UserService userService, JwtUtil jwtUtil) {
+    public UserController(UserService userService, JwtUtil jwtUtil, ResponseDTO responseDTO) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
+        this.responseDTO = responseDTO;
     }
-    @PostMapping(value = "/register")
+
+    @PostMapping(value = "/registerUser")
     public ResponseEntity<ResponseDTO> registerUser(@RequestBody @Valid UserDTO userDTO) {
         try {
             int res = userService.saveUser(userDTO);

@@ -2,7 +2,7 @@ package lk.ijse.cleancopvt.service.impl;
 
 import lk.ijse.cleancopvt.dto.UserDTO;
 import lk.ijse.cleancopvt.entity.User;
-import lk.ijse.cleancopvt.repo.UserRepository;
+import lk.ijse.cleancopvt.repo.UserRepo;
 import lk.ijse.cleancopvt.service.UserService;
 import lk.ijse.cleancopvt.util.VarList;
 import org.modelmapper.ModelMapper;
@@ -24,7 +24,7 @@ import java.util.Set;
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
     private ModelMapper modelMapper;
