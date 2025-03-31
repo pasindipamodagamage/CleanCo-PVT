@@ -1,5 +1,6 @@
 package lk.ijse.cleancopvt.service.impl;
 
+import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.UserDTO;
 import lk.ijse.cleancopvt.entity.User;
 import lk.ijse.cleancopvt.repo.UserRepo;
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         } else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            userDTO.setRole("USER");
+            userDTO.setRole(Role.Customer);
             userRepository.save(modelMapper.map(userDTO, User.class));
             return VarList.Created;
         }

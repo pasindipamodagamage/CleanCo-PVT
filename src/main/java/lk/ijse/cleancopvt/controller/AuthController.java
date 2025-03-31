@@ -17,18 +17,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/auth")
+@CrossOrigin("*")
 public class AuthController {
 
-    @Autowired
+//    @Autowired
     private final JwtUtil jwtUtil;
 
-    @Autowired
+//    @Autowired
     private final AuthenticationManager authenticationManager;
 
-    @Autowired
+//    @Autowired
     private final UserServiceImpl userService;
 
-    @Autowired
+//    @Autowired
     private final ResponseDTO responseDTO;
 
     //constructor injection
@@ -41,6 +42,8 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<ResponseDTO> authenticate(@RequestBody UserDTO userDTO) {
+        System.out.println(userDTO.toString());
+        System.out.println("data comes to js");
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getPassword()));

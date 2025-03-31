@@ -2,26 +2,24 @@ package lk.ijse.cleancopvt.controller;
 
 import jakarta.validation.Valid;
 import lk.ijse.cleancopvt.dto.AuthDTO;
+import lk.ijse.cleancopvt.dto.RegisterDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
-import lk.ijse.cleancopvt.dto.UserDTO;
 import lk.ijse.cleancopvt.service.UserService;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.VarList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/user")
+@CrossOrigin("*")
 public class UserController {
-    @Autowired
+
     private final UserService userService;
 
-    @Autowired
     private final JwtUtil jwtUtil;
 
-    @Autowired
     private final ResponseDTO responseDTO;
 
     //constructor injection
@@ -32,7 +30,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/registerUser")
-    public ResponseEntity<ResponseDTO> registerUser(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<ResponseDTO> registerUser(@RequestBody @Valid RegisterDTO userDTO) {
+        System.out.println("register");
         try {
             int res = userService.saveUser(userDTO);
             switch (res) {
