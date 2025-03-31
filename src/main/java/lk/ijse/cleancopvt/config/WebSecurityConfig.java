@@ -26,6 +26,7 @@ public class WebSecurityConfig {
     private UserServiceImpl userService;
     @Autowired
     private JwtFilter jwtFilter;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

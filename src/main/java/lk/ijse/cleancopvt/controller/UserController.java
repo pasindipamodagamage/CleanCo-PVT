@@ -2,8 +2,8 @@ package lk.ijse.cleancopvt.controller;
 
 import jakarta.validation.Valid;
 import lk.ijse.cleancopvt.dto.AuthDTO;
-import lk.ijse.cleancopvt.dto.RegisterDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
+import lk.ijse.cleancopvt.dto.UserDTO;
 import lk.ijse.cleancopvt.service.UserService;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.VarList;
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/registerUser")
-    public ResponseEntity<ResponseDTO> registerUser(@RequestBody @Valid RegisterDTO userDTO) {
+    public ResponseEntity<ResponseDTO> registerUser(@RequestBody @Valid UserDTO userDTO) {
         System.out.println("register");
         try {
             int res = userService.saveUser(userDTO);
@@ -58,4 +58,14 @@ public class UserController {
         }
     }
 
+    @PostMapping("/{email}")
+    public ResponseEntity<ResponseDTO> deactiveUser(@RequestBody @Valid UserDTO userDTO) {
+        System.out.println("deactiveUser");
+        try {
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

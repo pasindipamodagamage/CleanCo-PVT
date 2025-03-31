@@ -24,16 +24,34 @@ import java.util.Set;
 @Transactional
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    @Autowired
     private UserRepo userRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
+    public UserServiceImpl(UserRepo userRepository) {
+        this.userRepository = userRepository;
+    }
+
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        User user = userRepository.findByEmail(email);
+//        return new org.springframework.security.core.userdetails
+//                .User(user.getEmail(), user.getPassword(), getAuthority(user));
+//    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthority(user));
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with email: " + email);
+        }
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getEmail())
+                .password(user.getPassword()) // This should be encoded
+                .authorities(getAuthority(user))
+                .build();
     }
 
     public UserDTO loadUserDetailsByUsername(String username) throws UsernameNotFoundException {
