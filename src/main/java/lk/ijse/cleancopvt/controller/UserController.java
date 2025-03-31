@@ -20,13 +20,10 @@ public class UserController {
 
     private final JwtUtil jwtUtil;
 
-    private final ResponseDTO responseDTO;
-
     //constructor injection
     public UserController(UserService userService, JwtUtil jwtUtil, ResponseDTO responseDTO) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
-        this.responseDTO = responseDTO;
     }
 
     @PostMapping(value = "/registerUser")
@@ -58,14 +55,14 @@ public class UserController {
         }
     }
 
-    @PostMapping("/{email}")
-    public ResponseEntity<ResponseDTO> deactiveUser(@RequestBody @Valid UserDTO userDTO) {
-        System.out.println("deactiveUser");
-        try {
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
+//    @PostMapping("/{email}")
+//    public ResponseEntity<ResponseDTO> deactiveUser(@RequestBody @Valid UserDTO userDTO) {
+//        System.out.println("deactiveUser");
+//        try {
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        return null;
+//    }
 }

@@ -1,6 +1,7 @@
 package lk.ijse.cleancopvt.controller;
 
 
+import jakarta.servlet.http.HttpSession;
 import lk.ijse.cleancopvt.dto.AuthDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
 import lk.ijse.cleancopvt.dto.UserDTO;
@@ -61,6 +62,35 @@ public class AuthController {
                     .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
     }
+
+    @PostMapping("/deleteAccount")
+    public ResponseEntity<ResponseDTO> deleteAccount(HttpSession session) {
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+
+        if (userDTO == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(VarList.Unauthorized, "User not logged in", null));
+        }
+
+        int result = userService.deleteAccount(userDTO.getEmail());
+
+        if (result == VarList.Created) {
+            session.invalidate();
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseDTO(VarList.Created, "Account deactivated successfully", null));
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ResponseDTO(VarList.Not_Found, "User not found", null));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ResponseDTO> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO(VarList.Created, "Logout successful", null));
+    }
+
 
 }
 

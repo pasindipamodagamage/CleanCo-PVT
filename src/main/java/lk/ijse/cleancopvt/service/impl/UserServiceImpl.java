@@ -33,13 +33,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         this.userRepository = userRepository;
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User user = userRepository.findByEmail(email);
-//        return new org.springframework.security.core.userdetails
-//                .User(user.getEmail(), user.getPassword(), getAuthority(user));
-//    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -86,4 +79,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             userRepository.save(modelMapper.map(userDTO, User.class));
             return VarList.Created;
         }
-    }}
+    }
+
+    public int deleteAccount(String username) {
+        User user = userRepository.findByEmail(username);
+        if (user != null) {
+            user.setActive(false);  // Set active to false
+            user.setPassword(null);  // Nullify the password field
+            userRepository.save(user); // Save the updated user entity
+            return VarList.Created; // Return success status
+        }
+        return VarList.Not_Found; // Return error status if user not found
+    }
+}
