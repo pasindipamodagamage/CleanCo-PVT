@@ -1,10 +1,965 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <link rel="Icon" type="image/x-icon" href="images/215451966.png">
+    <title>PreRental - Happy Ride</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+          rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="../../static/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/animate.css">
+
+    <link rel="stylesheet" href="../../static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../static/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="../../static/css/aos.css">
+
+    <link rel="stylesheet" href="../../static/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="../../static/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="../../static/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="../../static/css/flaticon.css">
+    <link rel="stylesheet" href="../../static/css/icomoon.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<style>
+    .modal-content {
+        background-color: #fff;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 600px;
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        animation: slideIn 0.3s ease-in-out;
+        margin: 0 auto;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Modal Header */
+    .modal-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        background: #6a11cb;
+        color: white;
+        border-radius: 15px 15px 0 0;
+        border-bottom: none;
+        position: relative;
+    }
+
+    .modal-header .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .modal-header .logo span {
+        color: #28a745;
+    }
+
+    .modal-header .subtitle {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 15px;
+    }
+
+    .modal-header .btn-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .modal-header .btn-close:hover {
+        opacity: 0.8;
+    }
+
+    /* Modal Body */
+    .modal-body {
+        padding: 30px;
+    }
+
+    /* Form Styling */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .form-control:focus {
+        border-color: #6a11cb;
+        box-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
+    }
+
+    .form-control::placeholder {
+        color: #999;
+        font-size: 14px;
+    }
+
+    /* Error Message Styling */
+    .error-message {
+        font-size: 13px;
+        color: #dc3545;
+        margin-top: 5px;
+        display: none; /* Hide by default */
+    }
+
+    .form-control.error {
+        border-color: #dc3545;
+    }
+
+    /* Button Styling */
+    .btn-primary {
+        background: #6a11cb;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 16px;
+        width: 100%;
+        transition: background 0.3s ease;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #2575fc;
+    }
+
+    /* Resend OTP Link */
+    .resend-link {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .resend-link a {
+        color: #6a11cb;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .resend-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Google Button Styling */
+    .btn-google {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px 15px;
+        font-size: 15px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .btn-google img {
+        margin-right: 10px;
+    }
+
+    .btn-google:hover {
+        background-color: #f8f9fa;
+        border-color: #ccc;
+    }
+
+    /* Privacy Text */
+    .privacy-text {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    /* Login Topic */
+    .login-topic {
+        text-align: center;
+        font-size: 25px;
+        margin-bottom: 20px;
+        color: #0b0b0b;
+        font-weight: bold;
+    }
+
+    /* Forgot Password Link */
+    .forgot-password {
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    .forgot-password a {
+        color: #6a11cb;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .forgot-password a:hover {
+        text-decoration: underline;
+    }
+
+    /* Signup Link */
+    .signup-link {
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .signup-link a {
+        color: #6a11cb;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .signup-link a:hover {
+        text-decoration: underline;
+    }
+
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">PRE<span>RENTAL</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link">Service</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        Get Started
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id>
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div class="logo">Pre<span>Rental</span></div>
+                <p class="subtitle">Hire And Enjoy Your Journey</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="login-topic">Login to your account</div>
+                <form id="loginForm" style="font-size: 15px">
+                    <div class="form-group mb-3">
+                        <label for="loginEmail">Email</label>
+                        <input style="font-size: 15px" type="email" class="form-control" id="loginEmail" name="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="loginPassword">Password</label>
+                        <input style="font-size: 15px" type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Enter Password" required>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100" onclick="login()">Login</button>
+                </form>
+                <div class="text-center my-3">OR</div>
+                <button class="btn btn-google">
+                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo">
+                    Continue with Google
+                </button>
+                <div class="signup-link">
+                    Don't have an account? <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Sign up</a>
+                </div>
+                <div class="privacy-text">
+                    By logging in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================================================== Verify Model=================================================================-->
+<div class="modal fade" id="verificationModal" tabindex="-1" aria-labelledby="verificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-gradient-primary text-white">
+                <h5 class="modal-title" id="verificationModalLabel">A verification email has been sent to your email.Check your mail Box</h5>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form id="verifyForm">
+                    <div class="mb-4">
+                        <label for="otp" class="form-label fw-bold">Verification Code</label>
+                        <input type="text" class="form-control form-control-lg" id="otp" name="code" placeholder="Enter 6-digit code" required>
+                        <small class="form-text text-muted">Check your email for the verification code.</small>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg w-100" onclick="verifyTheAccount()">Verify</button>
+                </form>
+                <div class="text-center mt-3">
+                    <p class="text-muted">Didn't receive the code? <a href="#" id="resendOtp" class="text-decoration-none fw-bold">Resend OTP</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div class="logo">Pre<span>Rental</span></div>
+                <p class="subtitle">Hire And Enjoy Your Journey</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="login-topic">Create a new account</div>
+                <form id="registerForm" style="font-size:15px">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="registerFirstName">First Name</label>
+                                <input style="font-size: 15px" type="text" class="form-control" id="registerFirstName" name="registerFirstName" placeholder="First Name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="registerLastName">Last Name</label>
+                                <input style="font-size: 15px" type="text" class="form-control" id="registerLastName" name="registerLastName" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="registerEmail">Email</label>
+                        <input style="font-size: 15px" type="email" class="form-control" id="registerEmail" name="registerEmail" placeholder="Email" required>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="registerPassword">Password</label>
+                        <input style="font-size: 15px" type="password" class="form-control" id="registerPassword" name="registerPassword" placeholder="Password (min. 6 characters)" required>
+                        <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input style="font-size: 15px" type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                        <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mb-3" onclick="register()">  Verify Your Email </button>
+                    <div class="divider text-center mb-3">
+                        <span>OR</span>
+                    </div>
+                    <button type="button" class="btn btn-google w-100 mb-3">
+                        <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo">
+                        Sign up with Google
+                    </button>
+                    <div class="signup-link text-center">
+                        Already have an account? <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    </div>
+                    <div class="privacy-text">
+                        By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="hero-wrap ftco-degree-bg" style="background-image: url('images/wp2922360-bmw-wallpaper-1920x1080.jpg');"
+     data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
+            <div class="col-lg-8 ftco-animate">
+                <div class="text w-100 text-center mb-md-5 pb-md-5">
+                    <h1 class="mb-4">Fast &amp; Easy Way To Rent A Car</h1>
+                    <p style="font-size: 18px;">A small river named Duden flows by their place and supplies it with the
+                        necessary regelialia. It is a paradisematic country, in which roasted parts</p>
+                    <a href="https://vimeo.com/45830194"
+                       class="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="ion-ios-play"></span>
+                        </div>
+                        <div class="heading-title ml-5">
+                            <span>Easy steps for renting a car</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section ftco-no-pt bg-light">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-12	featured-top">
+                <div class="row no-gutters">
+                    <div class="col-md-4 d-flex align-items-center">
+                        <form action="#" class="request-form ftco-animate" style="background-color:#1a1a1a">
+                            <h2>Make your trip</h2>
+                            <div class="form-group">
+                                <label for="" class="label">Pick-up location</label>
+                                <input type="text" class="form-control" placeholder="City, Airport, Station, etc">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="label">Drop-off location</label>
+                                <input type="text" class="form-control" placeholder="City, Airport, Station, etc">
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mr-2">
+                                    <label for="" class="label">Pick-up date</label>
+                                    <input type="text" class="form-control" id="book_pick_date" placeholder="Date">
+                                </div>
+                                <div class="form-group ml-2">
+                                    <label for="" class="label">Drop-off date</label>
+                                    <input type="text" class="form-control" id="book_off_date" placeholder="Date">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="label">Pick-up time</label>
+                                <input type="text" class="form-control" id="time_pick" placeholder="Time">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Rent A Car Now" class="btn btn-secondary py-3 px-4">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-8 d-flex align-items-center">
+                        <div class="services-wrap rounded-right w-100">
+                            <h3 class="heading-section mb-4">Better Way to Rent Your Perfect Cars</h3>
+                            <div class="row d-flex mb-4">
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center"><span
+                                                class="flaticon-route"></span></div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">Choose Your Pickup Location</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center"><span
+                                                class="flaticon-handshake"></span></div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">Select the Best Deal</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center"><span
+                                                class="flaticon-rent"></span></div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">Reserve Your Rental Car</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p><a href="#" class="btn btn-primary py-3 px-4">Reserve Your Perfect Car</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+
+<section class="ftco-section ftco-no-pt bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+                <span class="subheading">What we offer</span>
+                <h2 class="mb-2">Feeatured Vehicles</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="carousel-car owl-carousel">
+                    <div class="item">
+                        <div class="car-wrap rounded ftco-animate">
+                            <div class="img rounded d-flex align-items-end"
+                                 style="background-image: url(images/car-1.jpg);">
+                            </div>
+                            <div class="text">
+                                <h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
+                                <div class="d-flex mb-3">
+                                    <span class="cat">Cheverolet</span>
+                                    <p class="price ml-auto">$500 <span>/day</span></p>
+                                </div>
+                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book
+                                    now</a> <a href="#" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="car-wrap rounded ftco-animate">
+                            <div class="img rounded d-flex align-items-end"
+                                 style="background-image: url(images/car-2.jpg);">
+                            </div>
+                            <div class="text">
+                                <h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
+                                <div class="d-flex mb-3">
+                                    <span class="cat">Cheverolet</span>
+                                    <p class="price ml-auto">$500 <span>/day</span></p>
+                                </div>
+                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book
+                                    now</a> <a href="#" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="car-wrap rounded ftco-animate">
+                            <div class="img rounded d-flex align-items-end"
+                                 style="background-image: url(images/car-3.jpg);">
+                            </div>
+                            <div class="text">
+                                <h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
+                                <div class="d-flex mb-3">
+                                    <span class="cat">Cheverolet</span>
+                                    <p class="price ml-auto">$500 <span>/day</span></p>
+                                </div>
+                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book
+                                    now</a> <a href="#" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="car-wrap rounded ftco-animate">
+                            <div class="img rounded d-flex align-items-end"
+                                 style="background-image: url(images/car-4.jpg);">
+                            </div>
+                            <div class="text">
+                                <h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
+                                <div class="d-flex mb-3">
+                                    <span class="cat">Cheverolet</span>
+                                    <p class="price ml-auto">$500 <span>/day</span></p>
+                                </div>
+                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book
+                                    now</a> <a href="#" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-about">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center"
+                 style="background-image: url(images/about.jpg);">
+            </div>
+            <div class="col-md-6 wrap-about ftco-animate">
+                <div class="heading-section heading-section-white pl-md-5">
+                    <span class="subheading">About us</span>
+                    <h2 class="mb-4">Welcome to PreRental</h2>
+
+                    <p>At Carbook, we are dedicated to providing you with the best car rental experience in Sri Lanka.
+                        Whether you're exploring the bustling streets of Colombo, the cultural heritage of Kandy, or the
+                        serene beaches of Mirissa, we offer a wide range of vehicles to suit your needs.</p>
+                    <p>Our mission is to make your journey seamless and enjoyable. With years of experience in the
+                        industry, we pride ourselves on offering reliable, affordable, and customer-focused services.
+                        From luxury sedans for special occasions to robust SUVs for family trips, we have the perfect
+                        vehicle for every adventure.</p>
+                    <p><a href="#" class="btn btn-primary py-3 px-4">Search Vehicle</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">Services</span>
+                <h2 class="mb-3">Our Latest Services</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="services services-2 w-100 text-center">
+                    <div class="icon d-flex align-items-center justify-content-center"><span
+                            class="flaticon-wedding-car"></span></div>
+                    <div class="text w-100">
+                        <h3 class="heading mb-2">Wedding Ceremony</h3>
+                        <p>Make your special day unforgettable with our luxury wedding car rentals. Perfect for
+                            traditional Sri Lankan weddings or modern celebrations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="services services-2 w-100 text-center">
+                    <div class="icon d-flex align-items-center justify-content-center"><span
+                            class="flaticon-transportation"></span></div>
+                    <div class="text w-100">
+                        <h3 class="heading mb-2">City Transfer</h3>
+                        <p>Travel comfortably across Sri Lanka's bustling cities like Colombo, Kandy, and Galle with our
+                            reliable and affordable city transfer services.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="services services-2 w-100 text-center">
+                    <div class="icon d-flex align-items-center justify-content-center"><span
+                            class="flaticon-car"></span></div>
+                    <div class="text w-100">
+                        <h3 class="heading mb-2">Airport Transfer</h3>
+                        <p>Enjoy hassle-free transfers to and from Bandaranaike International Airport with our punctual
+                            and professional drivers.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="services services-2 w-100 text-center">
+                    <div class="icon d-flex align-items-center justify-content-center"><span
+                            class="flaticon-transportation"></span></div>
+                    <div class="text w-100">
+                        <h3 class="heading mb-2">Whole City Tour</h3>
+                        <p>Explore Sri Lanka's rich heritage and scenic beauty with our guided city tours, covering
+                            iconic landmarks like Sigiriya, Temple of the Tooth, and more.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ftco-section ftco-intro" style="background-image: url(images/bg_3.jpg);">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-md-6 heading-section heading-section-white ftco-animate">
+                <h2 class="mb-3">Do You Want To Earn With Us? So Don't Be Late.</h2>
+                <a href="#" class="btn btn-primary btn-lg">Become A Driver</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-section testimony-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">Testimonial</span>
+                <h2 class="mb-3">Happy Clients</h2>
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2" style="background-image: url(images/person_1.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
+                                    and Consonantia, there live the blind texts.</p>
+                                <p class="name">Roger Scott</p>
+                                <span class="position">Marketing Manager</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2" style="background-image: url(images/person_2.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
+                                    and Consonantia, there live the blind texts.</p>
+                                <p class="name">Roger Scott</p>
+                                <span class="position">Interface Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2" style="background-image: url(images/person_3.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
+                                    and Consonantia, there live the blind texts.</p>
+                                <p class="name">Roger Scott</p>
+                                <span class="position">UI Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2" style="background-image: url(images/person_1.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
+                                    and Consonantia, there live the blind texts.</p>
+                                <p class="name">Roger Scott</p>
+                                <span class="position">Web Developer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2" style="background-image: url(images/person_1.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
+                                    and Consonantia, there live the blind texts.</p>
+                                <p class="name">Roger Scott</p>
+                                <span class="position">System Analyst</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+                <span class="subheading">Blog</span>
+                <h2>Recent Blog Posts</h2>
+                <p>Stay updated with the latest trends, tips, and insights about car rentals and travel in Sri
+                    Lanka.</p>
+            </div>
+        </div>
+        <div class="row d-flex">
+            <!-- Blog Post 1 -->
+            <div class="col-md-4 d-flex ftco-animate">
+                <div class="blog-entry justify-content-end">
+                    <a href="blog-single.html" class="block-20" style="background-image: url('images/image_1.jpg');">
+                    </a>
+                    <div class="text pt-4">
+                        <div class="meta mb-3">
+                            <div><a href="#">Nov. 10, 2023</a></div>
+                            <div><a href="#">Admin</a></div>
+                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 5</a></div>
+                        </div>
+                        <h3 class="heading mt-2"><a href="#">Top 5 Scenic Road Trips in Sri Lanka</a></h3>
+                        <p>Discover the most breathtaking routes to explore Sri Lanka by car, from coastal drives to
+                            mountain trails.</p>
+                        <p><a href="#" class="btn btn-primary">Read more</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 2 -->
+            <div class="col-md-4 d-flex ftco-animate">
+                <div class="blog-entry justify-content-end">
+                    <a href="blog-single.html" class="block-20" style="background-image: url('images/image_2.jpg');">
+                    </a>
+                    <div class="text pt-4">
+                        <div class="meta mb-3">
+                            <div><a href="#">Nov. 5, 2023</a></div>
+                            <div><a href="#">Admin</a></div>
+                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 8</a></div>
+                        </div>
+                        <h3 class="heading mt-2"><a href="#">How to Choose the Perfect Rental Car for Your Trip</a></h3>
+                        <p>Learn how to pick the right vehicle based on your travel needs, budget, and destination.</p>
+                        <p><a href="#" class="btn btn-primary">Read more</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 3 -->
+            <div class="col-md-4 d-flex ftco-animate">
+                <div class="blog-entry">
+                    <a href="blog-single.html" class="block-20" style="background-image: url('images/image_3.jpg');">
+                    </a>
+                    <div class="text pt-4">
+                        <div class="meta mb-3">
+                            <div><a href="#">Oct. 29, 2023</a></div>
+                            <div><a href="#">Admin</a></div>
+                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 12</a></div>
+                        </div>
+                        <h3 class="heading mt-2"><a href="#">Exploring Sri Lanka's Hidden Gems with a Rental Car</a>
+                        </h3>
+                        <p>Uncover lesser-known destinations in Sri Lanka that are best explored with the freedom of a
+                            rental car.</p>
+                        <p><a href="#" class="btn btn-primary">Read more</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-counter ftco-section img bg-light" id="section-counter">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
+                <div class="block-18">
+                    <div class="text text-border d-flex align-items-center">
+                        <strong class="number" data-number="60">0</strong>
+                        <span>Year <br>Experienced</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
+                <div class="block-18">
+                    <div class="text text-border d-flex align-items-center">
+                        <strong class="number" data-number="1090">0</strong>
+                        <span>Total <br>Cars</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
+                <div class="block-18">
+                    <div class="text text-border d-flex align-items-center">
+                        <strong class="number" data-number="2590">0</strong>
+                        <span>Happy <br>Customers</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
+                <div class="block-18">
+                    <div class="text d-flex align-items-center">
+                        <strong class="number" data-number="67">0</strong>
+                        <span>Total <br>Branches</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2"><a href="#" class="logo">PRE<span>RENTAL</span></a></h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">Information</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">About</a></li>
+                        <li><a href="#" class="py-2 d-block">Services</a></li>
+                        <li><a href="#" class="py-2 d-block">Term and Conditions</a></li>
+                        <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
+                        <li><a href="#" class="py-2 d-block">Privacy &amp; Cookies Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Customer Support</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">FAQ</a></li>
+                        <li><a href="#" class="py-2 d-block">Payment Option</a></li>
+                        <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
+                        <li><a href="#" class="py-2 d-block">How it works</a></li>
+                        <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Have a Questions?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="icon icon-map-marker"></span><span class="text">Kalutara,Sri Lanka</span></li>
+                            <li><a href="#"><span class="icon icon-phone"></span><span class="text">+94 72 503 872 7</span></a></li>
+                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VisahnChathuranga2003@gmail.com.com</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+
+                <p>
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> PreRental . All rights reserved</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script src="../../static/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="../../static/js/popper.min.js"></script>
+<script src="../../static/js/bootstrap.min.js"></script>
+<script src="../../static/js/jquery.easing.1.3.js"></script>
+<script src="../../static/js/jquery.waypoints.min.js"></script>
+<script src="../../static/js/jquery.stellar.min.js"></script>
+<script src="../../static/js/owl.carousel.min.js"></script>
+<script src="../../static/js/jquery.magnific-popup.min.js"></script>
+<script src="../../static/js/aos.js"></script>
+<script src="../../static/js/jquery.animateNumber.min.js"></script>
+<script src="../../static/js/bootstrap-datepicker.js"></script>
+<script src="../../static/js/jquery.timepicker.min.js"></script>
+<script src="../../static/js/scrollax.min.js"></script>
+<script src="../../static/js/main.js"></script>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script></script>
 </body>
 </html>
