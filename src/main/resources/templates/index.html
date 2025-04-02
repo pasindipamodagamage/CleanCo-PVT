@@ -2,9 +2,746 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clino - Professional Cleaning Services</title>
+    <link rel="icon" href="/static/assets/Company-logo.jpg">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ffd700;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: #f5f9ff;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+
+        .hero-section {
+            /*background-color: #CEDBF0;*/
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/static/assets/cleaning-wallpaper-repeat.jpg') repeat;
+            opacity: 0.8;
+            z-index: 0;
+        }
+
+        .hero-heading {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .service-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card {
+            border-radius: 12px;
+            transition: transform 0.3s;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .pricing-card:hover {
+            transform: scale(1.03);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .stats-container {
+            background-color: var(--secondary-color);
+            padding: 80px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+
+        .testimonial-card {
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            background-color: white;
+        }
+
+        .cta-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0;
+            border-radius: 15px;
+            margin: 80px 0;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-icon {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #ecf0f1;
+            transition: color 0.3s;
+        }
+
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+
+        .we-are-clino {
+            background-color: #E6EEFF;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .our-services-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .play-btn {
+            background-color: #FFD700;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+        }
+
+        .client-avatars {
+            display: flex;
+        }
+
+        .client-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: -10px;
+            border: 2px solid white;
+        }
+
+        .vip-tag {
+            background-color: #E6EEFF;
+            color: #4B80F9;
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin-left: 15px;
+        }
+
+        .stats-box {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-right: 15px;
+            margin-top: 25px;
+            display: inline-block;
+        }
+
+        .feature-section {
+            background-color: white;
+            padding: 60px 0;
+            border-radius: 0;
+        }
+
+        .feature-box {
+            background-color: var(--secondary-color);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .feature-box img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .feature-box h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-box p {
+            font-size: 0.95rem;
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+
+        .about-section {
+            background-color: var(--secondary-color);
+            padding: 80px 0;
+        }
+
+        .about-section {
+            background-color: #f8f9ff;
+            padding: 80px 0;
+        }
+
+        .about-badge {
+            background-color: #E6EEFF !important;
+            color: #3498db;
+            font-weight: normal;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .experience-badge {
+            position: absolute;
+            bottom: 20px;
+            left: -20px;
+            background-color: #3498db;
+            color: white;
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .experience-badge .years {
+            font-size: 1.8rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .experience-badge small {
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .handwritten-name {
+            font-family: 'Segoe Script', 'Brush Script MT', cursive;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .about-images img {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        .text-primary {
+            color: #3498db !important;
+        }
+    </style>
 </head>
 <body>
 
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <img src="/static/assets/Company-logo.jpg" style="width: 45px; height: 45px;margin-right: 5px;" alt="">
+        <a class="navbar-brand" href="index.html">CleanCO</a>
+        <h6 style="opacity: 0.4;margin-left: 100px; font-size: 10px"><i>Exceptional Cleaning Services for a Fresh and Pristine Space</i></h6>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="feedback.html">Feedback</a>
+                </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary ms-lg-3">Contact Us</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section" id="home">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content" data-aos="fade-right" data-aos-duration="1000">
+                <div class="we-are-clino">We Are CleanCo</div>
+                <h1 class="hero-heading">Feel Your Way For Freshness</h1>
+                <p class="lead mb-4">Experience the epitome of cleanliness with Clino. We provide top-notch cleaning services tailored to your needs, ensuring your spaces shine with perfection.</p>
+
+                <div class="d-flex align-items-center">
+                    <!--                    #-->
+                    <a href="customerView/service.html" class="our-services-btn">
+                        OUR SERVICES
+                        <span class="ms-2">
+                            <i class="fas fa-broom"></i>
+                        </span>
+                    </a>
+                    <!--                    #-->
+                    <a href="customerView/api/v1/service/getAllServices" class="play-btn ms-3">
+                        <i class="fas fa-play"></i>
+                    </a>
+                </div>
+
+                <div class="d-flex align-items-center mt-4">
+                    <div class="client-avatars">
+                        <!--                        #-->
+                        <img src="/static/assets/user.png" alt="Client" class="client-avatar">
+                        <img src="/static/assets/user.png" alt="Client" class="client-avatar">
+                        <img src="/static/assets/user.png" alt="Client" class="client-avatar">
+                        <img src="/static/assets/user.png" alt="Client" class="client-avatar">
+                        <img src="/static/assets/user.png" alt="Client" class="client-avatar">
+                    </div>
+                    <span class="vip-tag"><b>Our VIP Clients</b></span>
+                </div>
+
+                <div class="d-flex mt-4">
+                    <div class="stats-box">
+                        <h3 class="fw-bold mb-0">800+</h3>
+                        <p class="mb-0">Happy Clients</p>
+                    </div>
+                    <div class="stats-box">
+                        <h3 class="fw-bold mb-0">180+</h3>
+                        <p class="mb-0">Awards Receive</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000">
+                <img src="/static/assets/cleaning-prof.jpeg" alt="Cleaning Tools" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="feature-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-box">
+                    <img src="/static/assets/team.png" alt="Expert Team">
+                    <h3>Expert Team</h3>
+                    <p>Our highly trained professionals bring a wealth of experience.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-box">
+                    <img src="/static/assets/cleaner.png" alt="Quality Service">
+                    <h3>Quality Service</h3>
+                    <p>We guarantee a spotless finish that exceeds your expectations.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-box">
+                    <img src="/static/assets/price.png" alt="Affordable Price">
+                    <h3>Affordable Price</h3>
+                    <p>We offer exceptional services at prices that affordable for everyone.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Us Section -->
+<section class="about-section py-5 mt-5" id="about">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="about-images">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <img src="/static/assets/prof-cleaner.jpeg" alt="Cleaning" class="img-fluid rounded-3">
+                            <img src="/static/assets/cleaner-hand.jpeg" alt="Cleaning" class="img-fluid rounded-3 mb-3">
+                        </div>
+                        <div class="col-6 mt-5">
+                                <img src="/static/assets/vaccum.jpeg" alt="Cleaning" class="img-fluid rounded-3">
+                            <div class="position-relative">
+<!--                            <img src="/static/assets/chemicals.jpeg" alt="Cleaning" class="img-fluid rounded-3 mb-3">-->
+                                <div class="experience-badge">
+                                    <span class="years">16+</span>
+                                    <small class="d-block">Successful Years</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left">
+                <div class="ps-lg-5">
+                    <span class="badge about-badge mb-2">About Us</span>
+                    <h2 class="fw-bold mb-4">We Make Places Clean & Bright</h2>
+                    <p>At CleanCo, we're dedicated to transforming your living and working spaces into pristine havens.
+                        With years of experience and a passion for cleanliness, we strive to exceed your expectations every time.</p>
+                    <div class="row mt-4 mb-4">
+                        <div class="col-md-4 text-center">
+<!--                            #-->
+                            <h3 class="fw-bold text-primary mb-0">1000+</h3>
+                            <p>Projects Completed</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+<!--                            #-->
+                            <h3 class="fw-bold text-primary mb-0">123+</h3>
+                            <p>Expert Cleaners</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+<!--                            #-->
+                            <h3 class="fw-bold text-primary mb-0">400+</h3>
+                            <p>Repeat Clients</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="d-flex align-items-center">
+                            <div class="ceo-info">
+                                <h5 class="handwritten-name mb-0">Upul Kulathunga</h5>
+                                <p class="mb-0">Upul Kulathunga - CEO</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5 mt-5 ">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <span class="we-are-clino">Choose</span>
+                <h2 class="hero-heading mb-4">Why Choose CleanCo Cleaning Services</h2>
+                <p class="lead mb-4">With CleanCo, you're not just getting a cleaning service; you're gaining a partner
+                    in cleanliness. Here's why clients trust us:</p>
+
+                <ul class="list-unstyled">
+                    <li class="mb-3 d-flex align-items-center">
+                        <div class="text-primary me-2">
+                            <i class="fas fa-circle" style="color: #3498db; font-size: 12px;"></i>
+                        </div>
+                        <div>Our team comprises skilled professionals committed</div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center">
+                        <div class="text-primary me-2">
+                            <i class="fas fa-circle" style="color: #3498db; font-size: 12px;"></i>
+                        </div>
+                        <div>Count on us to be there when you need us</div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center">
+                        <div class="text-primary me-2">
+                            <i class="fas fa-circle" style="color: #3498db; font-size: 12px;"></i>
+                        </div>
+                        <div>Your satisfaction is our priority</div>
+                    </li>
+                </ul>
+
+                <div class="d-flex mt-4">
+                    <div class="mt-2">
+                        <p class="mb-2">We use top-quality products and proven techniques to ensure superior cleanliness and hygiene</p>
+                        <a href="view/signInAndSignUp.html" class="btn btn-primary mt-3" id="find-out-more">Find Out More</a>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <p class="mb-1">Have Any Questions?</p>
+                    <p class="fw-bold">+94 77 379 3891</p>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left">
+                <div class="position-relative">
+                    <img src="/static/assets/cleaner-shoot.jpeg" alt="Cleaning Service" class="img-fluid rounded-3 mb-3">
+                    <div class="mt-3">
+                        <img src="/static/assets/cleaningUsingLiquid.jpeg" alt="Cleaning Professional" class="img-fluid rounded-3">
+                    </div>
+
+                    <div class="position-absolute" style="top: 50px; right: 30px; background-color: #3498db; color: white; padding: 20px; border-radius: 10px;">
+                        <div class="text-center">
+                            <h3 class="fw-bold mb-0" style="font-size: 2rem;">16+</h3>
+                            <p class="mb-0">Successful<br>Years</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="py-5 mt-5" id="services">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-primary mb-2">Our Pricing</span>
+            <h2 class="fw-bold mb-3">Choose Your Perfect Clean</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card pricing-card h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Basic Plan</h5>
+<!--                        category eka-->
+                        <div class="price">$30<span>/monthly</span></div>
+<!--                        category price eka-->
+                        <ul class="list-unstyled mt-4">
+<!--                            ek category ekakt ena service tika-->
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Cleaning bathrooms</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Mopping floors</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Vacuuming carpets and rugs</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Dusting and wiping surfaces</li>
+                        </ul>
+                        <a href="view/signInAndSignUp.html" class="btn btn-outline-primary w-100 mt-3">Buy Plan</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card pricing-card h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Standard Plan</h5>
+                        <div class="price">$70<span>/monthly</span></div>
+                        <ul class="list-unstyled mt-4">
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> All services from Basic plan</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Washing baseboards, mopping</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Cleaning indoor windows</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Removing fridge drawers</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary w-100 mt-3">Buy Plan</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card pricing-card h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Premium Plan</h5>
+                        <div class="price">$120<span>/monthly</span></div>
+                        <ul class="list-unstyled mt-4">
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> All services from Standard</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Cleaning inside closets</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Organizing room area</li>
+                            <li class="mb-2"><i class="fas fa-check check-icon"></i> High-touch surface</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary w-100 mt-3">Buy Plan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="container cta-section" data-aos="fade-up" id="contact">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-lg-8">
+            <h2 class="mb-3">Call For A Free Quote</h2>
+            <p class="lead mb-0">Enjoy 30% Discount Coupon For First Order</p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+            <div class="d-flex justify-content-lg-end align-items-center">
+                <i class="fas fa-phone-alt me-3 fs-1"></i>
+                <div>
+                    <small class="d-block">CALL US</small>
+                    <a href="tel:+18004321265" class="text-white fs-4 text-decoration-none">+1 800 432 1265</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h3 class="mb-3">Clino</h3>
+                <p>Making your spaces sparkle since 2009. We provide top-quality cleaning services tailored to your needs.</p>
+                <div class="mt-4">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                <h5 class="mb-3">Services</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-2"><a href="#">Home Cleaning</a></li>
+                    <li class="mb-2"><a href="#">Office Cleaning</a></li>
+                    <li class="mb-2"><a href="#">Window Cleaning</a></li>
+                    <li class="mb-2"><a href="#">Post-construction</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                <h5 class="mb-3">Company</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-2"><a href="about.html">About Us</a></li>
+                    <li class="mb-2"><a href="careers.html">Careers</a></li>
+                    <li class="mb-2"><a href="blog.html">Blog</a></li>
+                    <li class="mb-2"><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="mb-3">Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> NO: 488-B, Upper Dicson Road, Galle</li>
+                    <li class="mb-2"><i class="fas fa-phone-alt me-2"></i> +94 077 379 3891</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@clino.com</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="mt-5 mb-4">
+        <div class="row">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <p class="mb-0">&copy; 2025 CleanCo. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="view/privacyPolicy.html" class="text-white me-3">Privacy Policy</a>
+                <a href="view/termsAndService.html" class="text-white">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AOS Animation Library -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    // Initialize AOS animation
+    AOS.init();
+
+    // Additional animations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add scroll-triggered animations
+        const animateElements = document.querySelectorAll('.service-card, .pricing-card');
+
+        window.addEventListener('scroll', checkScroll);
+
+        function checkScroll() {
+            animateElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < window.innerHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Initial check
+        checkScroll();
+    });
+</script>
 </body>
 </html>

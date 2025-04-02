@@ -16,7 +16,7 @@ public class CategoryDTO {
 
     private String description;
 
-    private String profilePic;
+//    private String profilePic;
 
     private double unitPrice;
 
