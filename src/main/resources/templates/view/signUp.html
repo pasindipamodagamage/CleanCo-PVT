@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="signUp.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
@@ -128,97 +129,6 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#signupForm').on('submit', function(e) {
-            e.preventDefault();
-
-            // Collect data from the form
-            var formData = {
-                firstName: $('#firstName').val(),
-                lastName: $('#lastName').val(),
-                email: $('#email').val(),
-                password: $('#password').val(),
-                contact: $('#contact-1').val(),
-                address: {
-                    locationNumber: $('#locationNumber').val(),
-                    street: $('#street').val(),
-                    city: $('#city').val(),
-                    district: $('#district').val()
-                },
-                profilePic: "null", // Set to default or user upload logic
-                nicNumber: "null",  // Same for NIC Number if necessary
-                role: "Customer",
-                active: true,
-                secondaryContact: "null" // Secondary contact set to null by default
-            };
-
-            console.log("Sending data:", formData);  // Debugging the data before sending
-
-            // Send AJAX request to register user
-            $.ajax({
-                url: 'http://localhost:8082/api/v1/user/registerUser',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function(response) {
-                    console.log("Response received:", response);
-                    switch(response.status) {
-                        case 'Created':
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'User registered successfully!',
-                                text: 'You have successfully created an account.',
-                                confirmButtonText: 'Ok'
-                            }).then(() => {
-                                window.location.href = 'signIn.html'; // Redirect after success
-                            });
-                            break;
-                        case 'Not_Acceptable':
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Failed to register user',
-                                text: response.message || 'Email already used.',
-                                confirmButtonText: 'Try Again'
-                            });
-                            break;
-                        case 'Bad_Gateway':
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Registration failed',
-                                text: response.message || 'An unexpected error occurred. Please try again later.',
-                                confirmButtonText: 'Try Again'
-                            });
-                            break;
-                        case 'Internal_Server_Error':
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Internal Server Error',
-                                text: response.message || 'Please try again later.',
-                                confirmButtonText: 'Ok'
-                            });
-                            break;
-                        default:
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Unexpected Error',
-                                text: 'An unexpected error occurred. Please try again later.',
-                                confirmButtonText: 'Ok'
-                            });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'An error occurred',
-                        text: 'Please try again later.',
-                        confirmButtonText: 'Ok'
-                    });
-                }
-            });
-        });
-    });
-</script>
+<script src="signUp.js"></script>
 </body>
 </html>
