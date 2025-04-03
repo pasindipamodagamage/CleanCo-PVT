@@ -75,7 +75,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         } else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            userDTO.setRole(Role.Customer);
             userRepository.save(modelMapper.map(userDTO, User.class));
             return VarList.Created;
         }

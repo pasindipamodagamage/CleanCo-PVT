@@ -1,0 +1,92 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.main-container {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+.form-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    z-index: 2;
+}
+.form-heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #212529;
+}
+.sub-heading {
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+.form-control {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+}
+.password-wrapper {
+    position: relative;
+}
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #adb5bd;
+}
+.btn-create-account {
+    background-color: #0d6efd;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+.btn-change-method {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+.login-link {
+    margin-top: 1.5rem;
+    text-align: center;
+    display: block;
+    color: #0d6efd;
+    text-decoration: none;
+}
+.login-link:hover {
+    text-decoration: underline;
+}
+.bg-image {
+    background-image: url('/static/assets/signUpImg.jpeg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 12px 12px 0;
+    height: 100%;
+    min-height: 500px;
+}
+.logo {
+    height: 40px;
+    margin-bottom: 20px;
+}
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+}
+input{
+    margin: 10px 0px;
+}

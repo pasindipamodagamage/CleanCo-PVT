@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanCO - Professional Cleaning Services</title>
+    <link rel="icon" href="/static/assets/Company-logo.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="signUp.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <img src="/static/assets/Company-logo.jpg" style="width: 45px; height: 45px;margin-right: 5px;" alt="">
+        <a class="navbar-brand" href="index.html">CleanCO</a>
+        <h6 style="opacity: 0.4;margin-left: 100px; font-size: 10px"><i>Exceptional Cleaning Services for a Fresh and Pristine Space</i></h6>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html#home">Home</a>
+                </li>
+            </ul>
+            <a href="index.html#contact" class="btn btn-primary ms-lg-3">Contact Us</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container main-container">
+    <div class="row w-100">
+        <div class="col-md-6">
+            <div class="form-container">
+                <div class="mb-4">
+                    <p class="text-muted mb-1">START FOR FREE</p>
+                    <h1 class="form-heading">Create New Account<span class="text-primary">.</span></h1>
+                    <p class="text-muted">Already A Member? <a href="signIn.html" class="text-primary text-decoration-none">Log In</a></p>
+                </div>
+
+                <form id="signupForm" autocomplete="on">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="firstName" class="form-label visually-hidden">First name</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" required autocomplete="given-name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label visually-hidden">Last name</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" required autocomplete="family-name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="locationNumber" class="form-label visually-hidden">Location Number</label>
+                            <input type="text" class="form-control" id="locationNumber" name="locationNumber" placeholder="Location Number (Optional)" autocomplete="address-line1">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="street" class="form-label visually-hidden">Street</label>
+                            <input type="text" class="form-control" id="street" name="street" placeholder="Street (Optional)" autocomplete="address-line2">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="city" class="form-label visually-hidden">City</label>
+                            <input type="text" class="form-control" id="city" name="city" placeholder="City (Optional)" autocomplete="address-level2">
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <select class="form-control" id="district" name="district" style="color: #5e5e5e" autocomplete="off">
+                            <option value="None">Select Your District</option>
+                            <option value="Ampara">Ampara</option>
+                            <option value="Anuradhapura">Anuradhapura</option>
+                            <option value="Badulla">Badulla</option>
+                            <option value="Batticaloa">Batticaloa</option>
+                            <option value="Colombo">Colombo</option>
+                            <option value="Galle">Galle</option>
+                            <option value="Gampaha">Gampaha</option>
+                            <option value="Hambantota">Hambantota</option>
+                            <option value="Jaffna">Jaffna</option>
+                            <option value="Kalutara">Kalutara</option>
+                            <option value="Kandy">Kandy</option>
+                            <option value="Kilinochchi">Kilinochchi</option>
+                            <option value="Kurunegala">Kurunegala</option>
+                            <option value="Mannar">Mannar</option>
+                            <option value="Matara">Matara</option>
+                            <option value="Moneragala">Moneragala</option>
+                            <option value="Mullaitivu">Mullaitivu</option>
+                            <option value="Nuwara_Eliya">Nuwara Eliya</option>
+                            <option value="Polonnaruwa">Polonnaruwa</option>
+                            <option value="Puttalam">Puttalam</option>
+                            <option value="Ratnapura">Ratnapura</option>
+                            <option value="Trincomalee">Trincomalee</option>
+                            <option value="Vavuniya">Vavuniya</option>
+                            <option value="Matale">Matale</option>
+                            <option value="Kegalle">Kegalle</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="contact-1" class="form-label visually-hidden">Contact</label>
+                        <input type="text" class="form-control" id="contact-1" name="contact" placeholder="Contact (Optional)" autocomplete="tel">
+                    </div>
+                    <div>
+                        <label for="email" class="form-label visually-hidden">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autocomplete="email">
+                    </div>
+
+                    <div class="password-wrapper">
+                        <label for="password" class="form-label visually-hidden">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required autocomplete="new-password">
+                    </div>
+                    <input type="hidden" name="profilePic" value="null">
+                    <input type="hidden" name="nicNumber" value="null">
+                    <input type="hidden" name="role" value="Customer">
+                    <input type="hidden" name="active" value="true">
+                    <input type="hidden" name="secondaryContact" value="null">
+
+                    <div class="d-flex mt-4">
+                        <button type="button" class="btn btn-change-method me-2">Cancel</button>
+                        <button type="submit" class="btn btn-create-account flex-grow-1">Create account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 d-none d-md-block">
+            <div class="bg-image"></div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#signupForm').on('submit', function(e) {
+            e.preventDefault();
+
+            // Collect data from the form
+            var formData = {
+                firstName: $('#firstName').val(),
+                lastName: $('#lastName').val(),
+                email: $('#email').val(),
+                password: $('#password').val(),
+                contact: $('#contact-1').val(),
+                address: {
+                    locationNumber: $('#locationNumber').val(),
+                    street: $('#street').val(),
+                    city: $('#city').val(),
+                    district: $('#district').val()
+                },
+                profilePic: "null", // Set to default or user upload logic
+                nicNumber: "null",  // Same for NIC Number if necessary
+                role: "Customer",
+                active: true,
+                secondaryContact: "null" // Secondary contact set to null by default
+            };
+
+            console.log("Sending data:", formData);  // Debugging the data before sending
+
+            // Send AJAX request to register user
+            $.ajax({
+                url: 'http://localhost:8082/api/v1/user/registerUser',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    console.log("Response received:", response);
+                    switch(response.status) {
+                        case 'Created':
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'User registered successfully!',
+                                text: 'You have successfully created an account.',
+                                confirmButtonText: 'Ok'
+                            }).then(() => {
+                                window.location.href = 'signIn.html'; // Redirect after success
+                            });
+                            break;
+                        case 'Not_Acceptable':
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Failed to register user',
+                                text: response.message || 'Email already used.',
+                                confirmButtonText: 'Try Again'
+                            });
+                            break;
+                        case 'Bad_Gateway':
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Registration failed',
+                                text: response.message || 'An unexpected error occurred. Please try again later.',
+                                confirmButtonText: 'Try Again'
+                            });
+                            break;
+                        case 'Internal_Server_Error':
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Internal Server Error',
+                                text: response.message || 'Please try again later.',
+                                confirmButtonText: 'Ok'
+                            });
+                            break;
+                        default:
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Unexpected Error',
+                                text: 'An unexpected error occurred. Please try again later.',
+                                confirmButtonText: 'Ok'
+                            });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred',
+                        text: 'Please try again later.',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

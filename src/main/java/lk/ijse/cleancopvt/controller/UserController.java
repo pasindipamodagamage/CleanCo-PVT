@@ -54,15 +54,4 @@ public class UserController {
                     .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
     }
-
-//    @PostMapping("/{email}")
-//    public ResponseEntity<ResponseDTO> deactiveUser(@RequestBody @Valid UserDTO userDTO) {
-//        System.out.println("deactiveUser");
-//        try {
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        return null;
-//    }
 }
