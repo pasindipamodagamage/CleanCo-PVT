@@ -1,60 +1,9 @@
-<!--signup js-->
-<!--<script>-->
-<!--    document.getElementById("signupForm").addEventListener("submit", function(event) {-->
-<!--        event.preventDefault();-->
-
-<!--        let firstName = document.getElementById("firstName").value;-->
-<!--        let lastName = document.getElementById("lastName").value;-->
-<!--        let email = document.getElementById("email").value;-->
-<!--        let contactNumber = document.getElementById("contactNumber").value;-->
-<!--        let password = document.getElementById("password").value;-->
-<!--        let confirmPassword = document.getElementById("confirmPassword").value;-->
-
-<!--        // Basic validation-->
-<!--        if (firstName.trim() === "" || lastName.trim() === "" || email.trim() === "" ||-->
-<!--            contactNumber.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {-->
-<!--            alert("Please fill out all fields.");-->
-<!--            return;-->
-<!--        }-->
-
-<!--        // Email validation-->
-<!--        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;-->
-<!--        if (!emailPattern.test(email)) {-->
-<!--            alert("Please enter a valid email address.");-->
-<!--            return;-->
-<!--        }-->
-
-<!--        // Password matching validation-->
-<!--        if (password !== confirmPassword) {-->
-<!--            alert("Passwords do not match.");-->
-<!--            return;-->
-<!--        }-->
-
-<!--        // Password strength validation (minimum 8 characters with at least one number)-->
-<!--        let passwordPattern = /^(?=.*\d).{8,}$/;-->
-<!--        if (!passwordPattern.test(password)) {-->
-<!--            alert("Password must be at least 8 characters long and contain at least one number.");-->
-<!--            return;-->
-<!--        }-->
-
-<!--        // If all validations pass-->
-<!--        alert("Sign up successful! Redirecting to login page...");-->
-<!--        window.location.href = "login.html";-->
-<!--    });-->
-
-<!--    // Google Sign-Up button click handler-->
-<!--    document.querySelector(".btn-google").addEventListener("click", function() {-->
-<!--        // This would typically trigger Google OAuth authentication-->
-<!--        alert("Google Sign-Up functionality would be implemented with Google OAuth API");-->
-<!--    });-->
-<!--</script>-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clino - Professional Cleaning Services</title>
+    <title>CleanCO - Professional Cleaning Services</title>
     <link rel="icon" href="/static/assets/Company-logo.jpg">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -63,258 +12,7 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #f8f9fa;
-            --accent-color: #ffd700;
-            --text-color: #333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: var(--text-color);
-            background-color: #f5f9ff;
-        }
-
-        .navbar {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .btn-primary:hover {
-            background-color: #2980b9;
-            border-color: #2980b9;
-        }
-
-        .hero-section {
-            /*background-color: #CEDBF0;*/
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('/static/assets/cleaning-wallpaper-repeat.jpg') repeat;
-            opacity: 0.8;
-            z-index: 0;
-        }
-
-        .hero-heading {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
-        }
-
-        .service-card {
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-radius: 12px;
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            height: 100%;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .pricing-card {
-            border-radius: 12px;
-            transition: transform 0.3s;
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .pricing-card:hover {
-            transform: scale(1.03);
-        }
-
-        .price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .price span {
-            font-size: 1rem;
-            color: #6c757d;
-        }
-
-        .stats-container {
-            background-color: var(--secondary-color);
-            padding: 80px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 0;
-        }
-
-        .stat-label {
-            font-size: 1.2rem;
-            color: #6c757d;
-        }
-
-        .testimonial-card {
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            background-color: white;
-        }
-
-        .cta-section {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 60px 0;
-            border-radius: 15px;
-            margin: 80px 0;
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 60px 0 30px;
-        }
-
-        .footer-links a {
-            color: #ecf0f1;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .social-icon {
-            font-size: 20px;
-            margin-right: 15px;
-            color: #ecf0f1;
-            transition: color 0.3s;
-        }
-
-        .social-icon:hover {
-            color: var(--accent-color);
-        }
-
-        .we-are-clino {
-            background-color: #E6EEFF;
-            padding: 8px 16px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .our-services-btn {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .play-btn {
-            background-color: #FFD700;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 15px;
-        }
-
-        .client-avatars {
-            display: flex;
-        }
-
-        .client-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: -10px;
-            border: 2px solid white;
-        }
-
-        .vip-tag {
-            background-color: #E6EEFF;
-            color: #4B80F9;
-            border-radius: 20px;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            margin-left: 15px;
-        }
-
-        .stats-box {
-            background-color: white;
-            border-radius: 12px;
-            padding: 15px 25px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin-right: 15px;
-            margin-top: 25px;
-            display: inline-block;
-        }
-
-        .feature-section {
-            background-color: white;
-            padding: 40px 0;
-        }
-
-        .feature-box {
-            background-color: #F8FAFF;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            height: 100%;
-        }
-
-        .feature-box img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
@@ -330,25 +28,26 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a>
+                    <a class="nav-link active" href="#home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about.html">About Us</a>
+                    <a class="nav-link active" href="#map">Location</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="services.html">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="feedback.html">Feedback</a>
+                    <a class="nav-link active" href="#contact">Contact</a>
                 </li>
             </ul>
-            <a href="contact.html" class="btn btn-primary ms-lg-3">Contact Us</a>
+            <!--            <a href="#contact" class="btn btn-primary ms-lg-3">Contact Us</a>-->
+            <a href="signIn.html" class="btn btn-primary ms-lg-3 get-started-btn">
+                <span class="btn-text">Get Started</span>
+                <i class="fas fa-arrow-right ms-2 btn-icon"></i>
+            </a>
         </div>
     </div>
 </nav>
 
 <!-- Hero Section -->
-<section class="hero-section">
+<section class="hero-section" id="home">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 hero-content" data-aos="fade-right" data-aos-duration="1000">
@@ -357,14 +56,14 @@
                 <p class="lead mb-4">Experience the epitome of cleanliness with Clino. We provide top-notch cleaning services tailored to your needs, ensuring your spaces shine with perfection.</p>
 
                 <div class="d-flex align-items-center">
-<!--                    #-->
-                    <a href="service.html" class="our-services-btn">
+                    <!--                    #-->
+                    <a href="customerView/service.html" class="our-services-btn">
                         OUR SERVICES
                         <span class="ms-2">
                             <i class="fas fa-broom"></i>
                         </span>
                     </a>
-<!--                    #-->
+                    <!--                    #-->
                     <a href="customerView/api/v1/service/getAllServices" class="play-btn ms-3">
                         <i class="fas fa-play"></i>
                     </a>
@@ -372,7 +71,7 @@
 
                 <div class="d-flex align-items-center mt-4">
                     <div class="client-avatars">
-<!--                        #-->
+                        <!--                        #-->
                         <img src="/static/assets/user.png" alt="Client" class="client-avatar">
                         <img src="/static/assets/user.png" alt="Client" class="client-avatar">
                         <img src="/static/assets/user.png" alt="Client" class="client-avatar">
@@ -406,21 +105,21 @@
         <div class="row g-4">
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="feature-box">
-                    <img src="/static/assets/team-icon.png" alt="Expert Team">
+                    <img src="/static/assets/team.png" alt="Expert Team">
                     <h3>Expert Team</h3>
                     <p>Our highly trained professionals bring a wealth of experience.</p>
                 </div>
             </div>
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="feature-box">
-                    <img src="/static/assets/quality-icon.png" alt="Quality Service">
+                    <img src="/static/assets/cleaner.png" alt="Quality Service">
                     <h3>Quality Service</h3>
                     <p>We guarantee a spotless finish that exceeds your expectations.</p>
                 </div>
             </div>
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                 <div class="feature-box">
-                    <img src="/static/assets/price-icon.png" alt="Affordable Price">
+                    <img src="/static/assets/price.png" alt="Affordable Price">
                     <h3>Affordable Price</h3>
                     <p>We offer exceptional services at prices that affordable for everyone.</p>
                 </div>
@@ -428,35 +127,26 @@
         </div>
     </div>
 </section>
-<!--&lt;!&ndash; Hero Section &ndash;&gt;-->
-<!--<section class="hero-section">-->
-<!--    <div class="container">-->
-<!--        <div class="row align-items-center">-->
-<!--            <div class="col-lg-6 hero-content" data-aos="fade-right" data-aos-duration="1000">-->
-<!--                <div class="we-are-clino">We Are CleanCo</div>-->
-<!--                <h1 class="hero-heading">Feel Your Way For Freshness</h1>-->
-<!--                <p class="lead mb-4">Experience the epitome of cleanliness with CleanCo, Our affordable high-quality-->
-<!--                    cleaning services tailored to your needs, ensuring your spaces shine with perfection.</p>-->
-<!--                <div class="d-flex gap-3">-->
-
 
 <!-- About Us Section -->
-<section class="py-5 mt-5">
+<section class="about-section py-5 mt-5" id="about">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6" data-aos="fade-right">
-                <div class="row g-3">
-                    <div class="col-6">
-                        <img src="https://via.placeholder.com/400x300" alt="Cleaning" class="img-fluid rounded-3 mb-3">
-                        <img src="https://via.placeholder.com/400x400" alt="Cleaning" class="img-fluid rounded-3">
-                    </div>
-                    <div class="col-6 mt-5">
-                        <img src="https://via.placeholder.com/400x400" alt="Cleaning" class="img-fluid rounded-3 mb-3">
-                        <div class="position-relative">
-                            <img src="https://via.placeholder.com/400x300" alt="Cleaning" class="img-fluid rounded-3">
-                            <div class="badge-experience">
-                                <span>16+</span>
-                                <small class="d-block">Experience Years</small>
+                <div class="about-images">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <img src="/static/assets/prof-cleaner.jpeg" alt="Cleaning" class="img-fluid rounded-3">
+                            <img src="/static/assets/cleaner-hand.jpeg" alt="Cleaning" class="img-fluid rounded-3 mb-3">
+                        </div>
+                        <div class="col-6 mt-5">
+                            <img src="/static/assets/vaccum.jpeg" alt="Cleaning" class="img-fluid rounded-3">
+                            <div class="position-relative">
+                                <!--                            <img src="/static/assets/chemicals.jpeg" alt="Cleaning" class="img-fluid rounded-3 mb-3">-->
+                                <div class="experience-badge">
+                                    <span class="years">16+</span>
+                                    <small class="d-block">Successful Years</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -464,29 +154,32 @@
             </div>
             <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left">
                 <div class="ps-lg-5">
-                    <span class="badge bg-primary mb-2">About Us</span>
+                    <span class="badge about-badge mb-2">About Us</span>
                     <h2 class="fw-bold mb-4">We Make Places Clean & Bright</h2>
-                    <p>At Clino, we're dedicated to transforming your living and working spaces into pristine havens. With years of experience and a passion for cleanliness, we strive to exceed your expectations every time.</p>
+                    <p>At CleanCo, we're dedicated to transforming your living and working spaces into pristine havens.
+                        With years of experience and a passion for cleanliness, we strive to exceed your expectations every time.</p>
                     <div class="row mt-4 mb-4">
                         <div class="col-md-4 text-center">
+                            <!--                            #-->
                             <h3 class="fw-bold text-primary mb-0">1000+</h3>
                             <p>Projects Completed</p>
                         </div>
                         <div class="col-md-4 text-center">
+                            <!--                            #-->
                             <h3 class="fw-bold text-primary mb-0">123+</h3>
                             <p>Expert Cleaners</p>
                         </div>
                         <div class="col-md-4 text-center">
+                            <!--                            #-->
                             <h3 class="fw-bold text-primary mb-0">400+</h3>
                             <p>Repeat Clients</p>
                         </div>
                     </div>
                     <div class="mt-4">
                         <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/60" alt="CEO" class="rounded-circle me-3">
-                            <div>
-                                <h5 class="mb-0">Hamida Jameel</h5>
-                                <p class="mb-0">Hamida Jameel - CEO</p>
+                            <div class="ceo-info">
+                                <h5 class="handwritten-name mb-0">Upul Kulathunga</h5>
+                                <p class="mb-0">Upul Kulathunga - CEO</p>
                             </div>
                         </div>
                     </div>
@@ -497,39 +190,70 @@
 </section>
 
 <!-- Why Choose Us Section -->
-<section class="py-5 bg-light mt-5">
+<section class="py-5 mt-5 ">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6" data-aos="fade-right">
-                <h2 class="fw-bold mb-4">Why Choose Clino Cleaning Services</h2>
-                <p class="lead mb-4">With Clino, you're not getting a cleaning service; you're getting a partner in keeping your space clean and healthy.</p>
+                <span class="we-are-clino">Choose</span>
+                <h2 class="hero-heading mb-4">Why Choose CleanCo Cleaning Services</h2>
+                <p class="lead mb-4">With CleanCo, you're not just getting a cleaning service; you're gaining a partner
+                    in cleanliness. Here's why clients trust us:</p>
+
                 <ul class="list-unstyled">
-                    <li class="mb-3"><i class="fas fa-check check-icon"></i> We deliver professional and personalized consistent service</li>
-                    <li class="mb-3"><i class="fas fa-check check-icon"></i> Attention to the finest details</li>
-                    <li class="mb-3"><i class="fas fa-check check-icon"></i> We make homes and properties shine</li>
+                    <li class="mb-3 d-flex align-items-center">
+                        <div class="text-primary me-2">
+                            <i class="fas fa-circle" style="color: #3498db; font-size: 12px;"></i>
+                        </div>
+                        <div>Our team comprises skilled professionals committed</div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center">
+                        <div class="text-primary me-2">
+                            <i class="fas fa-circle" style="color: #3498db; font-size: 12px;"></i>
+                        </div>
+                        <div>Count on us to be there when you need us</div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center">
+                        <div class="text-primary me-2">
+                            <i class="fas fa-circle" style="color: #3498db; font-size: 12px;"></i>
+                        </div>
+                        <div>Your satisfaction is our priority</div>
+                    </li>
                 </ul>
-                <div class="d-flex align-items-center mt-4">
-                    <div>
-                        <p class="mb-0 fw-bold">We use eco-friendly products</p>
-                        <p class="text-muted mb-0">Safe for your family and pets</p>
+
+                <div class="d-flex mt-4">
+                    <div class="mt-2">
+                        <p class="mb-2">We use top-quality products and proven techniques to ensure superior cleanliness and hygiene</p>
+                        <a href="signIn.html" class="btn btn-primary mt-3" id="find-out-more">Find Out More</a>
                     </div>
-                    <div class="ms-auto">
-                        <div class="bg-primary text-white p-3 rounded">
-                            <span class="fw-bold">16+</span>
-                            <small class="d-block">Years Experience</small>
+                </div>
+
+                <div class="mt-4">
+                    <p class="mb-1">Have Any Questions?</p>
+                    <p class="fw-bold">+94 77 379 3891</p>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left">
+                <div class="position-relative">
+                    <img src="/static/assets/cleaner-shoot.jpeg" alt="Cleaning Service" class="img-fluid rounded-3 mb-3">
+                    <div class="mt-3">
+                        <img src="/static/assets/cleaningUsingLiquid.jpeg" alt="Cleaning Professional" class="img-fluid rounded-3">
+                    </div>
+
+                    <div class="position-absolute" style="top: 50px; right: 30px; background-color: #3498db; color: white; padding: 20px; border-radius: 10px;">
+                        <div class="text-center">
+                            <h3 class="fw-bold mb-0" style="font-size: 2rem;">16+</h3>
+                            <p class="mb-0">Successful<br>Years</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left">
-                <img src="https://via.placeholder.com/600x500" alt="Cleaning Service" class="img-fluid rounded-3">
             </div>
         </div>
     </div>
 </section>
 
 <!-- Pricing Section -->
-<section class="py-5 mt-5">
+<section class="py-5 mt-5" id="services">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
             <span class="badge bg-primary mb-2">Our Pricing</span>
@@ -540,14 +264,17 @@
                 <div class="card pricing-card h-100">
                     <div class="card-body p-4">
                         <h5 class="card-title fw-bold">Basic Plan</h5>
+                        <!--                        category eka-->
                         <div class="price">$30<span>/monthly</span></div>
+                        <!--                        category price eka-->
                         <ul class="list-unstyled mt-4">
+                            <!--                            ek category ekakt ena service tika-->
                             <li class="mb-2"><i class="fas fa-check check-icon"></i> Cleaning bathrooms</li>
                             <li class="mb-2"><i class="fas fa-check check-icon"></i> Mopping floors</li>
                             <li class="mb-2"><i class="fas fa-check check-icon"></i> Vacuuming carpets and rugs</li>
                             <li class="mb-2"><i class="fas fa-check check-icon"></i> Dusting and wiping surfaces</li>
                         </ul>
-                        <a href="contact.html" class="btn btn-outline-primary w-100 mt-3">Buy Plan</a>
+                        <a href="signIn.html" class="btn btn-outline-primary w-100 mt-3">Buy Plan</a>
                     </div>
                 </div>
             </div>
@@ -585,19 +312,301 @@
     </div>
 </section>
 
-<!-- Call to Action -->
-<section class="container cta-section" data-aos="fade-up">
-    <div class="row justify-content-between align-items-center">
-        <div class="col-lg-8">
-            <h2 class="mb-3">Call For A Free Quote</h2>
-            <p class="lead mb-0">Enjoy 30% Discount Coupon For First Order</p>
+<!-- Feedback Section -->
+<section class="py-5 mt-5 bg-light" id="feedback">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-primary mb-2">Testimonials</span>
+            <h2 class="fw-bold mb-3">What Our Clients Say</h2>
+            <p class="lead">Discover why our clients trust us with their cleaning needs</p>
         </div>
-        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-            <div class="d-flex justify-content-lg-end align-items-center">
-                <i class="fas fa-phone-alt me-3 fs-1"></i>
-                <div>
-                    <small class="d-block">CALL US</small>
-                    <a href="tel:+18004321265" class="text-white fs-4 text-decoration-none">+1 800 432 1265</a>
+
+        <div class="row g-4 reviews-container">
+            <!-- First 3 testimonials (visible by default) -->
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/assets/user.png" alt="Client" class="rounded-circle" width="60" height="60">
+                        <div class="ms-3">
+                            <h5 class="mb-0">Sarah Johnson</h5>
+                            <small class="text-muted">Residential Client</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"The CleanCO team transformed my home! Their attention to detail is incredible, and they use eco-friendly products which I appreciate. Highly recommend their services to anyone looking for quality cleaning."</p>
+                    <div class="mt-3 text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/assets/user.png" alt="Client" class="rounded-circle" width="60" height="60">
+                        <div class="ms-3">
+                            <h5 class="mb-0">Michael Rodriguez</h5>
+                            <small class="text-muted">Office Manager</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"We've been using CleanCO's commercial cleaning services for our offices for over 2 years now. Their reliability and consistency make them an invaluable partner. Our workspace always looks professional and spotless!"</p>
+                    <div class="mt-3 text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/assets/user.png" alt="Client" class="rounded-circle" width="60" height="60">
+                        <div class="ms-3">
+                            <h5 class="mb-0">Amanda Patel</h5>
+                            <small class="text-muted">Premium Member</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"After trying several cleaning services, CleanCO stands out from the rest. Their Premium Plan offers exceptional value with services that truly make a difference. The staff is friendly, professional, and thorough!"</p>
+                    <div class="mt-3 text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional testimonials (hidden by default) -->
+            <div class="col-lg-4 hidden-reviews" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/assets/user.png" alt="Client" class="rounded-circle" width="60" height="60">
+                        <div class="ms-3">
+                            <h5 class="mb-0">David Wilson</h5>
+                            <small class="text-muted">Business Owner</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"CleanCO has been handling our office cleaning for the past year and they've been fantastic. Their team is always punctual, thorough, and professional. Our employees love coming into a clean workspace every morning."</p>
+                    <div class="mt-3 text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 hidden-reviews" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/assets/user.png" alt="Client" class="rounded-circle" width="60" height="60">
+                        <div class="ms-3">
+                            <h5 class="mb-0">Jennifer Lee</h5>
+                            <small class="text-muted">Homeowner</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"I've tried several cleaning services in the area, but CleanCO is by far the best. They pay attention to all the little details that others miss. My home has never looked better!"</p>
+                    <div class="mt-3 text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 hidden-reviews" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/assets/user.png" alt="Client" class="rounded-circle" width="60" height="60">
+                        <div class="ms-3">
+                            <h5 class="mb-0">Robert Chen</h5>
+                            <small class="text-muted">Apartment Manager</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"We use CleanCO for our apartment turnover cleanings and they do an exceptional job every time. Fast, efficient, and they leave the apartments looking brand new. Highly recommended!"</p>
+                    <div class="mt-3 text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5" data-aos="fade-up">
+            <button id="viewAllReviews" class="btn btn-outline-primary">View All Reviews</button>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section" data-aos="fade-up">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Ready for a Cleaner Space?</h2>
+        <p class="lead mb-4">Experience the CleanCO difference today. Book your cleaning service now and enjoy a fresh, pristine environment.</p>
+        <a href="signIn.html" class="btn btn-light btn-lg">Get Started</a>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5 mt-5" id="contact">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-primary mb-2">Contact Us</span>
+            <h2 class="fw-bold mb-3">Get in Touch</h2>
+            <p class="lead">Have questions or ready to book? We're here to help!</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-4">Contact Information</h4>
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-map-marker-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Our Location</h5>
+                                <p class="mb-0">NO: 488-B, Upper Dicson Road, Galle</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-phone-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Phone Number</h5>
+                                <p class="mb-0">+94 077 379 3891</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-envelope text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Email Address</h5>
+                                <p class="mb-0">info@cleanco.com</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-clock text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Working Hours</h5>
+                                <p class="mb-0">Monday - Saturday: 8:00 AM - 6:00 PM</p>
+                                <p class="mb-0">Sunday: 8:00 AM - 12:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5 class="mb-3">Follow Us</h5>
+                            <div class="d-flex">
+                                <a href="https://www.facebook.com" class="me-3" style="color: var(--primary-color)"><i class="fab fa-facebook-f fa-lg"></i></a>
+                                <a href="https://twitter.com" class="me-3" style="color: var(--primary-color)"><i class="fab fa-twitter fa-lg"></i></a>
+                                <a href="https://www.instagram.com" class="me-3" style="color: var(--primary-color)"><i class="fab fa-instagram fa-lg"></i></a>
+                                <a href="https://www.linkedin.com" style="color: var(--primary-color)"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-4">Send Us a Message</h4>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                        <label for="name">Your Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                        <label for="email">Your Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="tel" class="form-control" id="phone" placeholder="Phone Number">
+                                        <label for="phone">Phone Number</label>
+                                    </div>
+                                </div>
+                                <!--                                <div class="col-md-6">-->
+                                <!--                                    <div class="form-floating mb-3">-->
+                                <!--                                        <select class="form-select" id="service" aria-label="Service">-->
+                                <!--                                            <option selected disabled>Select a service</option>-->
+                                <!--                                            <option value="1">Home Cleaning</option>-->
+                                <!--                                            <option value="2">Office Cleaning</option>-->
+                                <!--                                            <option value="3">Window Cleaning</option>-->
+                                <!--                                            <option value="4">Post-construction Cleaning</option>-->
+                                <!--                                        </select>-->
+                                <!--                                        <label for="service">Service Required</label>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Your Message" id="message" style="height: 150px"></textarea>
+                                        <label for="message">Your Message</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" value="" id="terms">
+                                        <label class="form-check-label" for="terms">
+                                            I agree to the <a href="termsAndService.html">Terms & Conditions</a>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-5" id="map">
+    <div class="container">
+        <div class="card border-0 shadow-sm" data-aos="fade-up">
+            <div class="card-body p-0">
+                <!-- Google Maps Embed -->
+                <div style="height: 400px; border-radius: 12px; overflow: hidden;">
+                    <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.123456789012!2d80.12345678901234!3d6.123456789012345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMDcnMjQuNCJOIDgwwrAwNyczOC4xIkU!5e0!3m2!1sen!2slk!4v1234567890123!5m2!1sen!2slk"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </div>
         </div>
@@ -609,50 +618,51 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 mb-4 mb-lg-0">
-                <h3 class="mb-3">Clino</h3>
+                <h3 class="mb-3">CleanCO</h3>
                 <p>Making your spaces sparkle since 2009. We provide top-quality cleaning services tailored to your needs.</p>
                 <div class="mt-4">
-                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.facebook.com" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
+            <!--            #-->
             <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                <h5 class="mb-3">Services</h5>
-                <ul class="list-unstyled footer-links">
-                    <li class="mb-2"><a href="#">Home Cleaning</a></li>
-                    <li class="mb-2"><a href="#">Office Cleaning</a></li>
-                    <li class="mb-2"><a href="#">Window Cleaning</a></li>
-                    <li class="mb-2"><a href="#">Post-construction</a></li>
+                <!--                <h5 class="mb-3">Services</h5>-->
+                <!--                <ul class="list-unstyled footer-links">-->
+                <!--                    <li class="mb-2"><a href="#">Home Cleaning</a></li>-->
+                <!--                    <li class="mb-2"><a href="#">Office Cleaning</a></li>-->
+                <!--                    <li class="mb-2"><a href="#">Window Cleaning</a></li>-->
+                <!--                    <li class="mb-2"><a href="#">Post-construction</a></li>-->
                 </ul>
             </div>
             <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
                 <h5 class="mb-3">Company</h5>
                 <ul class="list-unstyled footer-links">
-                    <li class="mb-2"><a href="about.html">About Us</a></li>
-                    <li class="mb-2"><a href="careers.html">Careers</a></li>
-                    <li class="mb-2"><a href="blog.html">Blog</a></li>
-                    <li class="mb-2"><a href="contact.html">Contact</a></li>
+                    <li class="mb-2"><a href="#about">About Us</a></li>
+                    <li class="mb-2"><a href="#services">Service</a></li>
+                    <li class="mb-2"><a href="#feedback">Reviews</a></li>
+                    <li class="mb-2"><a href="#contact">Contact</a></li>
                 </ul>
             </div>
             <div class="col-lg-4">
                 <h5 class="mb-3">Contact Us</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Cleaning Street, Suite 101, New York, NY 10001</li>
-                    <li class="mb-2"><i class="fas fa-phone-alt me-2"></i> +1 800 432 1265</li>
-                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@clino.com</li>
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> NO: 488-B, Upper Dicson Road, Galle</li>
+                    <li class="mb-2"><i class="fas fa-phone-alt me-2"></i> +94 077 379 3891</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@cleanco.com</li>
                 </ul>
             </div>
         </div>
         <hr class="mt-5 mb-4">
         <div class="row">
             <div class="col-md-6 mb-3 mb-md-0">
-                <p class="mb-0">&copy; 2025 Clino. All rights reserved.</p>
+                <p class="mb-0">&copy; 2025 CleanCO. All Rights Reserved.</p>
             </div>
             <div class="col-md-6 text-md-end">
-                <a href="#" class="text-white me-3">Privacy Policy</a>
-                <a href="#" class="text-white">Terms of Service</a>
+                <a href="privacyPolicy.html" class="text-white me-3">Privacy Policy</a>
+                <a href="termsAndService.html" class="text-white">Terms of Service</a>
             </div>
         </div>
     </div>
@@ -662,30 +672,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- AOS Animation Library -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    // Initialize AOS animation
-    AOS.init();
-
-    // Additional animations
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add scroll-triggered animations
-        const animateElements = document.querySelectorAll('.service-card, .pricing-card');
-
-        window.addEventListener('scroll', checkScroll);
-
-        function checkScroll() {
-            animateElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                if (elementTop < window.innerHeight - 100) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        }
-
-        // Initial check
-        checkScroll();
-    });
-</script>
+<script src="index.js"></script>
 </body>
 </html>

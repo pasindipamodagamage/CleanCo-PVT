@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class AuthDTO extends UserDTO {
-    private String email;
+//    private String email;
+    private UserDTO user;
     private String token;
 }
