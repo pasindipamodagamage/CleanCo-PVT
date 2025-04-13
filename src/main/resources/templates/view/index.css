@@ -16,12 +16,6 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/*.navbar-brand {*/
-/*    font-weight: bold;*/
-/*    color: var(--primary-color);*/
-/*    font-size: 1.8rem;*/
-/*}*/
-
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);

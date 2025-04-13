@@ -108,9 +108,41 @@ body, html {
 }
 
 .navbar-brand {
-    font-weight: bold;
-    color: var(--primary-color);
     font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #1164a3, #055181);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s ease-in-out;
+    letter-spacing: 4px;
+    margin-left: 10px;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.1);
+}
+
+.nav-link {
+    position: relative;
+    padding: 8px 12px;
+    font-weight: 500;
+    color: var(--text-color) !important;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+    width: 100%;
 }
 
 .divider {
