@@ -23,8 +23,6 @@ public class AuthController {
 
     private final UserServiceImpl userService;
 
-
-    //constructor injection
     public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserServiceImpl userService, ResponseDTO responseDTO) {
         this.jwtUtil = jwtUtil;
         this.userService = userService;
@@ -36,23 +34,28 @@ public class AuthController {
 
         try {
             UserDTO loadedUser = userService.loadUserDetailsByUsername(userDTO.getEmail());
+
             if (loadedUser == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new ResponseDTO(VarList.Unauthorized, "User not found", null));
             }
 
-            // Compare passwords
+            if (!loadedUser.isActive()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(new ResponseDTO(VarList.Unauthorized, "Your account is inactive. Please contact support.", null));
+            }
+
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (!passwordEncoder.matches(userDTO.getPassword(), loadedUser.getPassword())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new ResponseDTO(VarList.Unauthorized, "Invalid Credentials", null));
             }
 
-            // Generate Token
             String token = jwtUtil.generateToken(loadedUser);
             AuthDTO authDTO = new AuthDTO();
             authDTO.setEmail(loadedUser.getEmail());
             authDTO.setToken(token);
+            authDTO.setActive(loadedUser.isActive());
 
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseDTO(VarList.Created, "Login Successful", authDTO));
@@ -62,35 +65,5 @@ public class AuthController {
                     .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
     }
-
-    @PostMapping("/deleteAccount")
-    public ResponseEntity<ResponseDTO> deleteAccount(HttpSession session) {
-        UserDTO userDTO = (UserDTO) session.getAttribute("user");
-
-        if (userDTO == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ResponseDTO(VarList.Unauthorized, "User not logged in", null));
-        }
-
-        int result = userService.deleteAccount(userDTO.getEmail());
-
-        if (result == VarList.Created) {
-            session.invalidate();
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ResponseDTO(VarList.Created, "Account deactivated successfully", null));
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ResponseDTO(VarList.Not_Found, "User not found", null));
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<ResponseDTO> logout(HttpSession session) {
-        session.invalidate();
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new ResponseDTO(VarList.Created, "Logout successful", null));
-    }
-
-
 }
 

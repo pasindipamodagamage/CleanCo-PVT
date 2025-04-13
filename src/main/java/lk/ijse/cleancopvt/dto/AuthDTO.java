@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Data
 @Component
-public class AuthDTO extends UserDTO {
-//    private String email;
-    private UserDTO user;
+public class AuthDTO{
+    private String email;
     private String token;
+    private Boolean active;
 }
