@@ -83,4 +83,5 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDTO(VarList.Created, "Logout successful", null));
     }
+
 }

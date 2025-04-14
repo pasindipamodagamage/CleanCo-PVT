@@ -31,7 +31,7 @@ public class Booking {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)  // Foreign key for category
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
 }

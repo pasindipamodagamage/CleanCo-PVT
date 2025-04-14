@@ -23,6 +23,6 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus = PaymentStatus.PENDING;
     @OneToOne
-    @JoinColumn(name = "booking_id", nullable = false, unique = true) // Foreign key to Booking
+    @JoinColumn(name = "booking_id", nullable = false, unique = true)
     private Booking booking;
 }
