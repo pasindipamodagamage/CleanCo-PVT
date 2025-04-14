@@ -19,19 +19,13 @@ public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-//    @OneToOne
-//    @JoinColumn(name = "booking_id", nullable = false)
-//    private Booking booking;
-
-    @OneToOne
-    @JoinColumn(name = "payment_id", nullable = false, unique = true)
-    private Payment payment;
-
     private LocalDate bookingDate;
     private LocalTime bookingTime;
-
     @Enumerated(EnumType.STRING)
     private Rating rating;
     private String comment;
+
+    @OneToOne
+    @JoinColumn(name = "booking_id", nullable = false, unique = true) // Foreign key to Booking
+    private Booking booking;
 }

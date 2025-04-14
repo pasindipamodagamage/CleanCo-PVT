@@ -18,12 +18,14 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private String name;
     private String description;
-//    private String profilePic;
     private double unitPrice;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ServicesSet> services = new ArrayList<>();
+    @ManyToMany(mappedBy = "categories")
+    private List<ServicesSet> servicesSets = new ArrayList<>();
+
+    @OneToMany(mappedBy = "category")
+    private List<Booking> bookings = new ArrayList<>();
+
 }

@@ -45,7 +45,7 @@ public class BookingServiceImpl implements BookingService {
         // Create a payment associated with this booking
         Payment payment = new Payment();
 //        payment.setBooking(booking);
-        payment.setAmount(booking.getPayment() != null ? booking.getPayment().getAmount() : 0.0); // Set amount from payment
+//        payment.setAmount(booking.getPayment() != null ? booking.getPayment().getAmount() : 0.0); // Set amount from payment
         payment.setPaymentStatus(PaymentStatus.PENDING);
         paymentRepo.save(payment);
 

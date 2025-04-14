@@ -12,37 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private LocalDate bookingDate;
     private LocalTime bookingTime;
-
     @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus=BookingStatus.PENDING;
-
-    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Payment payment;
-
-//    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Feedback feedback;
-
-    @ManyToMany
-    @JoinTable(
-            name = "booking_service",
-            joinColumns = @JoinColumn(name = "booking_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id")
-    )
-    private List<ServicesSet> services = new ArrayList<>();
+    private BookingStatus bookingStatus = BookingStatus.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)  // Foreign key for category
+    private Category category;
+
 }

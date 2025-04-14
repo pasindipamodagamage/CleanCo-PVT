@@ -18,17 +18,11 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-    @OneToOne
-    @JoinColumn(name = "booking_id", nullable = false, unique = true)
-    private Booking booking;
-
-    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Feedback feedback;
-
     private double amount;
     private LocalDate paymentDate;
-
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus = PaymentStatus.PENDING;
+    @OneToOne
+    @JoinColumn(name = "booking_id", nullable = false, unique = true) // Foreign key to Booking
+    private Booking booking;
 }

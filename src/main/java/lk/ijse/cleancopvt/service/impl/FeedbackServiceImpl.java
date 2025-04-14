@@ -77,7 +77,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
         Feedback feedback = new Feedback();
-        feedback.setPayment(payment);
+//        feedback.setPayment(payment);
         feedback.setRating(rating);
         feedback.setComment(comment);
 

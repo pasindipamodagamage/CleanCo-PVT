@@ -14,26 +14,22 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
 public class ServicesSet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private String serviceName;
-
     @Enumerated(EnumType.STRING)
-    private lk.ijse.cleancopvt.Enum.ServiceType serviceType=ServiceType.GENERAL_CLEAN;
-
+    private ServiceType serviceType = ServiceType.GENERAL_CLEAN;
     private String description;
-//    private String duration;
-//    private double price;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "service_category",  // Join table name
+            joinColumns = @JoinColumn(name = "service_set_id"), // FK for ServicesSet
+            inverseJoinColumns = @JoinColumn(name = "category_id")  // FK for Category
+    )
+    private List<Category> categories = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "services")
-    private List<Booking> bookings = new ArrayList<>();
 }

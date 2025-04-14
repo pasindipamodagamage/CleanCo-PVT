@@ -26,7 +26,6 @@ public class User {
     private Name name;
     private Address address;
     private Role role;
-
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean active = true;
     private String primaryContact;
