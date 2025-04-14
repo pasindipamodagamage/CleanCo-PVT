@@ -36,7 +36,6 @@ public class JwtUtil implements Serializable {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
-    //retrieve expiration date from jwt token
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
@@ -47,30 +46,21 @@ public class JwtUtil implements Serializable {
         return claimsResolver.apply(claims);
     }
 
-
-    //for retrieving any information from token we will need the secret key
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
-
-    //check if the token has expired
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
 
-
-    //generate token for user
     public String generateToken(UserDTO userDTO) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role",userDTO.getRole());
         return doGenerateToken(claims, userDTO.getEmail());
     }
 
-    //while creating the token -
-    //1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
-    //2. Sign the JWT using the HS512 algorithm and secret key.
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -80,8 +70,6 @@ public class JwtUtil implements Serializable {
                 .signWith(SignatureAlgorithm.HS512, secretKey).compact();
     }
 
-
-    //validate token
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

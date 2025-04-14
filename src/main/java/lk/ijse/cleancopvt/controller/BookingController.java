@@ -36,9 +36,11 @@ public class BookingController {
     public ResponseEntity<String> addBooking(@RequestBody Booking booking) {
         try {
             bookingService.createBooking(booking);
-            return ResponseUtil.generateSuccessResponse("Booking created successfully, payment status is PENDING.");
+//            return ResponseUtil.generateSuccessResponse("Booking created successfully, payment status is PENDING.");
+            return null;
         } catch (Exception e) {
-            return ResponseUtil.generateErrorResponse("Error while creating booking: " + e.getMessage());
+            return null;
+//            return ResponseUtil.generateErrorResponse("Error while creating booking: " + e.getMessage());
         }
     }
 
@@ -46,9 +48,12 @@ public class BookingController {
     public ResponseEntity<String> updateBookingAfterPayment(@PathVariable("bookingId") UUID bookingId, @RequestBody PaymentDTO paymentDTO) {
         try {
             bookingService.updateBookingStatusAfterPayment(bookingId, paymentDTO);
-            return ResponseUtil.generateSuccessResponse("Booking status updated successfully after payment.");
+            return null;
+
+//            return ResponseUtil.generateSuccessResponse("Booking status updated successfully after payment.");
         } catch (Exception e) {
-            return ResponseUtil.generateErrorResponse("Error while updating booking after payment: " + e.getMessage());
+            return null;
+//            return ResponseUtil.generateErrorResponse("Error while updating booking after payment: " + e.getMessage());
         }
     }
 
@@ -56,9 +61,11 @@ public class BookingController {
     public ResponseEntity<String> confirmBooking(@PathVariable("bookingId") UUID bookingId) {
         try {
             bookingService.confirmBooking(bookingId);
-            return ResponseUtil.generateSuccessResponse("Booking confirmed successfully.");
+            return null;
+//            return ResponseUtil.generateSuccessResponse("Booking confirmed successfully.");
         } catch (Exception e) {
-            return ResponseUtil.generateErrorResponse("Error while confirming booking: " + e.getMessage());
+            return null;
+//            return ResponseUtil.generateErrorResponse("Error while confirming booking: " + e.getMessage());
         }
     }
 
@@ -67,9 +74,11 @@ public class BookingController {
     public ResponseEntity<String> rejectBooking(@PathVariable("bookingId") UUID bookingId) {
         try {
             bookingService.rejectBooking(bookingId);
-            return ResponseUtil.generateSuccessResponse("Booking rejected successfully.");
+            return null;
+//            return ResponseUtil.generateSuccessResponse("Booking rejected successfully.");
         } catch (Exception e) {
-            return ResponseUtil.generateErrorResponse("Error while rejecting booking: " + e.getMessage());
+            return null;
+//            return ResponseUtil.generateErrorResponse("Error while rejecting booking: " + e.getMessage());
         }
     }
 }

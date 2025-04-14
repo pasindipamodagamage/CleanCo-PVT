@@ -13,14 +13,4 @@ public class ResponseUtil {
     private int code;
     private String message;
     private Object data;
-
-    // Success Response
-    public static ResponseEntity<String> generateSuccessResponse(String message) {
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
-
-    // Error Response
-    public static ResponseEntity<String> generateErrorResponse(String message) {
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-    }
 }

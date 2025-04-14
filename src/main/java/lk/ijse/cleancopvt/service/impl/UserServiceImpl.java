@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -83,11 +85,32 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public int deleteAccount(String username) {
         User user = userRepository.findByEmail(username);
         if (user != null) {
-            user.setActive(false);  // Set active to false
-            user.setPassword(null);  // Nullify the password field
-            userRepository.save(user); // Save the updated user entity
-            return VarList.Created; // Return success status
+            user.setActive(false);
+            user.setPassword(null);
+            userRepository.save(user);
+            return VarList.Created;
         }
-        return VarList.Not_Found; // Return error status if user not found
+        return VarList.Not_Found;
+    }
+
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public int updateUser(UserDTO userDTO) {
+        User user = userRepository.findByEmail(userDTO.getEmail());
+        if (user != null) {
+            user.setName(userDTO.getName());
+            user.setAddress(userDTO.getAddress());
+            user.setPrimaryContact(userDTO.getPrimaryContact());
+            user.setSecondaryContact(userDTO.getSecondaryContact());
+            user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword())); // update password if provided
+            userRepository.save(user);
+            return VarList.Created;
+        }
+        return VarList.Not_Found;
     }
 }
