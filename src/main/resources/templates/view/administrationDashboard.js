@@ -443,3 +443,121 @@
         checkUserRole();
     });
 
+//     user update
+    $(document).ready(function () {
+
+        function checkUserRole() {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";
+                return;
+            }
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/getRole",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (response) {
+                    const userRole = response.data;
+                    if (userRole !== 'Employee' && userRole !== 'Administrator') {
+                        alert("You do not have permission to edit your profile.");
+                        $('#my-profile').hide();
+                    }
+                },
+                error: function () {
+                    alert("Failed to fetch user role.");
+                }
+            });
+        }
+
+        function loadUserProfile() {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";
+                return;
+            }
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/me",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (response) {
+                    console.log("User Profile Data:", response);
+
+                    if (response && response.data) {
+                        const user = response.data;
+
+                        // Basic fields
+                        $('#firstName').val(user.name?.firstName || '');
+                        $('#lastName').val(user.name?.lastName || '');
+                        $('#nicNumber').val(user.nicNumber || '');
+                        $('#primaryContact').val(user.primaryContact || '');
+                        $('#secondaryContact').val(user.secondaryContact || '');
+                        $('#email').val(user.email || '');
+
+                        // Optional: You can add address fields here if you include them in the form
+
+                    } else {
+                        console.error("Invalid response data format");
+                        alert("Failed to load profile data.");
+                    }
+                },
+                error: function (err) {
+                    console.error("Error fetching profile data:", err);
+                    alert("Failed to load profile data.");
+                }
+            });
+        }
+
+        $('#updateProfileForm').submit(function (e) {
+            e.preventDefault();
+
+            const firstName = $('#firstName').val();
+            const lastName = $('#lastName').val();
+            const nicNumber = $('#nicNumber').val();
+            const primaryContact = $('#primaryContact').val();
+            const secondaryContact = $('#secondaryContact').val();
+            const email = $('#email').val();
+
+            const token = localStorage.getItem("authToken");
+
+            const updatedUserData = {
+                name: {
+                    firstName: firstName,
+                    lastName: lastName
+                },
+                nicNumber: nicNumber,
+                primaryContact: primaryContact,
+                secondaryContact: secondaryContact,
+                email: email
+            };
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/updateProfile",
+                type: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Content-Type": "application/json"
+                },
+                data: JSON.stringify(updatedUserData),
+                success: function () {
+                    alert("Profile updated successfully.");
+                    loadUserProfile();
+                },
+                error: function (err) {
+                    console.error("Profile update failed:", err);
+                    alert("Profile update failed: " + (err.responseJSON?.message || err.responseText));
+                }
+            });
+        });
+        checkUserRole();
+        loadUserProfile();
+    });

@@ -14,7 +14,7 @@
                 city: $('#city').val(),
                 district: $('#district').val()
             },
-            profilePic: "null",
+            profilePic: "/static/assets/user.png",
             nicNumber: "null",
             role: "Customer",
             active: true,

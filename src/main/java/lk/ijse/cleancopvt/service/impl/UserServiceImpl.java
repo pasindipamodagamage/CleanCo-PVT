@@ -1,6 +1,6 @@
 package lk.ijse.cleancopvt.service.impl;
 
-import lk.ijse.cleancopvt.Enum.Role;
+import lk.ijse.cleancopvt.dto.UpdateUserDTO;
 import lk.ijse.cleancopvt.dto.UserDTO;
 import lk.ijse.cleancopvt.entity.User;
 import lk.ijse.cleancopvt.repo.UserRepo;
@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 
 @Service
 @Transactional
@@ -100,17 +99,37 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .collect(Collectors.toList());
     }
 
-    public int updateUser(UserDTO userDTO) {
+    public int updateUser(UpdateUserDTO userDTO) {
         User user = userRepository.findByEmail(userDTO.getEmail());
+
         if (user != null) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+            // Validate current password
+            if (userDTO.getCurrentPassword() != null &&
+                    !encoder.matches(userDTO.getCurrentPassword(), user.getPassword())) {
+                return VarList.Unauthorized;
+            }
+
+            // Update profile fields
+            user.setProfilePic(userDTO.getProfilePic());
             user.setName(userDTO.getName());
             user.setAddress(userDTO.getAddress());
             user.setPrimaryContact(userDTO.getPrimaryContact());
             user.setSecondaryContact(userDTO.getSecondaryContact());
-            user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword())); // update password if provided
+            user.setNicNumber(userDTO.getNicNumber());
+
+            // Update password if provided
+            if (userDTO.getPassword() != null && !userDTO.getPassword().isBlank()) {
+                user.setPassword(encoder.encode(userDTO.getPassword()));
+            }
+
+            // Save updated user
             userRepository.save(user);
             return VarList.Created;
         }
+
         return VarList.Not_Found;
     }
+
 }

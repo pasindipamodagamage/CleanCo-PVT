@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lk.ijse.cleancopvt.dto.AuthDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
+import lk.ijse.cleancopvt.dto.UpdateUserDTO;
 import lk.ijse.cleancopvt.dto.UserDTO;
-import lk.ijse.cleancopvt.service.UserService;
 import lk.ijse.cleancopvt.service.impl.UserServiceImpl;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.VarList;
@@ -24,7 +24,7 @@ public class UserController {
 
     private final JwtUtil jwtUtil;
 
-    public UserController(UserServiceImpl userService, JwtUtil jwtUtil, ResponseDTO responseDTO) {
+    public UserController(UserServiceImpl userService, JwtUtil jwtUtil) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
     }
@@ -105,5 +105,66 @@ public class UserController {
         return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Role fetched", userRole));
     }
 
+    @PutMapping("/updateProfile")
+    public ResponseEntity<ResponseDTO> updateUserProfile(@RequestBody UpdateUserDTO updateUserDTO,
+                                                         HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(VarList.Unauthorized, "No JWT token found", null));
+        }
+
+        String token = authHeader.substring(7);
+        String email = jwtUtil.getUsernameFromToken(token);
+
+        if (email == null || email.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(VarList.Unauthorized, "Invalid token payload", null));
+        }
+
+        updateUserDTO.setEmail(email); // Set email into DTO from token
+        int result = userService.updateUser(updateUserDTO);
+
+        if (result == VarList.Created) {
+            return ResponseEntity.ok(new ResponseDTO(VarList.Created, "Profile updated successfully", null));
+        } else if (result == VarList.Unauthorized) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(VarList.Unauthorized, "Invalid current password", null));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(VarList.Not_Found, "User not found", null));
+        }
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ResponseDTO> getLoggedUser(@RequestHeader("Authorization") String authorization) {
+        try {
+            if (authorization == null || !authorization.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ResponseDTO(VarList.Unauthorized, "Missing or invalid token", null));
+            }
+
+            String token = authorization.substring(7);
+            String email = jwtUtil.getUsernameFromToken(token);
+
+            if (email == null || email.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ResponseDTO(VarList.Unauthorized, "Invalid token payload", null));
+            }
+
+            UserDTO userDTO = userService.searchUser(email);
+            if (userDTO == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponseDTO(VarList.Not_Found, "User not found", null));
+            }
+
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "User fetched successfully", userDTO));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
 
 }

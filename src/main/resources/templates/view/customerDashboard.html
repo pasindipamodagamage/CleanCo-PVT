@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CleanCO - Professional Cleaning Services</title>
-        <link rel="icon" href="/static/assets/Company-logo.jpg">
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <!-- AOS Animation Library -->
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="customerDashboard.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanCO - Customer Dashboard</title>
+    <link rel="icon" href="/static/assets/Company-logo.jpg">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="customerDashboard.css">
 </head>
 <body>
 
@@ -22,7 +19,6 @@
     <div class="container">
         <img src="/static/assets/Company-logo.jpg" style="width: 45px; height: 45px;margin-right: 5px;" alt="">
         <a class="navbar-brand" href="#">CLEANCO</a>
-        <h6 style="opacity: 0.4; margin-left: 20px; font-size: 10px"><i>Exceptional Cleaning Services for a Fresh and Pristine Space</i></h6>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,9 +34,6 @@
                     <a class="nav-link" href="index.html#services">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html#contact">Support</a>
-                </li>
-                <li class="nav-item">
                     <button class="btn btn-outline-primary">Log Out</button>
                 </li>
             </ul>
@@ -50,233 +43,488 @@
 
 <div class="container mt-4">
     <div class="row">
-        <!-- User Profile and Service Info -->
-        <div class="col-lg-4 mb-4">
+        <!-- User Profile and Navigation -->
+        <div class="col-lg-3 mb-4">
             <div class="user-profile">
                 <img src="/static/assets/my-photo.jpg" alt="User Avatar" class="user-avatar mb-3">
                 <h4 class="fw-bold mb-0">LISA M SMITH</h4>
-                <p class="text-muted mb-0">Premium Member</p>
+                <p class="text-muted mb-3">Premium Member</p>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" id="updateProfileBtn">Update Profile</button>
+                </div>
             </div>
 
             <div class="sidebar mt-4">
-                <a href="#" class="sidebar-link active">
-                    <i class="fas fa-chart-line"></i> Account Summary
+                <a href="#" class="sidebar-link" id="dashboardLink">
+                    <i class="fas fa-chart-line"></i> Dashboard
                 </a>
-                <a href="#" class="sidebar-link">
-                    <i class="fas fa-user"></i> My Profile
+                <a href="#" class="sidebar-link" id="bookingsLink">
+                    <i class="fas fa-calendar-alt"></i> My Bookings
                 </a>
-                <a href="#" class="sidebar-link">
-                    <i class="fas fa-credit-card"></i> Payments & Billing
+                <a href="#" class="sidebar-link" id="newBookingLink">
+                    <i class="fas fa-plus-circle"></i> New Booking
                 </a>
-                <a href="#" class="sidebar-link">
-                    <i class="fas fa-calendar-alt"></i> Manage Appointments
+                <a href="#" class="sidebar-link" id="paymentsLink">
+                    <i class="fas fa-credit-card"></i> Payments
                 </a>
-                <a href="#" class="sidebar-link">
-                    <i class="fas fa-star"></i> Rewards Points
-                </a>
-                <a href="index.html#contact" class="sidebar-link">
-                    <i class="fas fa-question-circle"></i> FAQs
-                </a>
-                <a href="index.html#callOfAction" class="sidebar-link">
-                    <i class="fas fa-headset"></i> Support
+                <a href="#" class="sidebar-link" id="feedbackLink">
+                    <i class="fas fa-comment"></i> Feedback
                 </a>
             </div>
         </div>
 
         <!-- Main Dashboard Content -->
-        <div class="col-lg-8">
-            <div class="main-content">
-                <!-- Service Info -->
-                <div class="service-info mb-4">
-                    <div class="service-icon">
-                        <i class="fas fa-broom fa-lg"></i>
+        <div class="col-lg-9">
+            <!-- Dashboard Overview -->
+            <div class="main-content" id="dashboardContent">
+                <h2 class="fw-bold mb-4">Dashboard Overview</h2>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Upcoming Booking</h5>
+                                <p class="card-value">April 18, 2025</p>
+                                <p class="card-text">9:00 AM - 12:00 PM</p>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h5 class="mb-0">Premium Cleaning Plan</h5>
-                        <p class="text-muted mb-0"><i class="fas fa-check-circle text-success me-2"></i> Active</p>
+                    <div class="col-md-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Active Plan</h5>
+                                <p class="card-value">Premium Plan</p>
+                                <p class="card-text">8 services remaining</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Reward Points</h5>
+                                <p class="card-value">1,250 pts</p>
+                                <p class="card-text">$12.50 value</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <h2 class="fw-bold mb-4">Account Summary</h2>
-                <p class="text-muted mb-4">Here's info as of 12:37 PM, 12 Apr</p>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Recent Bookings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>April 5, 2025</td>
+                                    <td>Premium Cleaning</td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                    <td><button class="btn btn-sm btn-outline-primary">Feedback</button></td>
+                                </tr>
+                                <tr>
+                                    <td>March 22, 2025</td>
+                                    <td>Premium Cleaning + Windows</td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                    <td><button class="btn btn-sm btn-outline-primary">Feedback</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <!-- Tabs -->
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <!-- Bookings Management -->
+            <div class="main-content d-none" id="bookingsContent">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold mb-0">My Bookings</h2>
+                    <button class="btn btn-primary" id="newBookingBtn">New Booking</button>
+                </div>
+
+                <ul class="nav nav-tabs" id="bookingsTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="subscription-tab" data-bs-toggle="tab" data-bs-target="#subscription" type="button" role="tab">Subscription</button>
+                        <button class="nav-link active" id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button">Upcoming</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab">History</button>
+                        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button">History</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="schedule-tab" data-bs-toggle="tab" data-bs-target="#schedule" type="button" role="tab">Schedule</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="extras-tab" data-bs-toggle="tab" data-bs-target="#extras" type="button" role="tab">Add-ons</button>
+                        <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button">Cancelled</button>
                     </li>
                 </ul>
 
-                <div class="tab-content" id="myTabContent">
-                    <!-- Subscription Tab -->
-                    <div class="tab-pane fade show active" id="subscription" role="tabpanel">
-                        <div class="plan-card">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="mb-0">Premium Plan</h5>
-                                <a href="#" class="btn-sm btn-light rounded-pill px-3">View Details</a>
-                            </div>
-                            <div class="plan-price">$120<span class="fs-6">/monthly</span></div>
-                            <p class="mb-1">Valid till 11 Apr 2026</p>
-                            <div class="mt-4">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <span>Next service date:</span>
-                                    <span class="fw-bold">April 18, 2025</span>
+                <div class="tab-content mt-3" id="bookingsTabContent">
+                    <div class="tab-pane fade show active" id="upcoming" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="mb-0">April 18, 2025</h5>
+                                    <span class="badge bg-info">Confirmed</span>
                                 </div>
-                                <div class="d-flex justify-content-between mb-3">
-                                    <span>Services included:</span>
-                                    <span class="fw-bold">12</span>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <span>Services remaining:</span>
-                                    <span class="fw-bold">8</span>
+                                <p><strong>Service:</strong> Premium Cleaning</p>
+                                <p><strong>Time:</strong> 9:00 AM - 12:00 PM</p>
+                                <p><strong>Address:</strong> 123 Main St, Apt 4B, Galle</p>
+                                <div class="d-flex gap-2 mt-3">
+                                    <button class="btn btn-outline-primary btn-sm">Reschedule</button>
+                                    <button class="btn btn-outline-danger btn-sm">Cancel</button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="d-flex gap-3 mt-4">
-                            <a href="#" class="action-btn btn-outline-primary border border-primary text-primary flex-grow-1 text-center">CHANGE PLAN</a>
-                            <a href="#" class="action-btn btn-filled flex-grow-1 text-center">SCHEDULE CLEANING</a>
                         </div>
                     </div>
-
-                    <!-- History Tab -->
                     <div class="tab-pane fade" id="history" role="tabpanel">
                         <div class="list-group">
-                            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1">Premium Home Cleaning</h6>
-                                    <p class="mb-0 text-muted">April 5, 2025</p>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="mb-1">April 5, 2025</h5>
+                                    <span class="badge bg-success">Completed</span>
                                 </div>
-                                <span class="badge bg-success rounded-pill">Completed</span>
+                                <p class="mb-1"><strong>Service:</strong> Premium Cleaning</p>
+                                <small class="text-muted">9:00 AM - 12:00 PM</small>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                    <button class="btn btn-sm btn-outline-success">Leave Feedback</button>
+                                </div>
                             </div>
-                            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1">Premium Home Cleaning</h6>
-                                    <p class="mb-0 text-muted">March 22, 2025</p>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="mb-1">March 22, 2025</h5>
+                                    <span class="badge bg-success">Completed</span>
                                 </div>
-                                <span class="badge bg-success rounded-pill">Completed</span>
-                            </div>
-                            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1">Window Cleaning Add-on</h6>
-                                    <p class="mb-0 text-muted">March 22, 2025</p>
+                                <p class="mb-1"><strong>Service:</strong> Premium Cleaning + Windows</p>
+                                <small class="text-muted">1:00 PM - 4:00 PM</small>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                    <button class="btn btn-sm btn-outline-success">Leave Feedback</button>
                                 </div>
-                                <span class="badge bg-success rounded-pill">Completed</span>
-                            </div>
-                            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1">Premium Home Cleaning</h6>
-                                    <p class="mb-0 text-muted">March 8, 2025</p>
-                                </div>
-                                <span class="badge bg-success rounded-pill">Completed</span>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Schedule Tab -->
-                    <div class="tab-pane fade" id="schedule" role="tabpanel">
-                        <div class="alert alert-info mb-4">
-                            <i class="fas fa-calendar-check me-2"></i> Your next cleaning is scheduled for <strong>April 18, 2025</strong> between 9:00 AM - 12:00 PM
+                    <div class="tab-pane fade" id="cancelled" role="tabpanel">
+                        <div class="alert alert-info">
+                            You don't have any cancelled bookings.
                         </div>
-
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5 class="card-title">Upcoming Cleanings</h5>
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Service</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>April 18, 2025</td>
-                                        <td>9:00 AM - 12:00 PM</td>
-                                        <td>Premium Cleaning</td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-outline-primary">Reschedule</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>May 2, 2025</td>
-                                        <td>1:00 PM - 4:00 PM</td>
-                                        <td>Premium Cleaning</td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-outline-primary">Reschedule</a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <a href="#" class="btn btn-primary">Schedule New Cleaning</a>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Add-ons Tab -->
-                    <div class="tab-pane fade" id="extras" role="tabpanel">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Deep Clean Add-on</h5>
-                                        <p class="card-text">Thorough cleaning of hard-to-reach areas including behind appliances and inside cabinets.</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="fw-bold">$45</span>
-                                            <a href="#" class="btn btn-sm btn-outline-primary">Add to Next Cleaning</a>
-                                        </div>
+            <!-- New Booking Form -->
+            <div class="main-content d-none" id="newBookingContent">
+                <h2 class="fw-bold mb-4">New Booking</h2>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form id="bookingForm">
+                            <div class="mb-3">
+                                <label for="serviceType" class="form-label">Service Type</label>
+                                <select class="form-select" id="serviceType" required>
+                                    <option value="">Select a service</option>
+                                    <option value="premium">Premium Cleaning</option>
+                                    <option value="deep">Deep Cleaning</option>
+                                    <option value="move">Move In/Out Cleaning</option>
+                                    <option value="office">Office Cleaning</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="bookingDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="bookingDate" required min="">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="timeSlot" class="form-label">Time Slot</label>
+                                <select class="form-select" id="timeSlot" required>
+                                    <option value="">Select a time slot</option>
+                                    <option value="morning">9:00 AM - 12:00 PM</option>
+                                    <option value="afternoon">1:00 PM - 4:00 PM</option>
+                                    <option value="evening">5:00 PM - 8:00 PM</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Add-ons (optional)</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="windowCleaning">
+                                    <label class="form-check-label" for="windowCleaning">Window Cleaning (+$35)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="fridgeCleaning">
+                                    <label class="form-check-label" for="fridgeCleaning">Refrigerator Cleaning (+$40)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="carpetCleaning">
+                                    <label class="form-check-label" for="carpetCleaning">Carpet Cleaning (+$50)</label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="specialInstructions" class="form-label">Special Instructions</label>
+                                <textarea class="form-control" id="specialInstructions" rows="3"></textarea>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary" id="cancelBookingBtn">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Continue to Payment</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Payments Section -->
+            <div class="main-content d-none" id="paymentsContent">
+                <h2 class="fw-bold mb-4">Payment Methods</h2>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Saved Payment Methods</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fab fa-cc-visa fa-2x me-3 text-primary"></i>
+                                        <span>Visa ending in 4242</span>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-danger">Remove</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Window Cleaning</h5>
-                                        <p class="card-text">Interior and exterior window cleaning for crystal clear views.</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="fw-bold">$35</span>
-                                            <a href="#" class="btn btn-sm btn-outline-primary">Add to Next Cleaning</a>
-                                        </div>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fab fa-paypal fa-2x me-3 text-primary"></i>
+                                        <span>PayPal: lisa.smith@example.com</span>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Oven & Refrigerator</h5>
-                                        <p class="card-text">Detailed cleaning of your kitchen appliances inside and out.</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="fw-bold">$40</span>
-                                            <a href="#" class="btn btn-sm btn-outline-primary">Add to Next Cleaning</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Carpet Deep Clean</h5>
-                                        <p class="card-text">Professional deep cleaning for carpets and area rugs.</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="fw-bold">$50</span>
-                                            <a href="#" class="btn btn-sm btn-outline-primary">Add to Next Cleaning</a>
-                                        </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-danger">Remove</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Add Payment Method</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs mb-4" id="paymentMethodTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="creditCard-tab" data-bs-toggle="tab" data-bs-target="#creditCard" type="button">Credit Card</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="paypal-tab" data-bs-toggle="tab" data-bs-target="#paypal" type="button">PayPal</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="paymentMethodTabContent">
+                            <div class="tab-pane fade show active" id="creditCard" role="tabpanel">
+                                <form id="creditCardForm">
+                                    <div class="mb-3">
+                                        <label for="cardNumber" class="form-label">Card Number</label>
+                                        <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="expiryDate" class="form-label">Expiry Date</label>
+                                            <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="cvv" class="form-label">CVV</label>
+                                            <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="cardName" class="form-label">Name on Card</label>
+                                        <input type="text" class="form-control" id="cardName" placeholder="Lisa Smith" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Card</button>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="paypal" role="tabpanel">
+                                <div class="text-center py-4">
+                                    <i class="fab fa-paypal fa-5x text-primary mb-3"></i>
+                                    <p class="mb-4">You'll be redirected to PayPal to complete your payment method setup.</p>
+                                    <button class="btn btn-primary">Connect with PayPal</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Payment History</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Service</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>April 5, 2025</td>
+                                    <td>$120.00</td>
+                                    <td>Premium Cleaning</td>
+                                    <td>Visa 4242</td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>March 22, 2025</td>
+                                    <td>$155.00</td>
+                                    <td>Premium + Windows</td>
+                                    <td>PayPal</td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="main-content d-none" id="feedbackContent">
+                <h2 class="fw-bold mb-4">Feedback</h2>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Leave Feedback</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="feedbackForm">
+                            <div class="mb-3">
+                                <label for="bookingSelect" class="form-label">Select Booking</label>
+                                <select class="form-select" id="bookingSelect" required>
+                                    <option value="">Select a booking</option>
+                                    <option value="1">April 5, 2025 - Premium Cleaning</option>
+                                    <option value="2">March 22, 2025 - Premium + Windows</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <div class="rating-stars">
+                                    <i class="far fa-star" data-rating="1"></i>
+                                    <i class="far fa-star" data-rating="2"></i>
+                                    <i class="far fa-star" data-rating="3"></i>
+                                    <i class="far fa-star" data-rating="4"></i>
+                                    <i class="far fa-star" data-rating="5"></i>
+                                    <input type="hidden" id="rating" name="rating" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="feedbackText" class="form-label">Your Feedback</label>
+                                <textarea class="form-control" id="feedbackText" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Your Previous Feedback</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="feedback-item mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h5>Premium Cleaning - April 5, 2025</h5>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p>The cleaning was very thorough and the team was professional. Would definitely book again!</p>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-sm btn-outline-primary me-2">Edit</button>
+                                <button class="btn btn-sm btn-outline-danger">Delete</button>
+                            </div>
+                        </div>
+                        <div class="feedback-item">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h5>Premium + Windows - March 22, 2025</h5>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p>Excellent service! The windows look brand new and the whole apartment smells fresh.</p>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-sm btn-outline-primary me-2">Edit</button>
+                                <button class="btn btn-sm btn-outline-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Profile Section -->
+            <div class="main-content d-none" id="updateProfileContent">
+                <h2 class="fw-bold mb-4">Update Profile</h2>
+
+                <div class="card">
+                    <div class="card-body">
+                        <form id="profileForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" value="Lisa" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" value="Smith" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" value="lisa.smith@example.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="phone" value="+94771234567" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <textarea class="form-control" id="address" rows="3" required>123 Main St, Apt 4B, Galle</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Change Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter new password">
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary" id="cancelProfileUpdateBtn">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -284,56 +532,9 @@
     </div>
 </div>
 
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 mb-4 mb-lg-0">
-                <h3 class="mb-3">CleanCO</h3>
-                <p>Making your spaces sparkle since 2009. We provide top-quality cleaning services tailored to your needs.</p>
-                <div class="mt-4">
-                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-            </div>
-            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                <h5 class="mb-3">Company</h5>
-                <ul class="list-unstyled footer-links">
-                    <li class="mb-2"><a href="#">About Us</a></li>
-                    <li class="mb-2"><a href="#">Services</a></li>
-                    <li class="mb-2"><a href="#">Reviews</a></li>
-                    <li class="mb-2"><a href="#">Location</a></li>
-                    <li class="mb-2"><a href="#">Contact</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-4">
-                <h5 class="mb-3">Contact Us</h5>
-                <ul class="list-unstyled">
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> NO: 488-B, Upper Dicson Road, Galle</li>
-                    <li class="mb-2"><i class="fas fa-phone-alt me-2"></i> +94 077 379 3891</li>
-                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@cleanco.com</li>
-                </ul>
-            </div>
-        </div>
-        <hr class="mt-4 mb-3">
-        <div class="row">
-            <div class="col-md-6 mb-3 mb-md-0">
-                <p class="mb-0">&copy; 2025 CleanCO. All Rights Reserved.</p>
-                <p style="font-size: 0.7rem">Developed by <strong><a href="#">Indy Gamage</a></strong></p>
-            </div>
-            <div class="col-md-6 text-md-end footer-links">
-                <a href="#" class="text-white me-3">Privacy Policy</a>
-                <a href="#" class="text-white">Terms of Service</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Bootstrap JS -->
+<!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JavaScript -->
+<script src="customerDashboard.js"></script>
 </body>
 </html>

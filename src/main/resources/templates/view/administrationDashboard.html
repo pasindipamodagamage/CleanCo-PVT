@@ -79,6 +79,7 @@
         <!-- Main Content Area -->
         <div class="col-lg-9">
             <div class="main-content">
+
                 <!-- Account Summary Section -->
                 <div id="account-summary" class="content-section active">
                     <h2 class="mb-4">Account Summary</h2>
@@ -178,59 +179,71 @@
                         <div class="card-body">
                             <div class="row mb-4">
                                 <div class="col-md-3 text-center">
-                                    <img src="/static/assets/my-photo.jpg" alt="Profile Picture" class="profile-picture mb-3">
-                                    <button class="btn btn-outline-primary btn-sm">Change Picture</button>
+                                    <img id="profilePicPreview" src="/static/assets/user.png" alt="Profile Picture" class="profile-picture mb-3">
+                                    <input type="file" id="profilePicInput" accept="image/*" class="form-control mb-2">
                                 </div>
                                 <div class="col-md-9">
-                                    <form>
+                                    <form id="updateProfileForm">
+                                        <!-- Name -->
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <label for="firstName" class="form-label">First Name</label>
-                                                <input type="text" class="form-control" id="firstName" value="Lisa">
+                                                <input type="text" class="form-control" id="firstName" name="firstName" value="Lisa">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="lastName" class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" id="lastName" value="Smith">
+                                                <input type="text" class="form-control" id="lastName" name="lastName" value="Smith">
                                             </div>
                                         </div>
+
+                                        <!-- NIC -->
                                         <div class="mb-3">
                                             <label for="nicNumber" class="form-label">NIC Number</label>
-                                            <input type="text" class="form-control" id="nicNumber" value="985412367V">
+                                            <input type="text" class="form-control" id="nicNumber" name="nicNumber" value="985412367V">
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="address" class="form-label">Address</label>
-                                            <textarea class="form-control" id="address" rows="3">42 Main Street, Galle, Sri Lanka</textarea>
-                                        </div>
+
+                                        <!-- Contacts -->
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <label for="primaryContact" class="form-label">Primary Contact</label>
-                                                <input type="tel" class="form-control" id="primaryContact" value="+94 77 123 4567">
+                                                <input type="tel" class="form-control" id="primaryContact" name="primaryContact" value="+94 77 123 4567">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="secondaryContact" class="form-label">Secondary Contact</label>
-                                                <input type="tel" class="form-control" id="secondaryContact" value="+94 71 987 6543">
+                                                <input type="tel" class="form-control" id="secondaryContact" name="secondaryContact" value="+94 71 987 6543">
                                             </div>
                                         </div>
+
+                                        <!-- Email -->
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="email" value="lisa.smith@cleanco.com">
+                                            <input type="email" class="form-control" id="email" name="email" value="lisa.smith@cleanco.com">
                                         </div>
+
                                         <hr>
+
+                                        <!-- Password Section -->
                                         <h5>Change Password</h5>
+
+                                        <!-- Current Password -->
                                         <div class="mb-3">
                                             <label for="currentPassword" class="form-label">Current Password</label>
-                                            <input type="password" class="form-control" id="currentPassword">
+                                            <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Current Password">
                                         </div>
+
+                                        <!-- New Password -->
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <label for="newPassword" class="form-label">New Password</label>
-                                                <input type="password" class="form-control" id="newPassword">
+                                                <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                                <input type="password" class="form-control" id="confirmPassword">
+                                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
                                             </div>
                                         </div>
+
+                                        <!-- Save Button -->
                                         <div class="text-end">
                                             <button type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
