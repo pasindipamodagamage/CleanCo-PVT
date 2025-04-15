@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserDTO {
-//    private UUID id;
     private String profilePic;
     private String nicNumber;
     private Name name;

@@ -23,6 +23,7 @@ public class ServicesSet {
     @Enumerated(EnumType.STRING)
     private ServiceType serviceType = ServiceType.GENERAL_CLEAN;
     private String description;
+    private double unitPrice;
 
     @ManyToMany
     @JoinTable(

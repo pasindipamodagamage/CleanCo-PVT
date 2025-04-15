@@ -17,8 +17,6 @@ public class ServicesSetDTO {
 
     private String description;
 
-//    private String duration;
-//
-//    private double price;
+    private double unitPrice;
 
 }

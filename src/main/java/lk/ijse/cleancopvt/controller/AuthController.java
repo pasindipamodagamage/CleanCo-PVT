@@ -51,6 +51,8 @@ public class AuthController {
                         .body(new ResponseDTO(VarList.Unauthorized, "Invalid Credentials", null));
             }
 
+            System.out.println("Logged in user role: " + loadedUser.getRole());
+
             String token = jwtUtil.generateToken(loadedUser);
             AuthDTO authDTO = new AuthDTO();
             authDTO.setEmail(loadedUser.getEmail());

@@ -1,5 +1,7 @@
 package lk.ijse.cleancopvt.controller;
 
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lk.ijse.cleancopvt.dto.AuthDTO;
@@ -83,5 +85,25 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDTO(VarList.Created, "Logout successful", null));
     }
+
+    @GetMapping("/getRole")
+    public ResponseEntity<ResponseDTO> getRole(@RequestHeader("Authorization") String authorization) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(VarList.Unauthorized, "Missing or invalid token", null));
+        }
+
+        String token = authorization.substring(7);
+        Claims claims = jwtUtil.getUserRoleCodeFromToken(token);
+        String userRole = claims.get("role", String.class);
+
+        if (userRole == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(VarList.Unauthorized, "Role not found in token", null));
+        }
+
+        return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Role fetched", userRole));
+    }
+
 
 }

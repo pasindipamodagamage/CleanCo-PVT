@@ -1,6 +1,7 @@
 package lk.ijse.cleancopvt.entity;
 
 import jakarta.persistence.*;
+import lk.ijse.cleancopvt.Enum.Duration;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class Category {
     private UUID id;
     private String name;
     private String description;
-    private double unitPrice;
+    private Duration duration;
 
     @ManyToMany(mappedBy = "categories")
     private List<ServicesSet> servicesSets = new ArrayList<>();

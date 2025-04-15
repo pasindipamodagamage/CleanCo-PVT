@@ -19,7 +19,6 @@ import java.util.UUID;
 @CrossOrigin("*")
 public class CategoryController {
 
-    @Autowired
     private final CategoryService categoryService;
 
     @Autowired
@@ -51,7 +50,7 @@ public class CategoryController {
 
     // Update an existing category
     @PutMapping("/updateCategory/{id}")
-    public ResponseEntity<String> updateCategory(@RequestHeader("Authorization") String authorization, @PathVariable("id") Long id, @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<String> updateCategory(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody CategoryDTO categoryDTO) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
             return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
         }
@@ -114,7 +113,6 @@ public class CategoryController {
         }
     }
 
-    // Helper method to check if the user has the required role(s)
     private boolean hasRequiredRole(String authorization, Role... roles) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             return false;
@@ -132,4 +130,5 @@ public class CategoryController {
 
         return false;
     }
+
 }

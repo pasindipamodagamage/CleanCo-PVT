@@ -25,22 +25,22 @@
 });
 
     // Category table row click
-    $('#categoriesTable tbody').on('click', 'tr', function() {
-    const id = $(this).data('id');
-    const name = $(this).find('td:eq(1)').text();
-    const description = $(this).find('td:eq(2)').text();
-    const status = $(this).find('td:eq(3) .badge').hasClass('bg-success') ? 'active' : 'inactive';
-
-    // Fill modal with data
-    $('#categoryModalLabel').text('Edit Category');
-    $('#categoryId').val(id);
-    $('#categoryName').val(name);
-    $('#categoryDescription').val(description);
-    $(`#categoryStatus${status.charAt(0).toUpperCase() + status.slice(1)}`).prop('checked', true);
-
-    // Show modal
-    $('#categoryModal').modal('show');
-});
+//     $('#categoriesTable tbody').on('click', 'tr', function() {
+//     const id = $(this).data('id');
+//     const name = $(this).find('td:eq(1)').text();
+//     const description = $(this).find('td:eq(2)').text();
+//     const status = $(this).find('td:eq(3) .badge').hasClass('bg-success') ? 'active' : 'inactive';
+//
+//     // Fill modal with data
+//     $('#categoryModalLabel').text('Edit Category');
+//     $('#categoryId').val(id);
+//     $('#categoryName').val(name);
+//     $('#categoryDescription').val(description);
+//     $(`#categoryStatus${status.charAt(0).toUpperCase() + status.slice(1)}`).prop('checked', true);
+//
+//     // Show modal
+//     $('#categoryModal').modal('show');
+// });
 
     // Service table row click
     $('#servicesTable tbody').on('click', 'tr', function() {
@@ -70,11 +70,11 @@
 });
 
     // Reset modals when hidden
-    $('#categoryModal').on('hidden.bs.modal', function () {
-    $('#categoryModalLabel').text('Add Category');
-    $('#categoryForm')[0].reset();
-    $('#categoryId').val('');
-});
+//     $('#categoryModal').on('hidden.bs.modal', function () {
+//     $('#categoryModalLabel').text('Add Category');
+//     $('#categoryForm')[0].reset();
+//     $('#categoryId').val('');
+// });
 
     $('#serviceModal').on('hidden.bs.modal', function () {
     $('#serviceModalLabel').text('Add Service');
@@ -88,50 +88,50 @@
 });
 
     // Save category
-    $('#saveCategoryBtn').click(function() {
-    if (!$('#categoryForm')[0].checkValidity()) {
-    $('#categoryForm')[0].reportValidity();
-    return;
-}
-
-    const id = $('#categoryId').val();
-    const name = $('#categoryName').val();
-    const description = $('#categoryDescription').val();
-    const status = $('input[name="categoryStatus"]:checked').val();
-
-    if (id) {
-    // Update existing category
-    const row = $(`#categoriesTable tbody tr[data-id="${id}"]`);
-    row.find('td:eq(1)').text(name);
-    row.find('td:eq(2)').text(description);
-    row.find('td:eq(3) .badge')
-    .removeClass('bg-success bg-danger')
-    .addClass(status === 'active' ? 'bg-success' : 'bg-danger')
-    .text(status === 'active' ? 'Active' : 'Inactive');
-} else {
-    // Add new category
-    const newId = 'CAT00' + ($('#categoriesTable tbody tr').length + 1);
-    const newRow = `
-                <tr data-id="${newId}">
-                    <td>${newId}</td>
-                    <td>${name}</td>
-                    <td>${description}</td>
-                    <td><span class="badge ${status === 'active' ? 'bg-success' : 'bg-danger'}">${status === 'active' ? 'Active' : 'Inactive'}</span></td>
-                    <td>
-                        <button class="btn btn-sm btn-info edit-btn" data-bs-toggle="modal" data-bs-target="#categoryModal">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger delete-btn">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
-    $('#categoriesTable tbody').append(newRow);
-}
-
-    $('#categoryModal').modal('hide');
-});
+//     $('#saveCategoryBtn').click(function() {
+//     if (!$('#categoryForm')[0].checkValidity()) {
+//     $('#categoryForm')[0].reportValidity();
+//     return;
+// }
+//
+//     const id = $('#categoryId').val();
+//     const name = $('#categoryName').val();
+//     const description = $('#categoryDescription').val();
+//     const status = $('input[name="categoryStatus"]:checked').val();
+//
+//     if (id) {
+//     // Update existing category
+//     const row = $(`#categoriesTable tbody tr[data-id="${id}"]`);
+//     row.find('td:eq(1)').text(name);
+//     row.find('td:eq(2)').text(description);
+//     row.find('td:eq(3) .badge')
+//     .removeClass('bg-success bg-danger')
+//     .addClass(status === 'active' ? 'bg-success' : 'bg-danger')
+//     .text(status === 'active' ? 'Active' : 'Inactive');
+// } else {
+//     // Add new category
+//     const newId = 'CAT00' + ($('#categoriesTable tbody tr').length + 1);
+//     const newRow = `
+//                 <tr data-id="${newId}">
+//                     <td>${newId}</td>
+//                     <td>${name}</td>
+//                     <td>${description}</td>
+//                     <td><span class="badge ${status === 'active' ? 'bg-success' : 'bg-danger'}">${status === 'active' ? 'Active' : 'Inactive'}</span></td>
+//                     <td>
+//                         <button class="btn btn-sm btn-info edit-btn" data-bs-toggle="modal" data-bs-target="#categoryModal">
+//                             <i class="fas fa-edit"></i>
+//                         </button>
+//                         <button class="btn btn-sm btn-danger delete-btn">
+//                             <i class="fas fa-trash"></i>
+//                         </button>
+//                     </td>
+//                 </tr>
+//             `;
+//     $('#categoriesTable tbody').append(newRow);
+// }
+//
+//     $('#categoryModal').modal('hide');
+// });
 
     // Save service
     $('#saveServiceBtn').click(function() {
@@ -188,12 +188,12 @@
 });
 
     // Delete category
-    $(document).on('click', '#categoriesTable .delete-btn', function(e) {
-    e.stopPropagation(); // Prevent row click event
-    if (confirm('Are you sure you want to delete this category?')) {
-    $(this).closest('tr').remove();
-}
-});
+//     $(document).on('click', '#categoriesTable .delete-btn', function(e) {
+//     e.stopPropagation(); // Prevent row click event
+//     if (confirm('Are you sure you want to delete this category?')) {
+//     $(this).closest('tr').remove();
+// }
+// });
 
     // Delete service
     $(document).on('click', '#servicesTable .delete-btn', function(e) {
@@ -382,7 +382,7 @@
 });
 });
 
-// logout
+    // logout
     document.getElementById("logoutBtn").addEventListener("click", function () {
         fetch('http://localhost:8082/api/v1/user/logout', {
             method: 'POST',
@@ -399,4 +399,189 @@
             .catch(err => {
                 console.error('Logout error:', err);
             });
+    });
+
+    // category
+    $(document).ready(function () {
+        // Check if the user is logged in and has the correct role
+        function checkUserRole() {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";  // Redirect to login page if no token
+                return;
+            }
+
+            const headers = {
+                "Authorization": "Bearer " + token
+            };
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/getRole",
+                type: "GET",
+                headers: headers,
+                success: function (response) {
+                    const userRole = response.data;
+                    if (userRole !== 'Employee' && userRole !== 'Administrator') {
+                        alert("You do not have permission to manage categories.");
+                        $('#manage-categories').hide();
+                    }
+                },
+                error: function () {
+                    alert("Failed to fetch user role.");
+                }
+            });
+
+        }
+
+        // Load categories initially
+        loadCategories();
+
+        // Save category button click
+        $('#saveCategoryBtn').click(function () {
+            if (!$('#categoryForm')[0].checkValidity()) {
+                $('#categoryForm')[0].reportValidity();
+                return;
+            }
+
+            const id = $('#categoryId').val();
+            const name = $('#categoryName').val();
+            const description = $('#categoryDescription').val();
+            const duration = $('#categoryDuration').val();
+
+            const token = localStorage.getItem("authToken");
+            const headers = {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            };
+
+            const categoryData = {
+                id: id || null,
+                name: name,
+                description: description,
+                duration: duration
+            };
+
+            if (id) {
+                // Update category
+                $.ajax({
+                    url: `http://localhost:8082/api/v1/category/updateCategory/${id}`,
+                    type: 'PUT',
+                    headers: headers,
+                    data: JSON.stringify(categoryData),
+                    success: function () {
+                        loadCategories(); // Reload list
+                        $('#categoryModal').modal('hide');
+                    },
+                    error: function (err) {
+                        alert("Update failed: " + err.responseText);
+                    }
+                });
+            } else {
+                // Add new category
+                $.ajax({
+                    url: "http://localhost:8082/api/v1/category/saveCategory",
+                    type: 'POST',
+                    headers: headers,
+                    data: JSON.stringify(categoryData),
+                    success: function () {
+                        loadCategories(); // Reload list
+                        $('#categoryModal').modal('hide');
+                    },
+                    error: function (err) {
+                        alert("Add failed: " + err.responseText);
+                    }
+                });
+            }
+        });
+
+        // Reset modal when hidden
+        $('#categoryModal').on('hidden.bs.modal', function () {
+            $('#categoryModalLabel').text('Add Category');
+            $('#categoryForm')[0].reset();
+            $('#categoryId').val('');
+        });
+
+        // Edit category button click
+        $('#categoriesTable').on('click', '.edit-btn', function () {
+            const row = $(this).closest('tr');
+            const id = row.data('id');
+            const name = row.find('td:eq(1)').text();
+            const description = row.find('td:eq(2)').text();
+            const duration = row.find('td:eq(3)').text();
+
+            $('#categoryModalLabel').text('Edit Category');
+            $('#categoryId').val(id);
+            $('#categoryName').val(name);
+            $('#categoryDescription').val(description);
+            $('#categoryDuration').val(duration);
+
+            $('#categoryModal').modal('show');
+        });
+
+        // Delete category button click
+        $('#categoriesTable').on('click', '.delete-btn', function (e) {
+            e.stopPropagation();
+            const row = $(this).closest('tr');
+            const id = row.data('id');
+            if (confirm('Are you sure you want to delete this category?')) {
+                const token = localStorage.getItem("authToken");
+                $.ajax({
+                    url: `http://localhost:8082/api/v1/category/removeCategory/${id}`,
+                    type: 'DELETE',
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    },
+                    success: function () {
+                        loadCategories();
+                    },
+                    error: function () {
+                        alert("Delete failed.");
+                    }
+                });
+            }
+        });
+
+        // Function to load categories into the table
+        function loadCategories() {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";  // Redirect to login page
+                return;
+            }
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/category/getAllCategory",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (categories) {
+                    let tbody = '';
+                    categories.forEach(category => {
+                        tbody += `
+                    <tr data-id="${category.id}">
+                        <td>${category.id}</td>
+                        <td>${category.name}</td>
+                        <td>${category.description}</td>
+                        <td>${category.duration}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-sm btn-danger delete-btn"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+                    });
+                    $('#categoriesTable tbody').html(tbody);
+                },
+                error: function () {
+                    alert("Failed to load categories");
+                }
+            });
+        }
+
+        // Call the function to check user role on page load
+        checkUserRole();
     });

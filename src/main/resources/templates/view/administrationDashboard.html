@@ -256,53 +256,12 @@
                                 <th>ID</th>
                                 <th>Category Name</th>
                                 <th>Description</th>
-                                <th>Status</th>
+                                <th>Duration</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-id="1">
-                                <td>CAT001</td>
-                                <td>Residential Cleaning</td>
-                                <td>Cleaning services for homes and apartments</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info edit-btn" data-bs-toggle="modal" data-bs-target="#categoryModal">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-btn">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-id="2">
-                                <td>CAT002</td>
-                                <td>Commercial Cleaning</td>
-                                <td>Cleaning services for offices and businesses</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info edit-btn" data-bs-toggle="modal" data-bs-target="#categoryModal">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-btn">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-id="3">
-                                <td>CAT003</td>
-                                <td>Specialized Cleaning</td>
-                                <td>Specialized cleaning services for specific needs</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info edit-btn" data-bs-toggle="modal" data-bs-target="#categoryModal">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-btn">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            <!-- Table rows will be dynamically populated -->
                             </tbody>
                         </table>
                     </div>
@@ -804,19 +763,15 @@
                         <textarea class="form-control" id="categoryDescription" rows="3" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="categoryStatus" id="categoryStatusActive" value="active" checked>
-                            <label class="form-check-label" for="categoryStatusActive">
-                                Active
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="categoryStatus" id="categoryStatusInactive" value="inactive">
-                            <label class="form-check-label" for="categoryStatusInactive">
-                                Inactive
-                            </label>
-                        </div>
+                        <label for="categoryDuration" class="form-label">Duration</label>
+                        <select class="form-select" id="categoryDuration" required>
+                            <option value="">Select Duration</option>
+                            <option value="Day">Day</option>
+                            <option value="Week">Week</option>
+                            <option value="Month">Month</option>
+                            <option value="SixMonth">SixMonth</option>
+                            <option value="Year">Year</option>
+                        </select>
                     </div>
                 </form>
             </div>
@@ -959,7 +914,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-4 text-center mb-4">
-                        <img src="/static/assets/default-user.jpg" alt="User Avatar" class="user-detail-avatar mb-3">
+                        <img src="/static/assets/my-photo.jpg" alt="User Avatar" class="user-detail-avatar mb-3">
                         <h5 class="user-detail-name">John Doe</h5>
                         <span class="badge bg-primary user-detail-role">Customer</span>
                     </div>
@@ -1099,5 +1054,6 @@
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="administrationDashboard.js"></script>
+
 </body>
 </html>

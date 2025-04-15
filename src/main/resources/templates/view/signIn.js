@@ -17,15 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
     typeEffect();
 });
 
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    alert("Login successful!");
-});
-
-document.querySelector(".btn-google").addEventListener("click", function() {
-    alert("Continuing with Google...");
-});
-
 $(document).ready(function () {
     $('#loginForm').on('submit', function (event) {
         event.preventDefault();
@@ -43,20 +34,20 @@ $(document).ready(function () {
             contentType: 'application/json',
             dataType: 'json',
             data: JSON.stringify(formData),
-
             success: function (response) {
                 if ((response.code === 200 || response.code === 201) && response.data) {
                     const token = response.data.token;
                     const isActive = response.data.active;
 
                     if (isActive === 1 || isActive === true) {
+                        // Store token based on remember me selection
                         if (rememberMe) {
                             localStorage.setItem('authToken', token);
                         } else {
-                            localStorage.removeItem('authToken');
                             sessionStorage.setItem('authToken', token);
                         }
 
+                        // Decode token to get user role
                         const decodedToken = jwt_decode(token);
                         const userRole = decodedToken.role;
 
@@ -67,36 +58,18 @@ $(document).ready(function () {
                             confirmButtonText: 'Ok'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                if (userRole === 'Employee' || userRole === 'Administrator') {
-                                    window.location.href = 'administrationDashboard.html';
-                                } else if (userRole === 'Customer') {
-                                    window.location.href = 'customerDashboard.html';
-                                } else {
-                                    window.location.href = 'index.html';
-                                }
+                                redirectBasedOnRole(userRole);
                             }
                         });
                     } else {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Account Inactive',
-                            text: 'Your account is currently inactive. Please contact support.',
-                            confirmButtonText: 'Ok'
-                        });
+                        showError('Account Inactive', 'Your account is currently inactive. Please contact support.', 'warning');
                     }
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Login Failed',
-                        text: response.message || 'Invalid credentials. Please try again.',
-                        confirmButtonText: 'Ok'
-                    });
+                    showError('Login Failed', response.message || 'Invalid credentials. Please try again.', 'error');
                 }
             },
-
             error: function (xhr, status, error) {
                 let errorMessage = 'An unknown error occurred.';
-
                 if (xhr.status === 0) {
                     errorMessage = 'Unable to connect to the server. Please check your network.';
                 } else if (xhr.responseJSON && xhr.responseJSON.message) {
@@ -104,32 +77,49 @@ $(document).ready(function () {
                 } else if (xhr.status === 401) {
                     errorMessage = 'Invalid credentials. Please try again.';
                 }
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Error',
-                    text: errorMessage,
-                    confirmButtonText: 'Ok'
-                });
+                showError('Login Error', errorMessage, 'error');
             }
         });
     });
 
+    // Check for existing token on page load
     checkExistingToken();
 
+    // Google Sign In Button
+    document.querySelector(".btn-google").addEventListener("click", function() {
+        // Implement Google Sign In logic here
+        alert("Google Sign In will be implemented here");
+    });
+
+    function redirectBasedOnRole(role) {
+        if (role === 'Employee' || role === 'Administrator') {
+            window.location.href = 'administrationDashboard.html';
+        } else if (role === 'Customer') {
+            window.location.href = 'customerDashboard.html';
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+
+    function showError(title, text, icon) {
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: text,
+            confirmButtonText: 'Ok'
+        });
+    }
+
     function checkExistingToken() {
+        // Check both localStorage and sessionStorage for token
         const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+
         if (token) {
             try {
                 const decodedToken = jwt_decode(token);
-                const userRole = decodedToken.role;
-
-                if (userRole === 'Employee' || userRole === 'Administrator') {
-                    window.location.href = 'administrationDashboard.html';
-                } else if (userRole === 'Customer') {
-                    window.location.href = 'customerDashboard.html';
-                }
+                redirectBasedOnRole(decodedToken.role);
             } catch (e) {
+                // If token is invalid, clear it
                 localStorage.removeItem('authToken');
                 sessionStorage.removeItem('authToken');
             }
