@@ -1,7 +1,6 @@
 package lk.ijse.cleancopvt.entity;
 
 import jakarta.persistence.*;
-import lk.ijse.cleancopvt.Enum.ServiceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,16 +19,14 @@ public class ServicesSet {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String serviceName;
-    @Enumerated(EnumType.STRING)
-    private ServiceType serviceType = ServiceType.GENERAL_CLEAN;
     private String description;
     private double unitPrice;
 
     @ManyToMany
     @JoinTable(
-            name = "service_category",  // Join table name
-            joinColumns = @JoinColumn(name = "service_set_id"), // FK for ServicesSet
-            inverseJoinColumns = @JoinColumn(name = "category_id")  // FK for Category
+            name = "service_category",
+            joinColumns = @JoinColumn(name = "service_set_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories = new ArrayList<>();
 

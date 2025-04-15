@@ -1,22 +1,20 @@
 package lk.ijse.cleancopvt.dto;
 
-import lk.ijse.cleancopvt.Enum.ServiceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ServicesSetDTO {
-    private int id;
-
+    private UUID id;
     private String serviceName;
-
-    private ServiceType serviceType;
-
     private String description;
-
     private double unitPrice;
-
+    private List<UUID> categoryIdList;
+    private List<String> categoryNames;
 }

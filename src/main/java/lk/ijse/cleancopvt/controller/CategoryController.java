@@ -3,6 +3,7 @@ package lk.ijse.cleancopvt.controller;
 import io.jsonwebtoken.Claims;
 import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.CategoryDTO;
+import lk.ijse.cleancopvt.dto.CategoryNameDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
 import lk.ijse.cleancopvt.service.CategoryService;
 import lk.ijse.cleancopvt.util.JwtUtil;
@@ -21,10 +22,8 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @Autowired
     private final JwtUtil jwtUtil;
 
-    @Autowired
     private final ResponseDTO responseDTO;
 
     public CategoryController(CategoryService categoryService, JwtUtil jwtUtil, ResponseDTO responseDTO) {
@@ -129,6 +128,20 @@ public class CategoryController {
         }
 
         return false;
+    }
+
+    @GetMapping("/getCategoryNames")
+    public ResponseEntity<List<CategoryNameDTO>> getCategoryNames(@RequestHeader("Authorization") String authorization) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+            return ResponseEntity.status(VarList.Forbidden).body(null);
+        }
+
+        try {
+            List<CategoryNameDTO> categoryNames = categoryService.getCategoryNames();
+            return ResponseEntity.status(VarList.OK).body(categoryNames);
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body(null);
+        }
     }
 
 }

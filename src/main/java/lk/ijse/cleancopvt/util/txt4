@@ -1,0 +1,179 @@
+
+    // View user
+    $(document).on('click', '#usersTable .view-btn', function(e) {
+    e.stopPropagation(); // Prevent row click event
+    const row = $(this).closest('tr');
+    const name = row.find('td:eq(1)').text();
+    const email = row.find('td:eq(2)').text();
+    const role = row.find('td:eq(3)').text();
+    const status = row.find('td:eq(4) .badge').text();
+
+    // Fill user view modal
+    $('.user-detail-name').text(name);
+    $('.user-detail-role').text(role);
+    $('.user-detail-email').text(email);
+    $('.user-detail-status')
+    .removeClass('bg-success bg-danger')
+    .addClass(status === 'Active' ? 'bg-success' : 'bg-danger')
+    .text(status);
+
+    // Show modal
+    $('#userViewModal').modal('show');
+});
+
+    // Change user status
+    $(document).on('click', '#usersTable .status-btn', function(e) {
+    e.stopPropagation(); // Prevent row click event
+    const row = $(this).closest('tr');
+    const badge = row.find('td:eq(4) .badge');
+    const isActive = badge.hasClass('bg-success');
+
+    if (isActive) {
+    if (confirm('Are you sure you want to deactivate this user?')) {
+    badge.removeClass('bg-success').addClass('bg-danger').text('Inactive');
+    $(this).find('i').removeClass('fa-ban').addClass('fa-check');
+}
+} else {
+    if (confirm('Are you sure you want to activate this user?')) {
+    badge.removeClass('bg-danger').addClass('bg-success').text('Active');
+    $(this).find('i').removeClass('fa-check').addClass('fa-ban');
+}
+}
+});
+
+    // Save user
+    $('#saveUserBtn').click(function() {
+    if (!$('#userForm')[0].checkValidity()) {
+    $('#userForm')[0].reportValidity();
+    return;
+}
+
+    const firstName = $('#userFirstName').val();
+    const lastName = $('#userLastName').val();
+    const fullName = firstName + ' ' + lastName;
+    const email = $('#userEmail').val();
+    const role = $('#userRole option:selected').text();
+
+    // Check if password and confirm password match
+    const password = $('#userPassword').val();
+    const confirmPassword = $('#userConfirmPassword').val();
+
+    if (password !== confirmPassword) {
+    alert('Passwords do not match!');
+    return;
+}
+
+    // Add new user
+    const newId = 'USR00' + ($('#usersTable tbody tr').length + 1);
+    const newRow = `
+            <tr data-id="${newId}">
+                <td>${newId}</td>
+                <td>${fullName}</td>
+                <td>${email}</td>
+                <td>${role}</td>
+                <td><span class="badge bg-success">Active</span></td>
+                <td>
+                    <button class="btn btn-sm btn-info view-btn" data-bs-toggle="modal" data-bs-target="#userViewModal">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-warning status-btn">
+                        <i class="fas fa-ban"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    $('#usersTable tbody').append(newRow);
+
+    $('#userModal').modal('hide');
+});
+
+    // Handle appointment actions
+    $(document).on('click', '#pendingAppointmentsTable .btn-success', function() {
+    if (confirm('Are you sure you want to confirm this appointment?')) {
+    const row = $(this).closest('tr').clone();
+    $(this).closest('tr').remove();
+    row.find('td:last-child').html(`
+                <button class="btn btn-sm btn-success">Complete</button>
+                <button class="btn btn-sm btn-danger">Cancel</button>
+            `);
+    $('#confirmedAppointmentsTable tbody').append(row);
+}
+});
+
+    $(document).on('click', '#pendingAppointmentsTable .btn-danger', function() {
+    if (confirm('Are you sure you want to reject this appointment?')) {
+    const row = $(this).closest('tr').clone();
+    $(this).closest('tr').remove();
+    row.find('td:last-child').html(`
+                <button class="btn btn-sm btn-info">View Details</button>
+            `);
+    $('#rejectedAppointmentsTable tbody').append(row);
+}
+});
+
+    $(document).on('click', '#confirmedAppointmentsTable .btn-success', function() {
+    if (confirm('Are you sure this appointment is completed?')) {
+    const row = $(this).closest('tr').clone();
+    $(this).closest('tr').remove();
+    row.find('td:last-child').html(`
+                <button class="btn btn-sm btn-info">View Details</button>
+            `);
+    $('#completedAppointmentsTable tbody').append(row);
+}
+});
+
+    $(document).on('click', '#confirmedAppointmentsTable .btn-danger', function() {
+    if (confirm('Are you sure you want to cancel this appointment?')) {
+    const row = $(this).closest('tr').clone();
+    $(this).closest('tr').remove();
+    row.find('td:last-child').html(`
+                <button class="btn btn-sm btn-info">View Details</button>
+            `);
+    $('#rejectedAppointmentsTable tbody').append(row);
+}
+});
+
+    // Handle review actions
+    $(document).on('click', '#reviews .btn-outline-danger', function() {
+    if (confirm('Are you sure you want to hide this review?')) {
+    $(this).closest('.card').fadeOut();
+}
+});
+
+    $(document).on('click', '#reviews .btn-outline-primary', function() {
+    const reviewerName = $(this).closest('.card-body').find('.card-title').text();
+    alert('Replying to ' + reviewerName + '\'s review. This feature is under development.');
+});
+
+    // Handle mail actions
+    $('.mail-list .list-group-item').click(function() {
+    $('.mail-list .list-group-item').removeClass('active');
+    $(this).addClass('active');
+    // In a real app, you would load the email content here
+});
+
+    $('.card-footer .btn-primary').click(function() {
+    alert('Reply feature is under development');
+});
+
+    $('.card-footer .btn-outline-secondary').click(function() {
+    alert('Forward feature is under development');
+});
+
+    $('.card-footer .btn-outline-danger').click(function() {
+    if (confirm('Are you sure you want to delete this message?')) {
+    alert('Message deleted');
+}
+});
+
+    // Complete booking action
+    $(document).on('click', '#pendingBookingsTable .btn-success', function() {
+    if (confirm('Are you sure this booking is completed?')) {
+    $(this).closest('tr').find('td:eq(5) .badge')
+    .removeClass('bg-warning')
+    .addClass('bg-success')
+    .text('Completed');
+    $(this).prop('disabled', true).text('Completed');
+}
+});
+});

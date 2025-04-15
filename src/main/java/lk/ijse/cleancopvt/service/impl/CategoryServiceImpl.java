@@ -1,6 +1,7 @@
 package lk.ijse.cleancopvt.service.impl;
 
 import lk.ijse.cleancopvt.dto.CategoryDTO;
+import lk.ijse.cleancopvt.dto.CategoryNameDTO;
 import lk.ijse.cleancopvt.entity.Category;
 import lk.ijse.cleancopvt.repo.CategoryRepo;
 import lk.ijse.cleancopvt.service.CategoryService;
@@ -59,4 +60,12 @@ public class CategoryServiceImpl implements CategoryService {
                 .map(category -> modelMapper.map(category, CategoryDTO.class))
                 .orElse(null);
     }
+
+    @Override
+    public List<CategoryNameDTO> getCategoryNames() {
+        return categoryRepo.findAll().stream()
+                .map(category -> new CategoryNameDTO(category.getId(), category.getName()))
+                .collect(Collectors.toList());
+    }
+
 }

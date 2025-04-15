@@ -283,60 +283,12 @@
                                 <th>Service Name</th>
                                 <th>Category</th>
                                 <th>Price</th>
-                                <th>Duration</th>
-                                <th>Status</th>
+                                <th>Description</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-id="1">
-                                <td>SRV001</td>
-                                <td>Regular Home Cleaning</td>
-                                <td>Residential Cleaning</td>
-                                <td>$120</td>
-                                <td>2 hours</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info edit-btn" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-btn">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-id="2">
-                                <td>SRV002</td>
-                                <td>Deep Home Cleaning</td>
-                                <td>Residential Cleaning</td>
-                                <td>$250</td>
-                                <td>4 hours</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info edit-btn" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-btn">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-id="3">
-                                <td>SRV003</td>
-                                <td>Office Cleaning</td>
-                                <td>Commercial Cleaning</td>
-                                <td>$180</td>
-                                <td>3 hours</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info edit-btn" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-btn">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            <!-- Dynamic Rows -->
                             </tbody>
                         </table>
                     </div>
@@ -799,40 +751,16 @@
                         <input type="text" class="form-control" id="serviceName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="serviceCategory" class="form-label">Category</label>
-                        <select class="form-select" id="serviceCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="1">Residential Cleaning</option>
-                            <option value="2">Commercial Cleaning</option>
-                            <option value="3">Specialized Cleaning</option>
-                        </select>
+                        <label for="serviceCategory" class="form-label">Categories</label>
+                        <select id="serviceCategory" class="form-control" multiple required></select>
                     </div>
                     <div class="mb-3">
                         <label for="servicePrice" class="form-label">Price ($)</label>
                         <input type="number" class="form-control" id="servicePrice" required>
                     </div>
                     <div class="mb-3">
-                        <label for="serviceDuration" class="form-label">Duration (hours)</label>
-                        <input type="number" class="form-control" id="serviceDuration" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="serviceDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="serviceDescription" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="serviceStatus" id="serviceStatusActive" value="active" checked>
-                            <label class="form-check-label" for="serviceStatusActive">
-                                Active
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="serviceStatus" id="serviceStatusInactive" value="inactive">
-                            <label class="form-check-label" for="serviceStatusInactive">
-                                Inactive
-                            </label>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -1054,6 +982,5 @@
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="administrationDashboard.js"></script>
-
 </body>
 </html>

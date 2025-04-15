@@ -44,9 +44,10 @@ public class ServiceController {
         }
     }
 
+
     // Update an existing service
     @PutMapping("/updateService/{id}")
-    public ResponseEntity<String> updateService(@RequestHeader("Authorization") String authorization, @PathVariable("id") int id, @RequestBody ServicesSetDTO serviceDTO) {
+    public ResponseEntity<String> updateService(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody ServicesSetDTO serviceDTO) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
             return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
         }
@@ -109,7 +110,6 @@ public class ServiceController {
         }
     }
 
-    // Helper method to check if the user has the required role(s)
     private boolean hasRequiredRole(String authorization, Role... roles) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             return false;
@@ -124,6 +124,8 @@ public class ServiceController {
                 return true;
             }
         }
+
         return false;
     }
+
 }

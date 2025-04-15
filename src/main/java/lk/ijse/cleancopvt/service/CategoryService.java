@@ -1,6 +1,7 @@
 package lk.ijse.cleancopvt.service;
 
 import lk.ijse.cleancopvt.dto.CategoryDTO;
+import lk.ijse.cleancopvt.dto.CategoryNameDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,4 +12,6 @@ public interface CategoryService {
         public void deleteCategory(UUID id);
         public List<CategoryDTO> getAllCategories();
         public CategoryDTO getCategoryById(UUID id);
+        List<CategoryNameDTO> getCategoryNames();
+
 }
