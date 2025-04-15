@@ -15,4 +15,6 @@ public interface UserRepo extends JpaRepository<User, UUID> {
 
     int deleteByEmail(String userName);
 
+    User findByNicNumber(String nicNumber);
+
 }

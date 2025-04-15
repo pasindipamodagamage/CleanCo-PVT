@@ -443,6 +443,7 @@
         checkUserRole();
     });
 
+//
 //     user update
     $(document).ready(function () {
 
@@ -560,4 +561,149 @@
         });
         checkUserRole();
         loadUserProfile();
+    });
+
+    // user deactivated
+    $(document).ready(function () {
+        // Check if the user is logged in and has the correct role
+        function checkUserRole() {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";  // Redirect to login page if no token
+                return;
+            }
+
+            const headers = {
+                "Authorization": "Bearer " + token
+            };
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/getRole",
+                type: "GET",
+                headers: headers,
+                success: function (response) {
+                    const userRole = response.data;
+                    if (userRole !== 'Employee' && userRole !== 'Administrator') {
+                        alert("You do not have permission to manage users.");
+                        $('#manage-users').hide();  // Ensure that this element exists
+                    } else {
+                        loadUsers();  // Only load users if the role is correct
+                    }
+                },
+                error: function () {
+                    alert("Failed to fetch user role.");
+                }
+            });
+        }
+
+        function loadUsers() {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";  // Redirect to login page
+                return;
+            }
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/getAllUsers",  // Correct endpoint to get users
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (response) {
+                    const users = response.data;
+                    let tbody = '';
+                    users.forEach(user => {
+                        tbody += `
+                    <tr data-id="${user.nicNumber}">
+                        <td>${user.nicNumber}</td>
+                        <td>${user.name.firstName} ${user.name.lastName}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td><span class="badge ${user.active ? 'bg-success' : 'bg-danger'}">
+                            ${user.active ? 'Active' : 'Inactive'}
+                        </span></td>
+                        <td>
+                            <button class="btn btn-sm btn-info view-btn" data-bs-toggle="modal" data-bs-target="#userViewModal">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-warning status-btn">
+                                <i class="fas fa-ban"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                    });
+                    $('#usersTable tbody').html(tbody);
+                },
+                error: function () {
+                    alert("Failed to load users.");
+                }
+            });
+        }
+
+        // Call the function to check user role on page load
+        checkUserRole();
+    });
+
+    $('#usersTable').on('click', '.status-btn', function () {
+        const nicNumber = $(this).closest('tr').data('id');
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+            alert("You are not logged in.");
+            window.location.href = "signIn.html";
+            return;
+        }
+
+        $.ajax({
+            url: `http://localhost:8082/api/v1/user/toggleStatus/${nicNumber}`,
+            type: "PUT",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function () {
+                loadUsers(); // Refresh the table after toggling
+            },
+            error: function () {
+                alert("Failed to toggle user status.");
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("authToken"); // Or sessionStorage.getItem
+
+        if (token) {
+            fetch("http://localhost:8082/api/v1/user/me", {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Failed to fetch user data");
+                    return response.json();
+                })
+                .then(data => {
+                    const user = data.data;
+
+                    // Set avatar
+                    const avatar = document.getElementById("user-avatar");
+                    avatar.src = user.profilePic ? user.profilePic : "/static/assets/user.jpeg";
+
+                    // Set full name
+                    const name = document.getElementById("user-name");
+                    const fullName = user.name.firstName + " " + user.name.lastName;
+                    name.textContent = fullName;
+
+                    // Set role
+                    const role = document.getElementById("user-role");
+                    role.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1).toLowerCase();
+                })
+                .catch(error => {
+                    console.error("Error loading user profile:", error);
+                });
+        }
     });

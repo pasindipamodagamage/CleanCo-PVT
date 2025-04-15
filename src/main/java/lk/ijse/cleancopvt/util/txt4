@@ -1,3 +1,5 @@
+password and prof pic can not update
+
 
     // View user
     $(document).on('click', '#usersTable .view-btn', function(e) {

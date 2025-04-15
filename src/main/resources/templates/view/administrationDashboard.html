@@ -42,10 +42,10 @@
     <div class="row">
         <!-- User Profile and Sidebar -->
         <div class="col-lg-3 mb-4">
-            <div class="user-profile">
-                <img src="/static/assets/my-photo.jpg" alt="User Avatar" class="user-avatar mb-3">
-                <h4 class="fw-bold mb-0">LISA M SMITH</h4>
-                <p class="text-muted mb-0">Admin</p>
+            <div class="user-profile text-center">
+                <img id="user-avatar" src="/static/assets/default-avatar.jpg" alt="User Avatar" class="user-avatar mb-3" style="height:100px; width:100px; object-fit:cover; border-radius:50%;">
+                <h4 id="user-name" class="fw-bold mb-0">Loading...</h4>
+                <p id="user-role" class="text-muted mb-0">Loading...</p>
             </div>
 
             <div class="sidebar mt-4">
@@ -319,7 +319,7 @@
                         <table class="table table-hover" id="usersTable">
                             <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>NIC</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
@@ -328,51 +328,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-id="1">
-                                <td>USR001</td>
-                                <td>John Doe</td>
-                                <td>john.doe@example.com</td>
-                                <td>Customer</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info view-btn" data-bs-toggle="modal" data-bs-target="#userViewModal">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-warning status-btn">
-                                        <i class="fas fa-ban"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-id="2">
-                                <td>USR002</td>
-                                <td>Jane Smith</td>
-                                <td>jane.smith@example.com</td>
-                                <td>Customer</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info view-btn" data-bs-toggle="modal" data-bs-target="#userViewModal">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-warning status-btn">
-                                        <i class="fas fa-ban"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-id="3">
-                                <td>USR003</td>
-                                <td>Robert Johnson</td>
-                                <td>robert.johnson@example.com</td>
-                                <td>Staff</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info view-btn" data-bs-toggle="modal" data-bs-target="#userViewModal">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-warning status-btn">
-                                        <i class="fas fa-ban"></i>
-                                    </button>
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>

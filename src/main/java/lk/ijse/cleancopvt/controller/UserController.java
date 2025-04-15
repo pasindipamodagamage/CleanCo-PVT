@@ -4,16 +4,16 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lk.ijse.cleancopvt.dto.AuthDTO;
-import lk.ijse.cleancopvt.dto.ResponseDTO;
-import lk.ijse.cleancopvt.dto.UpdateUserDTO;
-import lk.ijse.cleancopvt.dto.UserDTO;
+import lk.ijse.cleancopvt.Enum.Role;
+import lk.ijse.cleancopvt.dto.*;
 import lk.ijse.cleancopvt.service.impl.UserServiceImpl;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.VarList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/user")
@@ -161,6 +161,33 @@ public class UserController {
 
             return ResponseEntity.ok(new ResponseDTO(VarList.OK, "User fetched successfully", userDTO));
 
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<ResponseDTO> getAllUsers() {
+        try {
+            List<UserDTO> users = userService.getAllUsers();
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Users fetched successfully", users));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @PutMapping("/toggleStatus/{nicNumber}")
+    public ResponseEntity<ResponseDTO> toggleUserStatus(@PathVariable String nicNumber) {
+        try {
+            int result = userService.toggleUserStatus(nicNumber);
+            if (result == VarList.OK) {
+                return ResponseEntity.ok(new ResponseDTO(VarList.OK, "User status toggled", null));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponseDTO(VarList.Not_Found, "User not found", null));
+            }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));

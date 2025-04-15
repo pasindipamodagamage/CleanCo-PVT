@@ -132,4 +132,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return VarList.Not_Found;
     }
 
+    public int toggleUserStatus(String nicNumber) {
+        User user = userRepository.findByNicNumber(nicNumber);
+        if (user != null) {
+            user.setActive(!user.isActive()); // Toggle status
+            userRepository.save(user);
+            return VarList.OK;
+        }
+        return VarList.Not_Found;
+    }
+
 }
