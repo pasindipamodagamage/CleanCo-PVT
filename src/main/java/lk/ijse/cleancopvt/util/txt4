@@ -1,5 +1,5 @@
 password and prof pic can not update
-
+inactive is working
 
     // View user
     $(document).on('click', '#usersTable .view-btn', function(e) {

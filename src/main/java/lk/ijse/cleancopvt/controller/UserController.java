@@ -194,4 +194,31 @@ public class UserController {
         }
     }
 
+    @PostMapping("/createEmployee")
+    public ResponseEntity<ResponseDTO> createEmployee(@RequestBody @Valid UserDTO userDTO,
+                                                      @RequestHeader("Authorization") String authorization) {
+        String token = authorization.substring(7); // Extract token
+        Claims claims = jwtUtil.getUserRoleCodeFromToken(token);
+        String userRole = claims.get("role", String.class);
+
+        if (!"Administrator".equals(userRole)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new ResponseDTO(VarList.Forbidden, "Only Administrators can create Employees.", null));
+        }
+
+        userDTO.setRole(Role.Employee);
+        try {
+            int res = userService.saveUser(userDTO);
+            if (res == VarList.Created) {
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(new ResponseDTO(VarList.Created, "Employee created successfully.", null));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                        .body(new ResponseDTO(VarList.Not_Acceptable, "Email Already Used.", null));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
 }

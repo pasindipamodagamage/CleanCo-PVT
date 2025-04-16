@@ -105,3 +105,22 @@ document.addEventListener('DOMContentLoaded', function() {
         this.reset();
     });
 });
+
+// logout
+document.getElementById("logoutBtn").addEventListener("click", function () {
+    fetch('http://localhost:8082/api/v1/user/logout', {
+        method: 'POST',
+        credentials: 'include', // This sends cookies/session
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res => {
+            localStorage.removeItem('authToken');
+            sessionStorage.removeItem('authToken');
+            window.location.href = 'index.html';
+        })
+        .catch(err => {
+            console.error('Logout error:', err);
+        });
+});

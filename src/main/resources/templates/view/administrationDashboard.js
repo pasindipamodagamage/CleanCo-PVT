@@ -707,3 +707,110 @@
                 });
         }
     });
+
+    // employee register
+    $(document).ready(function () {
+        function checkUserRoleAndEnableSignup() {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";
+                return;
+            }
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/getRole",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (response) {
+                    const userRole = response.data;
+                    if (userRole !== 'Administrator') {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Access Denied',
+                            text: 'Only administrators can register employees.',
+                            confirmButtonText: 'Ok'
+                        }).then(() => {
+                            // Disable form and buttons for non-employee users
+                            $('#employeeRegister :input').prop('disabled', true);
+                            $('.btn-create-account').prop('disabled', true);
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Could not verify your role.',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            });
+        }
+
+        $('#employeeRegister').on('submit', function (e) {
+            e.preventDefault();
+
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";
+                return;
+            }
+
+            const formData = {
+                name: {
+                    firstName: $('#firstName1').val(),
+                    lastName: $('#lastName1').val()
+                },
+                email: $('#email1').val(),
+                password: $('#password').val(),
+                primaryContact: $('#contact-1').val(),
+                address: {
+                    locationNumber: $('#locationNumber').val(),
+                    street: $('#street').val(),
+                    city: $('#city').val(),
+                    district: $('#district').val()
+                },
+                profilePic: "/static/assets/user.png",
+                nicNumber: null,
+                role: "Employee",
+                active: true,
+                secondaryContact: null
+            };
+
+            $.ajax({
+                url: 'http://localhost:8082/api/v1/user/createEmployee',
+                type: 'POST',
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    // handle success
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Employee Created',
+                        text: response.message,
+                        confirmButtonText: 'Ok'
+                    });
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error Occurred',
+                        text: xhr.responseJSON?.message || 'Please try again later.',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            });
+
+        });
+
+        checkUserRoleAndEnableSignup();
+    });
+
