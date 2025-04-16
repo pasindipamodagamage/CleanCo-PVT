@@ -73,3 +73,56 @@
             });
         });
     });
+
+
+    $(document).ready(function () {
+        loadServiceCartDetails();
+    });
+
+    function loadServiceCartDetails() {
+        $.ajax({
+            url: 'http://localhost:8082/api/v1/service/serviceCartDetail',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                console.log("Received data:", response.data);
+                if (response.code === 200 && response.data) {
+                    renderCartItems(response.data);
+                } else {
+                    $('#cartServiceList').html('<p class="text-danger">No services available at the moment.</p>');
+                }
+            },
+            error: function (xhr) {
+                console.error("Failed to load service cart details:", xhr);
+                $('#cartServiceList').html('<p class="text-danger">Failed to load services.</p>');
+            }
+        });
+    }
+
+    function renderCartItems(data) {
+        let html = '';
+
+        data.forEach(item => {
+            let servicesHtml = item.serviceNames.map(service =>
+                `<li class="mb-2"><i class="fas fa-check check-icon"></i> ${service}</li>`
+            ).join('');
+
+            html += `
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card pricing-card h-100 shadow rounded-4">
+                    <div class="card-body p-4">
+                        <div class="text-muted mb-2 fw-semibold">${item.duration}</div>
+                        <h5 class="card-title fw-bold">${item.categoryName}</h5>
+                        <div class="price text-success">Rs. ${item.total.toFixed(2)}</div>
+                        <ul class="list-unstyled mt-4">
+                            ${servicesHtml}
+                        </ul>
+                        <a href="signIn.html" class="btn btn-outline-primary w-100 mt-3">Buy Plan</a>
+                    </div>
+                </div>
+            </div>
+        `;
+        });
+
+        $('#cartServiceList').html(html);
+    }

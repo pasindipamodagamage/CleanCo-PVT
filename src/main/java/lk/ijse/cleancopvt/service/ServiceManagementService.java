@@ -1,5 +1,6 @@
 package lk.ijse.cleancopvt.service;
 
+import lk.ijse.cleancopvt.dto.CategoryServiceCartDTO;
 import lk.ijse.cleancopvt.dto.ServicesSetDTO;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface  ServiceManagementService {
     public List<ServicesSetDTO> getAllServices();
 
     public ServicesSetDTO getServiceById(UUID id);
+
+    List<CategoryServiceCartDTO> getAllServiceCartDetails();
+
 }

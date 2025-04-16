@@ -2,6 +2,9 @@ package lk.ijse.cleancopvt.controller;
 
 import io.jsonwebtoken.Claims;
 import lk.ijse.cleancopvt.Enum.Role;
+import lk.ijse.cleancopvt.dto.CategoryServiceCartDTO;
+import lk.ijse.cleancopvt.dto.ResponseDTO;
+import lk.ijse.cleancopvt.dto.ServiceCartDetailDTO;
 import lk.ijse.cleancopvt.dto.ServicesSetDTO;
 import lk.ijse.cleancopvt.service.ServiceManagementService;
 import lk.ijse.cleancopvt.util.JwtUtil;
@@ -127,5 +130,16 @@ public class ServiceController {
 
         return false;
     }
+
+    @GetMapping("/serviceCartDetail")
+    public ResponseEntity<ResponseDTO> getServiceCartDetails() {
+        try {
+            List<CategoryServiceCartDTO> details = serviceManagementService.getAllServiceCartDetails();
+            return ResponseEntity.ok(new ResponseDTO(200, "Success", details));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new ResponseDTO(500, "Server Error", null));
+        }
+    }
+
 
 }

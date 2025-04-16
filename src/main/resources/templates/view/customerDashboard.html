@@ -10,6 +10,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="administrationDashboard.css">
     <link rel="stylesheet" href="customerDashboard.css">
 </head>
 <body>
@@ -18,7 +19,8 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <img src="/static/assets/Company-logo.jpg" style="width: 45px; height: 45px;margin-right: 5px;" alt="">
-        <a class="navbar-brand" href="#">CLEANCO</a>
+        <a class="navbar-brand" href="index.html">CLEANCO</a>
+        <h6 style="opacity: 0.4; margin-left: 20px; font-size: 10px"><i>Exceptional Cleaning Services for a Fresh and Pristine Space</i></h6>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -28,13 +30,13 @@
                     <a class="nav-link" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="index.html#services">Services</a>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-primary">Log Out</button>
+                    <a class="nav-link" href="index.html#feedback">Review</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="" id="logoutBtn">Logout</a>
                 </li>
             </ul>
         </div>

@@ -1,5 +1,7 @@
 package lk.ijse.cleancopvt.service.impl;
 
+import lk.ijse.cleancopvt.Enum.Duration;
+import lk.ijse.cleancopvt.dto.CategoryServiceCartDTO;
 import lk.ijse.cleancopvt.dto.ServicesSetDTO;
 import lk.ijse.cleancopvt.entity.Category;
 import lk.ijse.cleancopvt.entity.ServicesSet;
@@ -11,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,5 +88,46 @@ public class ServiceManagementServiceImpl implements ServiceManagementService {
         return serviceRepo.findById(id)
                 .map(service -> modelMapper.map(service, ServicesSetDTO.class))
                 .orElse(null);
+    }
+
+    @Override
+    public List<CategoryServiceCartDTO> getAllServiceCartDetails() {
+        List<ServicesSet> allServices = serviceRepo.findAll();
+
+        Map<String, CategoryServiceCartDTO> resultMap = new HashMap<>();
+
+        for (ServicesSet service : allServices) {
+            if (service.getCategories() != null) {
+                for (Category category : service.getCategories()) {
+                    String key = category.getName();
+
+                    Duration duration = category.getDuration();
+                    int multiplier = switch (duration) {
+                        case Day -> 1;
+                        case Week -> 7;
+                        case Month -> 30;
+                        case SixMonth -> 180;
+                        case Year -> 360;
+                    };
+
+                    double serviceTotal = service.getUnitPrice() * multiplier;
+
+                    resultMap.computeIfAbsent(key, k -> {
+                        CategoryServiceCartDTO dto = new CategoryServiceCartDTO();
+                        dto.setCategoryName(k);
+                        dto.setDuration(duration);
+                        dto.setServiceNames(new ArrayList<>());
+                        dto.setTotal(0.0);
+                        return dto;
+                    });
+
+                    CategoryServiceCartDTO existing = resultMap.get(key);
+                    existing.getServiceNames().add(service.getServiceName());
+                    existing.setTotal(existing.getTotal() + serviceTotal);
+                }
+            }
+        }
+
+        return new ArrayList<>(resultMap.values());
     }
 }

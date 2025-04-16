@@ -46,7 +46,6 @@
                     <a class="nav-link active" href="#callOfAction">Contact</a>
                 </li>
             </ul>
-<!--            <a href="#contact" class="btn btn-primary ms-lg-3">Contact Us</a>-->
             <a href="signIn.html" class="btn btn-primary ms-lg-3 get-started-btn">
                 <span class="btn-text">Get Started</span>
                 <i class="fas fa-arrow-right ms-2 btn-icon"></i>
@@ -67,6 +66,7 @@
 
                 <div class="d-flex mt-4">
                     <div class="stats-box">
+<!--                        -->
                         <h3 class="fw-bold mb-0">800+</h3>
                         <p class="mb-0">Happy Clients</p>
                     </div>
@@ -239,55 +239,8 @@
             <span class="badge bg-primary mb-2">Our Pricing</span>
             <h2 class="fw-bold mb-3">Choose Your Perfect Clean</h2>
         </div>
-        <div class="row g-4">
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="card pricing-card h-100">
-                    <div class="card-body p-4">
-                        <h5 class="card-title fw-bold">Basic Plan</h5>
-<!--                        category eka-->
-                        <div class="price">$30<span>/monthly</span></div>
-<!--                        category price eka-->
-                        <ul class="list-unstyled mt-4">
-<!--                            ek category ekakt ena service tika-->
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Cleaning bathrooms</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Mopping floors</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Vacuuming carpets and rugs</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Dusting and wiping surfaces</li>
-                        </ul>
-                        <a href="signIn.html" class="btn btn-outline-primary w-100 mt-3">Buy Plan</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="card pricing-card h-100">
-                    <div class="card-body p-4">
-                        <h5 class="card-title fw-bold">Standard Plan</h5>
-                        <div class="price">$70<span>/monthly</span></div>
-                        <ul class="list-unstyled mt-4">
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> All services from Basic plan</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Washing baseboards, mopping</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Cleaning indoor windows</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Removing fridge drawers</li>
-                        </ul>
-                        <a href="contact.html" class="btn btn-primary w-100 mt-3">Buy Plan</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="card pricing-card h-100">
-                    <div class="card-body p-4">
-                        <h5 class="card-title fw-bold">Premium Plan</h5>
-                        <div class="price">$120<span>/monthly</span></div>
-                        <ul class="list-unstyled mt-4">
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> All services from Standard</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Cleaning inside closets</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> Organizing room area</li>
-                            <li class="mb-2"><i class="fas fa-check check-icon"></i> High-touch surface</li>
-                        </ul>
-                        <a href="contact.html" class="btn btn-primary w-100 mt-3">Buy Plan</a>
-                    </div>
-                </div>
-            </div>
+        <div class="row g-4" id="cartServiceList">
+
         </div>
     </div>
 </section>
@@ -651,7 +604,7 @@
 <!-- AOS Animation Library -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="index.js"></script>
 </body>
 </html>
