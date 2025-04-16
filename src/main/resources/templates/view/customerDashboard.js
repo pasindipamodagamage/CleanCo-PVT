@@ -124,3 +124,41 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
             console.error('Logout error:', err);
         });
 });
+
+// login data
+document.addEventListener("DOMContentLoaded", function () {
+    const token = localStorage.getItem("authToken"); // Or sessionStorage.getItem
+
+    if (token) {
+        fetch("http://localhost:8082/api/v1/user/me", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to fetch user data");
+                return response.json();
+            })
+            .then(data => {
+                const user = data.data;
+
+                // Set avatar
+                const avatar = document.getElementById("user-avatar");
+                avatar.src = user.profilePic ? user.profilePic : "static/assets/user.jpeg";
+
+                // Set full name
+                const name = document.getElementById("user-name");
+                const fullName = user.name.firstName + " " + user.name.lastName;
+                name.textContent = fullName;
+
+                // Set role
+                const role = document.getElementById("user-role");
+                role.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1).toLowerCase();
+            })
+            .catch(error => {
+                console.error("Error loading user profile:", error);
+            });
+    }
+});
+
+

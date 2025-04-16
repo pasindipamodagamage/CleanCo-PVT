@@ -180,69 +180,116 @@
                     <h2 class="mb-4">My Profile</h2>
                     <div class="card">
                         <div class="card-body">
-                            <div class="row mb-4">
-                                <div class="col-md-3 text-center">
-                                    <img id="profilePicPreview" src="/static/assets/user.png" alt="Profile Picture" class="profile-picture mb-3">
-                                    <input type="file" id="profilePicInput" accept="image/*" class="form-control mb-2">
-                                </div>
-                                <div class="col-md-9">
-                                    <form id="updateProfileForm">
+                            <form id="updateProfileForm">
+                                <div class="row mb-4">
+                                    <div class="col-md-3 text-center">
+                                        <img id="profilePicPreview" src="/static/assets/user.png" alt="Profile Picture" class="profile-picture mb-3">
+                                        <input type="file" id="profilePicInput" name="profilePicFile" accept="image/*" class="form-control mb-2">
+                                        <input type="hidden" id="profilePic" name="profilePic">
+                                    </div>
+
+                                    <div class="col-md-9">
                                         <!-- Name -->
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <label for="firstName" class="form-label">First Name</label>
-                                                <input type="text" class="form-control" id="firstName" name="firstName" value="Lisa">
+                                                <input type="text" class="form-control" id="firstName" name="name.firstName" placeholder="First Name">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="lastName" class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" id="lastName" name="lastName" value="Smith">
+                                                <input type="text" class="form-control" id="lastName" name="name.lastName" placeholder="Last Name">
                                             </div>
                                         </div>
 
                                         <!-- NIC -->
                                         <div class="mb-3">
                                             <label for="nicNumber" class="form-label">NIC Number</label>
-                                            <input type="text" class="form-control" id="nicNumber" name="nicNumber" value="985412367V">
+                                            <input type="text" class="form-control" id="nicNumber" name="nicNumber" placeholder="NIC Number">
+                                        </div>
+
+                                        <!-- Address -->
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="locationNumber" class="form-label">Address Line 1 (Location Number)</label>
+                                                <input type="text" class="form-control" id="locationNumber1" name="address.locationNumber" placeholder="Location Number">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="street" class="form-label">Address Line 2 (Street)</label>
+                                                <input type="text" class="form-control" id="street1" name="address.street" placeholder="Street">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="city" class="form-label">City</label>
+                                                <input type="text" class="form-control" id="city1" name="address.city" placeholder="City">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="district" class="form-label">District</label>
+                                                <select class="form-select" id="district1" name="address.district">
+                                                    <option value="None">Select District</option>
+                                                    <option value="Ampara">Ampara</option>
+                                                    <option value="Anuradhapura">Anuradhapura</option>
+                                                    <option value="Badulla">Badulla</option>
+                                                    <option value="Batticaloa">Batticaloa</option>
+                                                    <option value="Colombo">Colombo</option>
+                                                    <option value="Galle">Galle</option>
+                                                    <option value="Gampaha">Gampaha</option>
+                                                    <option value="Hambantota">Hambantota</option>
+                                                    <option value="Jaffna">Jaffna</option>
+                                                    <option value="Kalutara">Kalutara</option>
+                                                    <option value="Kandy">Kandy</option>
+                                                    <option value="Kilinochchi">Kilinochchi</option>
+                                                    <option value="Kurunegala">Kurunegala</option>
+                                                    <option value="Mannar">Mannar</option>
+                                                    <option value="Matara">Matara</option>
+                                                    <option value="Moneragala">Moneragala</option>
+                                                    <option value="Mullaitivu">Mullaitivu</option>
+                                                    <option value="Nuwara_Eliya">Nuwara Eliya</option>
+                                                    <option value="Polonnaruwa">Polonnaruwa</option>
+                                                    <option value="Puttalam">Puttalam</option>
+                                                    <option value="Ratnapura">Ratnapura</option>
+                                                    <option value="Trincomalee">Trincomalee</option>
+                                                    <option value="Vavuniya">Vavuniya</option>
+                                                    <option value="Matale">Matale</option>
+                                                    <option value="Kegalle">Kegalle</option>
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <!-- Contacts -->
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <label for="primaryContact" class="form-label">Primary Contact</label>
-                                                <input type="tel" class="form-control" id="primaryContact" name="primaryContact" value="+94 77 123 4567">
+                                                <input type="tel" class="form-control" id="primaryContact" name="primaryContact" placeholder="Primary Contact">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="secondaryContact" class="form-label">Secondary Contact</label>
-                                                <input type="tel" class="form-control" id="secondaryContact" name="secondaryContact" value="+94 71 987 6543">
+                                                <input type="tel" class="form-control" id="secondaryContact" name="secondaryContact" placeholder="Secondary Contact">
                                             </div>
                                         </div>
 
                                         <!-- Email -->
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email" value="lisa.smith@cleanco.com">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                                         </div>
 
+                                        <!-- Change Password -->
                                         <hr>
-
-                                        <!-- Password Section -->
                                         <h5>Change Password</h5>
-
-                                        <!-- Current Password -->
                                         <div class="mb-3">
                                             <label for="currentPassword" class="form-label">Current Password</label>
                                             <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Current Password">
                                         </div>
-
-                                        <!-- New Password -->
                                         <div class="row mb-3">
                                             <div class="col-md-6">
-                                                <label for="newPassword" class="form-label">New Password</label>
-                                                <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password">
+                                                <label for="password" class="form-label">New Password</label>
+                                                <input type="password" class="form-control" id="password1" name="password" placeholder="New Password">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+                                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
                                             </div>
                                         </div>
 
@@ -250,9 +297,9 @@
                                         <div class="text-end">
                                             <button type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

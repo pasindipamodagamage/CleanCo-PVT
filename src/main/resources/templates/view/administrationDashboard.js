@@ -443,13 +443,12 @@
         checkUserRole();
     });
 
-//
 //     user update
     $(document).ready(function () {
+        let currentUserData = {}; // Store the loaded data
 
         function checkUserRole() {
             const token = localStorage.getItem("authToken");
-
             if (!token) {
                 alert("You are not logged in.");
                 window.location.href = "signIn.html";
@@ -477,7 +476,6 @@
 
         function loadUserProfile() {
             const token = localStorage.getItem("authToken");
-
             if (!token) {
                 alert("You are not logged in.");
                 window.location.href = "signIn.html";
@@ -491,20 +489,21 @@
                     "Authorization": "Bearer " + token
                 },
                 success: function (response) {
-                    console.log("User Profile Data:", response);
-
                     if (response && response.data) {
-                        const user = response.data;
+                        currentUserData = response.data;
 
-                        // Basic fields
-                        $('#firstName').val(user.name?.firstName || '');
-                        $('#lastName').val(user.name?.lastName || '');
-                        $('#nicNumber').val(user.nicNumber || '');
-                        $('#primaryContact').val(user.primaryContact || '');
-                        $('#secondaryContact').val(user.secondaryContact || '');
-                        $('#email').val(user.email || '');
+                        $('#firstName').val(currentUserData.name?.firstName || '');
+                        $('#lastName').val(currentUserData.name?.lastName || '');
+                        $('#nicNumber').val(currentUserData.nicNumber || '');
+                        $('#primaryContact').val(currentUserData.primaryContact || '');
+                        $('#secondaryContact').val(currentUserData.secondaryContact || '');
+                        $('#email').val(currentUserData.email || '');
 
-                        // Optional: You can add address fields here if you include them in the form
+                        // Handle address fields if needed:
+                        $('#locationNumber1').val(currentUserData.address?.locationNumber || '');
+                        $('#street1').val(currentUserData.address?.street || '');
+                        $('#city1').val(currentUserData.address?.city || '');
+                        $('#district1').val(currentUserData.address?.district || 'None');
 
                     } else {
                         console.error("Invalid response data format");
@@ -521,26 +520,39 @@
         $('#updateProfileForm').submit(function (e) {
             e.preventDefault();
 
-            const firstName = $('#firstName').val();
-            const lastName = $('#lastName').val();
-            const nicNumber = $('#nicNumber').val();
-            const primaryContact = $('#primaryContact').val();
-            const secondaryContact = $('#secondaryContact').val();
-            const email = $('#email').val();
-
             const token = localStorage.getItem("authToken");
 
+            // Merge only non-empty fields, update password logic included
             const updatedUserData = {
                 name: {
-                    firstName: firstName,
-                    lastName: lastName
+                    firstName: $('#firstName').val().trim() || currentUserData.name?.firstName,
+                    lastName: $('#lastName').val().trim() || currentUserData.name?.lastName
                 },
-                nicNumber: nicNumber,
-                primaryContact: primaryContact,
-                secondaryContact: secondaryContact,
-                email: email
+                nicNumber: $('#nicNumber').val().trim() || currentUserData.nicNumber,
+                primaryContact: $('#primaryContact').val().trim() || currentUserData.primaryContact,
+                secondaryContact: $('#secondaryContact').val().trim() || currentUserData.secondaryContact,
+                email: $('#email').val().trim() || currentUserData.email,
+                address: {
+                    locationNumber: $('#locationNumber1').val().trim() || currentUserData.address?.locationNumber,
+                    street: $('#street1').val().trim() || currentUserData.address?.street,
+                    city: $('#city1').val().trim() || currentUserData.address?.city,
+                    district: $('#district1').val() !== 'None' ? $('#district1').val() : currentUserData.address?.district
+                }
             };
 
+            // Password handling - only update if provided
+            const currentPassword = $('#currentPassword').val().trim();
+            const newPassword = $('#password1').val().trim();
+            const confirmPassword = $('#confirmPassword').val().trim();
+
+            if (newPassword && newPassword === confirmPassword) {
+                updatedUserData.password = newPassword;  // Update password if entered and confirmed
+            } else if (newPassword && newPassword !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            // Send updated data to backend
             $.ajax({
                 url: "http://localhost:8082/api/v1/user/updateProfile",
                 type: "PUT",
@@ -551,7 +563,7 @@
                 data: JSON.stringify(updatedUserData),
                 success: function () {
                     alert("Profile updated successfully.");
-                    loadUserProfile();
+                    loadUserProfile();  // Reload updated profile data
                 },
                 error: function (err) {
                     console.error("Profile update failed:", err);
@@ -559,6 +571,7 @@
                 }
             });
         });
+
         checkUserRole();
         loadUserProfile();
     });
@@ -673,6 +686,7 @@
         });
     });
 
+    // login data
     document.addEventListener("DOMContentLoaded", function () {
         const token = localStorage.getItem("authToken"); // Or sessionStorage.getItem
 
@@ -691,7 +705,7 @@
 
                     // Set avatar
                     const avatar = document.getElementById("user-avatar");
-                    avatar.src = user.profilePic ? user.profilePic : "/static/assets/user.jpeg";
+                    avatar.src = user.profilePic ? user.profilePic : "static/assets/user.jpeg";
 
                     // Set full name
                     const name = document.getElementById("user-name");

@@ -106,7 +106,7 @@
                             <ul class="list-unstyled mt-4">
                                 ${servicesHtml}
                             </ul>
-                            <a href="signIn.html" class="btn btn-outline-primary w-100 mt-3">Buy Plan</a>
+                            <a href="customerDashboard.html#newBookingLink" class="btn btn-outline-primary w-100 mt-3">Buy Plan</a>
                         </div>
                     </div>
                 </div>`;
