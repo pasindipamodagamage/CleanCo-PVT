@@ -123,7 +123,7 @@ public class UserController {
                     .body(new ResponseDTO(VarList.Unauthorized, "Invalid token payload", null));
         }
 
-        updateUserDTO.setEmail(email); // Set email into DTO from token
+        updateUserDTO.setEmail(email);
         int result = userService.updateUser(updateUserDTO);
 
         if (result == VarList.Created) {
@@ -197,7 +197,7 @@ public class UserController {
     @PostMapping("/createEmployee")
     public ResponseEntity<ResponseDTO> createEmployee(@RequestBody @Valid UserDTO userDTO,
                                                       @RequestHeader("Authorization") String authorization) {
-        String token = authorization.substring(7); // Extract token
+        String token = authorization.substring(7);
         Claims claims = jwtUtil.getUserRoleCodeFromToken(token);
         String userRole = claims.get("role", String.class);
 

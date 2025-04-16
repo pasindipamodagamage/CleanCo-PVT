@@ -31,7 +31,6 @@ public class ServiceController {
         this.jwtUtil = jwtUtil;
     }
 
-    // Add a new service
     @PostMapping("/saveService")
     public ResponseEntity<String> addService(@RequestHeader("Authorization") String authorization, @RequestBody ServicesSetDTO serviceDTO) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
@@ -46,8 +45,6 @@ public class ServiceController {
         }
     }
 
-
-    // Update an existing service
     @PutMapping("/updateService/{id}")
     public ResponseEntity<String> updateService(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody ServicesSetDTO serviceDTO) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
@@ -55,7 +52,7 @@ public class ServiceController {
         }
 
         try {
-            serviceDTO.setId(id);  // Set the ID for the service
+            serviceDTO.setId(id);
             serviceManagementService.updateService(serviceDTO);
             return ResponseEntity.status(VarList.OK).body("Service updated successfully");
         } catch (Exception e) {
@@ -63,7 +60,6 @@ public class ServiceController {
         }
     }
 
-    // Delete a service by ID
     @DeleteMapping("/removeService/{id}")
     public ResponseEntity<String> deleteService(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
@@ -78,7 +74,6 @@ public class ServiceController {
         }
     }
 
-    // View all services
     @GetMapping("/getAllServices")
     public ResponseEntity<List<ServicesSetDTO>> getAllServices(@RequestHeader("Authorization") String authorization) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
@@ -93,7 +88,6 @@ public class ServiceController {
         }
     }
 
-    // View a service by ID
     @GetMapping("/getServiceById/{id}")
     public ResponseEntity<ServicesSetDTO> getServiceById(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {

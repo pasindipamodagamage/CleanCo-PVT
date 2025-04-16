@@ -32,7 +32,6 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackDTO addFeedback(FeedbackDTO feedbackDTO) {
-        // Convert DTO to entity
         Feedback feedback = modelMapper.map(feedbackDTO, Feedback.class);
         Feedback savedFeedback = feedbackRepo.save(feedback);
         return modelMapper.map(savedFeedback, FeedbackDTO.class);
@@ -77,7 +76,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
         Feedback feedback = new Feedback();
-//        feedback.setPayment(payment);
         feedback.setRating(rating);
         feedback.setComment(comment);
 

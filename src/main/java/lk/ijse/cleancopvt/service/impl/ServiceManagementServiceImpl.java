@@ -33,7 +33,6 @@ public class ServiceManagementServiceImpl implements ServiceManagementService {
     public void addService(ServicesSetDTO serviceDTO) {
         ServicesSet service = modelMapper.map(serviceDTO, ServicesSet.class);
 
-        // Ensure that serviceName is set
         if (serviceDTO.getServiceName() != null && !serviceDTO.getServiceName().isEmpty()) {
             service.setServiceName(serviceDTO.getServiceName());
         }
@@ -52,7 +51,6 @@ public class ServiceManagementServiceImpl implements ServiceManagementService {
     public void updateService(ServicesSetDTO serviceDTO) {
         ServicesSet service = modelMapper.map(serviceDTO, ServicesSet.class);
 
-        // Ensure that serviceName is set
         if (serviceDTO.getServiceName() != null && !serviceDTO.getServiceName().isEmpty()) {
             service.setServiceName(serviceDTO.getServiceName());
         }

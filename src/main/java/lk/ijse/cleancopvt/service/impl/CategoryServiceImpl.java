@@ -24,27 +24,23 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // Add a new category
     @Override
     public void addCategory(CategoryDTO categoryDTO) {
         Category category = modelMapper.map(categoryDTO, Category.class);
         categoryRepo.save(category);
     }
 
-    // Update an existing category
     @Override
     public void updateCategory(CategoryDTO categoryDTO) {
         Category category = modelMapper.map(categoryDTO, Category.class);
         categoryRepo.save(category);
     }
 
-    // Delete a category by ID
     @Override
     public void deleteCategory(UUID id) {
         categoryRepo.deleteById(id);
     }
 
-    // Get all categories
     @Override
     public List<CategoryDTO> getAllCategories() {
         List<Category> categories = categoryRepo.findAll();
@@ -53,7 +49,6 @@ public class CategoryServiceImpl implements CategoryService {
                 .collect(Collectors.toList());
     }
 
-    // Get a category by ID
     @Override
     public CategoryDTO getCategoryById(UUID id) {
         return categoryRepo.findById(id)

@@ -105,13 +105,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (user != null) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-            // Validate current password
             if (userDTO.getCurrentPassword() != null &&
                     !encoder.matches(userDTO.getCurrentPassword(), user.getPassword())) {
                 return VarList.Unauthorized;
             }
 
-            // Update profile fields
             user.setProfilePic(userDTO.getProfilePic());
             user.setName(userDTO.getName());
             user.setAddress(userDTO.getAddress());
@@ -119,12 +117,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             user.setSecondaryContact(userDTO.getSecondaryContact());
             user.setNicNumber(userDTO.getNicNumber());
 
-            // Update password if provided
             if (userDTO.getPassword() != null && !userDTO.getPassword().isBlank()) {
                 user.setPassword(encoder.encode(userDTO.getPassword()));
             }
 
-            // Save updated user
             userRepository.save(user);
             return VarList.Created;
         }
@@ -135,7 +131,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public int toggleUserStatus(String nicNumber) {
         User user = userRepository.findByNicNumber(nicNumber);
         if (user != null) {
-            user.setActive(!user.isActive()); // Toggle status
+            user.setActive(!user.isActive());
             userRepository.save(user);
             return VarList.OK;
         }

@@ -8,7 +8,6 @@ import lk.ijse.cleancopvt.dto.ResponseDTO;
 import lk.ijse.cleancopvt.service.CategoryService;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.VarList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +31,6 @@ public class CategoryController {
         this.responseDTO = responseDTO;
     }
 
-    // Add a new category
     @PostMapping("/saveCategory")
     public ResponseEntity<String> addCategory(@RequestHeader("Authorization") String authorization, @RequestBody CategoryDTO categoryDTO) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
@@ -47,7 +45,6 @@ public class CategoryController {
         }
     }
 
-    // Update an existing category
     @PutMapping("/updateCategory/{id}")
     public ResponseEntity<String> updateCategory(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody CategoryDTO categoryDTO) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
@@ -55,7 +52,7 @@ public class CategoryController {
         }
 
         try {
-            categoryDTO.setId(id);  // Set the ID for the category
+            categoryDTO.setId(id);
             categoryService.updateCategory(categoryDTO);
             return ResponseEntity.status(VarList.OK).body("Category updated successfully");
         } catch (Exception e) {
@@ -63,7 +60,6 @@ public class CategoryController {
         }
     }
 
-    // Delete a category by ID
     @DeleteMapping("/removeCategory/{id}")
     public ResponseEntity<String> deleteCategory(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
@@ -78,7 +74,6 @@ public class CategoryController {
         }
     }
 
-    // View all categories
     @GetMapping("getAllCategory")
     public ResponseEntity<List<CategoryDTO>> getAllCategories(@RequestHeader("Authorization") String authorization) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
@@ -93,7 +88,6 @@ public class CategoryController {
         }
     }
 
-    // View a category by ID
     @GetMapping("/getEachOneCategory/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {

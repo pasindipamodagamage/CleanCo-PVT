@@ -1,6 +1,5 @@
 package lk.ijse.cleancopvt.config;
 
-import jakarta.servlet.Filter;
 import lk.ijse.cleancopvt.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

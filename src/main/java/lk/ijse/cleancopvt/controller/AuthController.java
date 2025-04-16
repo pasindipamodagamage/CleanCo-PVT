@@ -1,7 +1,5 @@
 package lk.ijse.cleancopvt.controller;
 
-
-import jakarta.servlet.http.HttpSession;
 import lk.ijse.cleancopvt.dto.AuthDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
 import lk.ijse.cleancopvt.dto.UserDTO;

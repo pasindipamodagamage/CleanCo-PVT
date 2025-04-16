@@ -5,7 +5,6 @@ import lk.ijse.cleancopvt.dto.ResponseDTO;
 import lk.ijse.cleancopvt.entity.Booking;
 import lk.ijse.cleancopvt.service.BookingService;
 import lk.ijse.cleancopvt.util.JwtUtil;
-import lk.ijse.cleancopvt.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,11 +35,9 @@ public class BookingController {
     public ResponseEntity<String> addBooking(@RequestBody Booking booking) {
         try {
             bookingService.createBooking(booking);
-//            return ResponseUtil.generateSuccessResponse("Booking created successfully, payment status is PENDING.");
             return null;
         } catch (Exception e) {
             return null;
-//            return ResponseUtil.generateErrorResponse("Error while creating booking: " + e.getMessage());
         }
     }
 
@@ -49,11 +46,8 @@ public class BookingController {
         try {
             bookingService.updateBookingStatusAfterPayment(bookingId, paymentDTO);
             return null;
-
-//            return ResponseUtil.generateSuccessResponse("Booking status updated successfully after payment.");
         } catch (Exception e) {
             return null;
-//            return ResponseUtil.generateErrorResponse("Error while updating booking after payment: " + e.getMessage());
         }
     }
 
@@ -62,10 +56,8 @@ public class BookingController {
         try {
             bookingService.confirmBooking(bookingId);
             return null;
-//            return ResponseUtil.generateSuccessResponse("Booking confirmed successfully.");
         } catch (Exception e) {
             return null;
-//            return ResponseUtil.generateErrorResponse("Error while confirming booking: " + e.getMessage());
         }
     }
 
@@ -75,10 +67,8 @@ public class BookingController {
         try {
             bookingService.rejectBooking(bookingId);
             return null;
-//            return ResponseUtil.generateSuccessResponse("Booking rejected successfully.");
         } catch (Exception e) {
             return null;
-//            return ResponseUtil.generateErrorResponse("Error while rejecting booking: " + e.getMessage());
         }
     }
 }

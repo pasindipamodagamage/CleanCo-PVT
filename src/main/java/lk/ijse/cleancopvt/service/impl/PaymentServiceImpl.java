@@ -16,7 +16,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentRepo paymentRepo;
 
-    // Method to create a new payment (for use when booking is created)
     @Override
     public Payment createPayment(PaymentDTO paymentDTO) {
         Payment payment = new Payment();
@@ -27,7 +26,6 @@ public class PaymentServiceImpl implements PaymentService {
         return payment;
     }
 
-    // Method to update the payment status to PAID after payment is made
     @Override
     public void updatePaymentStatus(UUID bookingId, PaymentDTO paymentDTO) {
         Payment payment = paymentRepo.findById(bookingId).orElse(null);
