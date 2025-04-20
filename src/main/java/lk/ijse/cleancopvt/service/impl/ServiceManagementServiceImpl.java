@@ -97,6 +97,7 @@ public class ServiceManagementServiceImpl implements ServiceManagementService {
         for (ServicesSet service : allServices) {
             if (service.getCategories() != null) {
                 for (Category category : service.getCategories()) {
+                    UUID categoryId = category.getId();
                     String key = category.getName();
 
                     Duration duration = category.getDuration();
@@ -112,6 +113,7 @@ public class ServiceManagementServiceImpl implements ServiceManagementService {
 
                     resultMap.computeIfAbsent(key, k -> {
                         CategoryServiceCartDTO dto = new CategoryServiceCartDTO();
+                        dto.setId(categoryId);
                         dto.setCategoryName(k);
                         dto.setDuration(duration);
                         dto.setServiceNames(new ArrayList<>());

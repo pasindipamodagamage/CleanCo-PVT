@@ -44,6 +44,8 @@
             .then(res => {
                 localStorage.removeItem('authToken');
                 sessionStorage.removeItem('authToken');
+                localStorage.removeItem('userId');
+                sessionStorage.removeItem('userId');
                 window.location.href = 'index.html';
             })
             .catch(err => {
@@ -463,7 +465,7 @@
                 },
                 success: function (response) {
                     const userRole = response.data;
-                    if (userRole !== 'Employee' && userRole !== 'Administrator') {
+                    if (userRole !== 'Employee' && userRole !== 'Administrator' && userRole !== 'Customer' ) {
                         alert("You do not have permission to edit your profile.");
                         $('#my-profile').hide();
                     }

@@ -76,7 +76,7 @@ public class CategoryController {
 
     @GetMapping("getAllCategory")
     public ResponseEntity<List<CategoryDTO>> getAllCategories(@RequestHeader("Authorization") String authorization) {
-        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee,Role.Customer)) {
             return ResponseEntity.status(VarList.Forbidden).body(null);
         }
 
@@ -90,7 +90,7 @@ public class CategoryController {
 
     @GetMapping("/getEachOneCategory/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id) {
-        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee,Role.Customer)) {
             return ResponseEntity.status(VarList.Forbidden).body(null);
         }
 

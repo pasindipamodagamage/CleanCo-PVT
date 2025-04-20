@@ -1,5 +1,6 @@
 package lk.ijse.cleancopvt.service;
 
+import lk.ijse.cleancopvt.Enum.Rating;
 import lk.ijse.cleancopvt.dto.FeedbackDTO;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface FeedbackService {
     FeedbackDTO updateFeedbackMessage(UUID id, String newComment);
     void removeFeedback(UUID id);
     List<FeedbackDTO> viewAllFeedbacks();
+
+    void submitFeedback(UUID paymentId, Rating rating, String comment);
 }

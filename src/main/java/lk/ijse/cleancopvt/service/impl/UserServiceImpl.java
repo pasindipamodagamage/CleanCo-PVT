@@ -43,17 +43,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
-                .password(user.getPassword()) // This should be encoded
+                .password(user.getPassword())
                 .authorities(getAuthority(user))
                 .build();
     }
 
+    @Override
     public UserDTO loadUserDetailsByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);
         return modelMapper.map(user,UserDTO.class);
     }
 
-    private Set<SimpleGrantedAuthority> getAuthority(User user) {
+    @Override
+    public Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
         return authorities;
@@ -81,6 +83,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
     }
 
+    @Override
     public int deleteAccount(String username) {
         User user = userRepository.findByEmail(username);
         if (user != null) {
@@ -92,6 +95,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return VarList.Not_Found;
     }
 
+    @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -99,6 +103,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public int updateUser(UpdateUserDTO userDTO) {
         User user = userRepository.findByEmail(userDTO.getEmail());
 
@@ -128,6 +133,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return VarList.Not_Found;
     }
 
+    @Override
     public int toggleUserStatus(String nicNumber) {
         User user = userRepository.findByNicNumber(nicNumber);
         if (user != null) {

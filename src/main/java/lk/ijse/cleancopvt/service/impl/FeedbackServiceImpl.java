@@ -67,6 +67,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .toList();
     }
 
+    @Override
     public void submitFeedback(UUID paymentId, Rating rating, String comment) {
         Payment payment = paymentRepo.findById(paymentId)
                 .orElseThrow(() -> new RuntimeException("Payment not found"));

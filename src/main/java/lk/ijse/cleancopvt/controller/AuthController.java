@@ -56,7 +56,7 @@ public class AuthController {
             authDTO.setEmail(loadedUser.getEmail());
             authDTO.setToken(token);
             authDTO.setActive(loadedUser.isActive());
-
+            authDTO.setId(loadedUser.getId());
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseDTO(VarList.Created, "Login Successful", authDTO));
 

@@ -12,6 +12,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="administrationDashboard.css">
     <link rel="stylesheet" href="customerDashboard.css">
+
 </head>
 <body>
 
@@ -47,18 +48,19 @@
     <div class="row">
         <!-- User Profile and Navigation -->
         <div class="col-lg-3 mb-4">
-                <div class="user-profile text-center">
-                    <img id="user-avatar" src="/static/assets/default-avatar.jpg" alt="User Avatar" class="user-avatar mb-3" style="height:100px; width:100px; object-fit:cover; border-radius:50%;">
-                    <h4 id="user-name" class="fw-bold mb-0"></h4>
-                    <p id="user-role" class="text-muted mb-0"></p>
-                </div>
+            <div class="user-profile text-center">
+                <img id="user-avatar" src="" alt="User Avatar"
+                     class="user-avatar mb-3" style="height:100px; width:100px; object-fit:cover; border-radius:50%;">
+                <h4 id="user-name" class="fw-bold mb-0"></h4>
+                <p id="user-role" class="text-muted mb-0"></p>
+            </div>
 
             <div class="sidebar mt-4">
-                <a href="#" class="sidebar-link" id="dashboardLink">
+                <a href="#" class="sidebar-link active" id="dashboardLink">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </a>
-                <a href="#" class="sidebar-link" id="bookingsLink">
-                    <i class="fas fa-calendar-alt"></i> My Bookings
+                <a href="#" class="sidebar-link" id="updateProfileBtn">
+                    <i class="fas fa-user-edit"></i> Update Profile
                 </a>
                 <a href="#" class="sidebar-link" id="newBookingLink">
                     <i class="fas fa-plus-circle"></i> New Booking
@@ -134,13 +136,7 @@
                                     <td>April 5, 2025</td>
                                     <td>Premium Cleaning</td>
                                     <td><span class="badge bg-success">Completed</span></td>
-                                    <td><button class="btn btn-sm btn-outline-primary">Feedback</button></td>
-                                </tr>
-                                <tr>
-                                    <td>March 22, 2025</td>
-                                    <td>Premium Cleaning + Windows</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td><button class="btn btn-sm btn-outline-primary">Feedback</button></td>
+                                    <td><button class="btn btn-sm btn-outline-primary feedback-btn">Feedback</button></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -149,75 +145,111 @@
                 </div>
             </div>
 
-            <!-- Bookings Management -->
-            <div class="main-content d-none" id="bookingsContent">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="fw-bold mb-0">My Bookings</h2>
-                    <button class="btn btn-primary" id="newBookingBtn">New Booking</button>
-                </div>
+            <!-- My Profile Section -->
+            <div id="updateProfileContent" class="main-content d-none" >
+                <h2 class="mb-4">My Profile</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <form id="updateProfileForm">
+                            <div class="row mb-4">
+                                <div class="col-md-3 text-center">
+                                    <img id="profilePicPreview" src="/static/assets/user.png" alt="Profile Picture"
+                                         class="profile-picture mb-3" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+                                    <input type="file" id="profilePicInput" name="profilePicFile" accept="image/*" class="form-control mb-2">
+                                    <input type="hidden" id="profilePic" name="profilePic">
+                                    <!--                                    <button type="button" id="uploadProfilePicBtn" class="btn btn-sm btn-primary">Upload</button>-->
+                                </div>
 
-                <ul class="nav nav-tabs" id="bookingsTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button">Upcoming</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button">History</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button">Cancelled</button>
-                    </li>
-                </ul>
+                                <div class="col-md-9">
+                                    <!-- Name -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="firstName" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" name="name.firstName" placeholder="First Name">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="lastName" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" name="name.lastName" placeholder="Last Name">
+                                        </div>
+                                    </div>
 
-                <div class="tab-content mt-3" id="bookingsTabContent">
-                    <div class="tab-pane fade show active" id="upcoming" role="tabpanel">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="mb-0">April 18, 2025</h5>
-                                    <span class="badge bg-info">Confirmed</span>
-                                </div>
-                                <p><strong>Service:</strong> Premium Cleaning</p>
-                                <p><strong>Time:</strong> 9:00 AM - 12:00 PM</p>
-                                <p><strong>Address:</strong> 123 Main St, Apt 4B, Galle</p>
-                                <div class="d-flex gap-2 mt-3">
-                                    <button class="btn btn-outline-primary btn-sm">Reschedule</button>
-                                    <button class="btn btn-outline-danger btn-sm">Cancel</button>
+                                    <!-- NIC -->
+                                    <div class="mb-3">
+                                        <label for="nicNumber" class="form-label">NIC Number</label>
+                                        <input type="text" class="form-control" id="nicNumber" name="nicNumber" placeholder="NIC Number">
+                                    </div>
+
+                                    <!-- Address -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="locationNumber" class="form-label">Address Line 1 (Location Number)</label>
+                                            <input type="text" class="form-control" id="locationNumber" name="address.locationNumber" placeholder="Location Number">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="street" class="form-label">Address Line 2 (Street)</label>
+                                            <input type="text" class="form-control" id="street" name="address.street" placeholder="Street">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="city" class="form-label">City</label>
+                                            <input type="text" class="form-control" id="city" name="address.city" placeholder="City">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="district" class="form-label">District</label>
+                                            <select class="form-select" id="district" name="address.district">
+                                                <option value="">Select District</option>
+                                                <option value="Colombo">Colombo</option>
+                                                <option value="Gampaha">Gampaha</option>
+                                                <!-- Add other districts as needed -->
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Contacts -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="primaryContact" class="form-label">Primary Contact</label>
+                                            <input type="tel" class="form-control" id="primaryContact" name="primaryContact" placeholder="Primary Contact">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="secondaryContact" class="form-label">Secondary Contact</label>
+                                            <input type="tel" class="form-control" id="secondaryContact" name="secondaryContact" placeholder="Secondary Contact">
+                                        </div>
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                    </div>
+
+                                    <!-- Change Password -->
+                                    <hr>
+                                    <h5>Change Password</h5>
+                                    <div class="mb-3">
+                                        <label for="currentPassword" class="form-label">Current Password</label>
+                                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Current Password">
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="password" class="form-label">New Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="New Password">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                                        </div>
+                                    </div>
+
+                                    <!-- Save Button -->
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="history" role="tabpanel">
-                        <div class="list-group">
-                            <div class="list-group-item">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="mb-1">April 5, 2025</h5>
-                                    <span class="badge bg-success">Completed</span>
-                                </div>
-                                <p class="mb-1"><strong>Service:</strong> Premium Cleaning</p>
-                                <small class="text-muted">9:00 AM - 12:00 PM</small>
-                                <div class="mt-2">
-                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
-                                    <button class="btn btn-sm btn-outline-success">Leave Feedback</button>
-                                </div>
-                            </div>
-                            <div class="list-group-item">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="mb-1">March 22, 2025</h5>
-                                    <span class="badge bg-success">Completed</span>
-                                </div>
-                                <p class="mb-1"><strong>Service:</strong> Premium Cleaning + Windows</p>
-                                <small class="text-muted">1:00 PM - 4:00 PM</small>
-                                <div class="mt-2">
-                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
-                                    <button class="btn btn-sm btn-outline-success">Leave Feedback</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="cancelled" role="tabpanel">
-                        <div class="alert alert-info">
-                            You don't have any cancelled bookings.
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -226,64 +258,34 @@
             <div class="main-content d-none" id="newBookingContent">
                 <h2 class="fw-bold mb-4">New Booking</h2>
 
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <form id="bookingForm">
-                            <div class="mb-3">
-                                <label for="serviceType" class="form-label">Service Type</label>
-                                <select class="form-select" id="serviceType" required>
-                                    <option value="">Select a service</option>
-                                    <option value="premium">Premium Cleaning</option>
-                                    <option value="deep">Deep Cleaning</option>
-                                    <option value="move">Move In/Out Cleaning</option>
-                                    <option value="office">Office Cleaning</option>
-                                </select>
-                            </div>
+                <div class="row g-4" id="cartServiceList">
+                    <a href="#" class="btn btn-outline-primary w-100 mt-3 buy-plan-btn"
+                       data-category-id="${item.id}"
+                       data-category-name="${item.categoryName}">Buy Plan</a>                </div>
+            </div>
 
-                            <div class="mb-3">
-                                <label for="bookingDate" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="bookingDate" required min="">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="timeSlot" class="form-label">Time Slot</label>
-                                <select class="form-select" id="timeSlot" required>
-                                    <option value="">Select a time slot</option>
-                                    <option value="morning">9:00 AM - 12:00 PM</option>
-                                    <option value="afternoon">1:00 PM - 4:00 PM</option>
-                                    <option value="evening">5:00 PM - 8:00 PM</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Add-ons (optional)</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="windowCleaning">
-                                    <label class="form-check-label" for="windowCleaning">Window Cleaning (+$35)</label>
+            <!-- Booking Modal -->
+            <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content p-3">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="bookingModalLabel">Book This Service</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="bookingForm">
+                                <input type="hidden" id="bookingCategoryId">
+                                <div class="mb-3">
+                                    <label for="bookingDate" class="form-label">Choose Date</label>
+                                    <input type="date" class="form-control" id="bookingDate" required>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="fridgeCleaning">
-                                    <label class="form-check-label" for="fridgeCleaning">Refrigerator Cleaning (+$40)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="carpetCleaning">
-                                    <label class="form-check-label" for="carpetCleaning">Carpet Cleaning (+$50)</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="specialInstructions" class="form-label">Special Instructions</label>
-                                <textarea class="form-control" id="specialInstructions" rows="3"></textarea>
-                            </div>
-
-                            <div class="d-flex justify-content-between mt-4">
-                                <button type="button" class="btn btn-outline-secondary" id="cancelBookingBtn">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Continue to Payment</button>
-                            </div>
-                        </form>
+                                <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <!-- Payments Section -->
             <div class="main-content d-none" id="paymentsContent">
                 <h2 class="fw-bold mb-4">Payment Methods</h2>
@@ -418,12 +420,9 @@
                     <div class="card-body">
                         <form id="feedbackForm">
                             <div class="mb-3">
-                                <label for="bookingSelect" class="form-label">Select Booking</label>
-                                <select class="form-select" id="bookingSelect" required>
-                                    <option value="">Select a booking</option>
-                                    <option value="1">April 5, 2025 - Premium Cleaning</option>
-                                    <option value="2">March 22, 2025 - Premium + Windows</option>
-                                </select>
+<!--                                booking name and date and time-->
+                                <label class="form-label">Select Booking</label>
+                                <input type="text" hidden="hidden">
                             </div>
                             <div class="mb-3">
                                 <label for="rating" class="form-label">Rating</label>
@@ -467,79 +466,20 @@
                                 <button class="btn btn-sm btn-outline-danger">Delete</button>
                             </div>
                         </div>
-                        <div class="feedback-item">
-                            <div class="d-flex justify-content-between mb-2">
-                                <h5>Premium + Windows - March 22, 2025</h5>
-                                <div class="text-warning">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Excellent service! The windows look brand new and the whole apartment smells fresh.</p>
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-sm btn-outline-primary me-2">Edit</button>
-                                <button class="btn btn-sm btn-outline-danger">Delete</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Update Profile Section -->
-            <div class="main-content d-none" id="updateProfileContent">
-                <h2 class="fw-bold mb-4">Update Profile</h2>
-
-                <div class="card">
-                    <div class="card-body">
-                        <form id="profileForm">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="firstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" value="Lisa" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="lastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" value="Smith" required>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" value="lisa.smith@example.com" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input type="tel" class="form-control" id="phone" value="+94771234567" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="address" class="form-label">Address</label>
-                                <textarea class="form-control" id="address" rows="3" required>123 Main St, Apt 4B, Galle</textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Change Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter new password">
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
-                            </div>
-                            <div class="d-flex justify-content-between mt-4">
-                                <button type="button" class="btn btn-outline-secondary" id="cancelProfileUpdateBtn">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- Custom JavaScript -->
 <script src="customerDashboard.js"></script>
+
 </body>
 </html>

@@ -13,10 +13,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingDTO {
-
     private UUID userId;
     private UUID categoryId;
     private LocalDate bookingDate;
     private LocalTime bookingTime;
-    private BookingStatus bookingStatus = BookingStatus.PENDING;
+    private BookingStatus bookingStatus;
 }

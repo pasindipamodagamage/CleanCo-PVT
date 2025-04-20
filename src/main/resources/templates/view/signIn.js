@@ -38,16 +38,17 @@ $(document).ready(function () {
                 if ((response.code === 200 || response.code === 201) && response.data) {
                     const token = response.data.token;
                     const isActive = response.data.active;
+                    const userId = response.data.id;  // This is where we extract the id
 
                     if (isActive === 1 || isActive === true) {
-                        // Store token based on remember me selection
                         if (rememberMe) {
                             localStorage.setItem('authToken', token);
+                            localStorage.setItem('userId', userId);  // Now we are using userId correctly
                         } else {
                             sessionStorage.setItem('authToken', token);
+                            sessionStorage.setItem('userId', userId);  // Now we are using userId correctly
                         }
 
-                        // Decode token to get user role
                         const decodedToken = jwt_decode(token);
                         const userRole = decodedToken.role;
 
@@ -82,10 +83,8 @@ $(document).ready(function () {
         });
     });
 
-    // Check for existing token on page load
     checkExistingToken();
 
-    // Google Sign In Button
     document.querySelector(".btn-google").addEventListener("click", function() {
         // Implement Google Sign In logic here
         alert("Google Sign In will be implemented here");

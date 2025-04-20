@@ -76,7 +76,7 @@ public class ServiceController {
 
     @GetMapping("/getAllServices")
     public ResponseEntity<List<ServicesSetDTO>> getAllServices(@RequestHeader("Authorization") String authorization) {
-        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee, Role.Customer)) {
             return ResponseEntity.status(VarList.Forbidden).body(null);
         }
 
@@ -90,7 +90,7 @@ public class ServiceController {
 
     @GetMapping("/getServiceById/{id}")
     public ResponseEntity<ServicesSetDTO> getServiceById(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id) {
-        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee, Role.Customer)) {
             return ResponseEntity.status(VarList.Forbidden).body(null);
         }
 
