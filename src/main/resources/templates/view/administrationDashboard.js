@@ -837,7 +837,6 @@
             });
         }
 
-        // 🔄 Toggle deactivate on status button click
         $('#usersTable').on('click', '.status-btn', function () {
             const token = localStorage.getItem("authToken");
             const userEmail = $(this).data("email");
@@ -883,44 +882,6 @@
 
         checkUserRole();
     });
-    // $(document).ready(function () {
-    //     const token = localStorage.getItem("authToken");
-    //
-    //     $.ajax({
-    //         url: "http://localhost:8082/api/v1/booking/getAllPendingBookings",
-    //         method: "GET",
-    //         headers: {
-    //             Authorization: `Bearer ${token}`
-    //         },
-    //         success: function (data) {
-    //             let tableBody = $("#pendingAppointmentsBody");
-    //             tableBody.empty();
-    //
-    //             data.forEach(booking => {
-    //                 const fullName = `${booking.name.firstName} ${booking.name.lastName}`;
-    //                 const formattedDate = new Date(booking.bookingDate).toLocaleDateString();
-    //                 const formattedTime = booking.bookingTime.slice(0, 5);
-    //
-    //                 tableBody.append(`
-    //                 <tr>
-    //                     <td>${fullName}</td>
-    //                     <td>${booking.categoryName}</td>
-    //                     <td>${booking.customerContact}</td>
-    //                     <td>${formattedDate}</td>
-    //                     <td>${formattedTime}</td>
-    //                     <td>
-    //                         <button class="btn btn-sm btn-success">Confirm</button>
-    //                         <button class="btn btn-sm btn-danger">Reject</button>
-    //                     </td>
-    //                 </tr>
-    //             `);
-    //             });
-    //         },
-    //         error: function () {
-    //             alert("Failed to fetch pending bookings.");
-    //         }
-    //     });
-    // });
 
     $(document).ready(function () {
         const token = localStorage.getItem("authToken");
@@ -944,93 +905,53 @@
                     const formattedTime = booking.bookingTime.slice(0, 5);
 
                     const row = `
-        <tr data-id="${booking.id}">
-            <td>${fullName}</td>
-            <td>${booking.categoryName}</td>
-            <td>${booking.customerContact}</td>
-            <td>${formattedDate}</td>
-            <td>${formattedTime}</td>
-            <td>
-                <button class="btn btn-sm btn-success confirm-btn">Confirm</button>
-                <button class="btn btn-sm btn-danger reject-btn">Reject</button>
-            </td>
-        </tr>
-    `;
+                    <tr data-id="${booking.id}">
+                        <td>${fullName}</td>
+                        <td>${booking.categoryName}</td>
+                        <td>${booking.customerContact}</td>
+                        <td>${formattedDate}</td>
+                        <td>${formattedTime}</td>
+                        <td>
+                            <button class="btn btn-sm btn-success confirm-btn">Confirm</button>
+                            <button class="btn btn-sm btn-danger reject-btn">Reject</button>
+                        </td>
+                    </tr>
+                `;
                     tableBody.append(row);
                 });
-
-
-                // Event delegation for dynamically created buttons
-                $("#pendingAppointmentsBody").on("click", ".confirm-btn", function () {
-                    const row = $(this).closest("tr");
-                    const bookingId = row.data("id");
-
-                    updateBookingStatus(bookingId, "CONFIRMED", row);
-                });
-
-                $("#pendingAppointmentsBody").on("click", ".reject-btn", function () {
-                    const row = $(this).closest("tr");
-                    const bookingId = row.data("id");
-
-                    updateBookingStatus(bookingId, "REJECTED", row);
-                });
-
-                function updateBookingStatus(id, status, row) {
-                    $.ajax({
-                        url: `http://localhost:8082/api/v1/booking/${status === "CONFIRMED" ? "confirmBooking" : "rejectBooking"}/${id}`,
-                        method: "PUT",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            "Content-Type": "application/json"
-                        },
-                        data: JSON.stringify({
-                            bookingID: id,
-                            status: status
-                        }),
-                        success: function (res) {
-                            alert(res);
-                            // Disable both buttons in the row
-                            row.find("button").prop("disabled", true);
-                        },
-                        error: function () {
-                            alert(`Failed to ${status.toLowerCase()} booking.`);
-                        }
-                    });
-                }
             },
             error: function () {
                 alert("Failed to fetch pending bookings.");
             }
         });
-    });
 
-    $(document).on("click", ".confirm-btn, .reject-btn", function () {
-        const $row = $(this).closest("tr");
-        const bookingId = $row.data("id");
-        const isConfirm = $(this).hasClass("confirm-btn");
-        const status = isConfirm ? "CONFIRMED" : "REJECTED";
-        const token = localStorage.getItem("authToken");
+        // Handle confirm/reject buttons
+        $("#pendingAppointmentsBody").on("click", ".confirm-btn, .reject-btn", function () {
+            const $row = $(this).closest("tr");
+            const bookingId = $row.data("id");
+            const isConfirm = $(this).hasClass("confirm-btn");
+            const status = isConfirm ? "CONFIRMED" : "REJECTED";
 
-        $.ajax({
-            url: `http://localhost:8082/api/v1/booking/${isConfirm ? 'confirmBooking' : 'rejectBooking'}/${bookingId}`,
-            method: "PUT",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            },
-            data: JSON.stringify({
-                status: status
-            }),
-            success: function () {
-                // Disable the clicked button and remove it from the row
-                $row.find(isConfirm ? ".confirm-btn" : ".reject-btn").remove();
-
-                // Optional: Add status feedback
-                $row.find("td:last").append(`<span class="ms-2 badge ${isConfirm ? 'bg-success' : 'bg-danger'}">${status}</span>`);
-            },
-            error: function (xhr) {
-                alert("Error: " + (xhr.responseText || "Could not update booking."));
-            }
+            $.ajax({
+                url: `http://localhost:8082/api/v1/booking/${isConfirm ? 'confirmBooking' : 'rejectBooking'}/${bookingId}`,
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                data: JSON.stringify({
+                    bookingStatus: status // ✅ must match field in BookingUpdateDTO
+                }),
+                success: function (res) {
+                    alert(res);
+                    // Disable both buttons after one action
+                    $row.find("button").prop("disabled", true);
+                    $row.find("td:last").append(`<span class="ms-2 badge ${isConfirm ? 'bg-success' : 'bg-danger'}">${status}</span>`);
+                },
+                error: function (xhr) {
+                    alert("Error: " + (xhr.responseText || "Could not update booking."));
+                }
+            });
         });
     });
 
@@ -1053,3 +974,43 @@
             }
         });
     });
+
+    function loadRejectedBookings() {
+        const token = localStorage.getItem("authToken");
+
+        $.ajax({
+            url: "http://localhost:8082/api/v1/booking/rejectedBookings",
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            success: function (bookings) {
+                const tbody = $("#rejectedAppointmentsTable tbody");
+                tbody.empty();
+
+                bookings.forEach(function (booking) {
+                    const fullName = booking.name
+                        ? `${booking.name.firstName} ${booking.name.lastName}`
+                        : (booking.userName || "Unknown");
+
+                    const formattedDate = new Date(booking.bookingDate).toLocaleDateString();
+                    const formattedTime = booking.bookingTime?.slice(0, 5) || "--:--";
+
+                    const row = `
+                    <tr>
+                        <td>${booking.bookingId}</td>
+                        <td>${fullName}</td>
+                        <td>${booking.categoryName}</td>
+                        <td>${formattedDate}</td>
+                        <td>${formattedTime}</td>
+                    </tr>
+                `;
+                    tbody.append(row);
+                });
+            },
+            error: function (xhr) {
+                console.error("Error loading rejected bookings", xhr.responseText);
+                alert("Failed to load rejected bookings: " + xhr.status);
+            }
+        });
+    }

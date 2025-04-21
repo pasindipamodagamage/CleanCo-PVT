@@ -181,6 +181,19 @@ public class BookingController {
         return bookingRepo.countByBookingStatus(BookingStatus.PENDING);
     }
 
+    @GetMapping("/rejectedBookings")
+    public ResponseEntity<?> getRejectedBookings(@RequestHeader("Authorization") String authorization) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+            return ResponseEntity.status(VarList.Forbidden).body("Access denied");
+        }
+
+        try {
+            List<BookingDTO> rejectedList = bookingService.getBookingsByStatus(BookingStatus.REJECTED);
+            return ResponseEntity.status(VarList.OK).body(rejectedList);
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body("Error: " + e.getMessage());
+        }
+    }
 
     private boolean hasRequiredRole(String authorization, Role... roles) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {

@@ -58,6 +58,13 @@ public class BookingServiceImpl {
                 .collect(Collectors.toList());
     }
 
+    public List<BookingDTO> getBookingsByStatus(BookingStatus status) {
+        List<Booking> bookings = bookingRepo.findByBookingStatus(status);
+        return bookings.stream()
+                .map(booking -> modelMapper.map(booking, BookingDTO.class))
+                .collect(Collectors.toList());
+    }
+
     public List<BookingCustomerTM> getBookingsForUser(UUID userId) {
         List<Booking> bookings = bookingRepo.findByUserId(userId);
 
