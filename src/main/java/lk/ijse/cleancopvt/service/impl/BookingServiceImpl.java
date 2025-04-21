@@ -1,9 +1,7 @@
 package lk.ijse.cleancopvt.service.impl;
 
 import lk.ijse.cleancopvt.Enum.BookingStatus;
-import lk.ijse.cleancopvt.dto.BookingDTO;
-import lk.ijse.cleancopvt.dto.BookingUpdateDTO;
-import lk.ijse.cleancopvt.dto.CategoryDTO;
+import lk.ijse.cleancopvt.dto.*;
 import lk.ijse.cleancopvt.entity.Booking;
 import lk.ijse.cleancopvt.entity.Category;
 import lk.ijse.cleancopvt.entity.User;
@@ -45,6 +43,34 @@ public class BookingServiceImpl {
                 .collect(Collectors.toList());
     }
 
+    public List<PendingBooking> getAllPendingBookings() {
+        List<Booking> pendingBookings = bookingRepo.findByBookingStatus(BookingStatus.PENDING);
+
+        return pendingBookings.stream()
+                .map(booking -> new PendingBooking(
+                        booking.getId(),
+                        booking.getUser().getName(),
+                        booking.getCategory().getName(),
+                        booking.getUser().getPrimaryContact(),
+                        booking.getBookingDate(),
+                        booking.getBookingTime()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    public List<BookingCustomerTM> getBookingsForUser(UUID userId) {
+        List<Booking> bookings = bookingRepo.findByUserId(userId);
+
+        return bookings.stream().map(booking -> {
+            BookingCustomerTM dto = new BookingCustomerTM();
+            dto.setUserid(booking.getUser().getId());
+            dto.setBookingDate(booking.getBookingDate());
+            dto.setBookingStatus(booking.getBookingStatus());
+            dto.setCategoryName(booking.getCategory().getName());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
     public void addBooking(BookingDTO bookingDTO) {
         Booking booking = new Booking();
         booking.setBookingDate(bookingDTO.getBookingDate());
@@ -62,15 +88,17 @@ public class BookingServiceImpl {
         bookingRepo.save(booking);
     }
 
-    public void updateBooking(BookingUpdateDTO bookingUpdateDTO) {
-        Booking booking = modelMapper.map(bookingUpdateDTO, Booking.class);
+    public void updateBooking(BookingUpdateDTO dto) {
+        Booking booking = bookingRepo.findById(dto.getBookingID())
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        booking.setBookingStatus(dto.getStatus());
         bookingRepo.save(booking);
     }
+
 
     public long countPendingBookings() {
         return bookingRepo.countByBookingStatus(BookingStatus.PENDING);
     }
-
-
 
 }

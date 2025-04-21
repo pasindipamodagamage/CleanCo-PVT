@@ -410,8 +410,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    const userId = localStorage.getItem("userId"); // Get userId from localStorage
+
     $.ajax({
-        url: 'http://localhost:8082/api/v1/booking/getBookingTableData',
+        url: `http://localhost:8082/api/v1/booking/getBookingsForUser?userId=${userId}`, // Pass userId as query parameter
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem("authToken")
@@ -423,17 +425,17 @@ $(document).ready(function () {
             data.forEach(booking => {
                 const statusBadge = getStatusBadge(booking.bookingStatus);
                 const row = `
-                        <tr>
-                            <td>${booking.bookingDate}</td>
-                            <td>${booking.categoryName}</td>
-                            <td>${statusBadge}</td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary me-1 feedback-btn">Feedback</button>
-                                <button class="btn btn-sm btn-outline-success me-1 pay-btn">Pay</button>
-                                <button class="btn btn-sm btn-outline-danger cancel-btn">Cancel</button>
-                            </td>
-                        </tr>
-                    `;
+                    <tr>
+                        <td>${booking.bookingDate}</td>
+                        <td>${booking.categoryName}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1 feedback-btn">Feedback</button>
+                            <button class="btn btn-sm btn-outline-success me-1 pay-btn">Pay</button>
+                            <button class="btn btn-sm btn-outline-danger cancel-btn">Cancel</button>
+                        </td>
+                    </tr>
+                `;
                 tbody.append(row);
             });
         },
@@ -452,3 +454,47 @@ $(document).ready(function () {
         return `<span class="badge ${className}">${status.charAt(0) + status.slice(1).toLowerCase()}</span>`;
     }
 });
+
+// $(document).ready(function () {
+//     $.ajax({
+//         url: 'http://localhost:8082/api/v1/booking/getBookingTableData',
+//         method: 'GET',
+//         headers: {
+//             'Authorization': 'Bearer ' + localStorage.getItem("authToken")
+//         },
+//         success: function (data) {
+//             const tbody = $('#recentBookingsBody');
+//             tbody.empty();
+//
+//             data.forEach(booking => {
+//                 const statusBadge = getStatusBadge(booking.bookingStatus);
+//                 const row = `
+//                         <tr>
+//                             <td>${booking.bookingDate}</td>
+//                             <td>${booking.categoryName}</td>
+//                             <td>${statusBadge}</td>
+//                             <td>
+//                                 <button class="btn btn-sm btn-outline-primary me-1 feedback-btn">Feedback</button>
+//                                 <button class="btn btn-sm btn-outline-success me-1 pay-btn">Pay</button>
+//                                 <button class="btn btn-sm btn-outline-danger cancel-btn">Cancel</button>
+//                             </td>
+//                         </tr>
+//                     `;
+//                 tbody.append(row);
+//             });
+//         },
+//         error: function () {
+//             alert("Failed to load bookings");
+//         }
+//     });
+//
+//     function getStatusBadge(status) {
+//         let className = "bg-secondary";
+//         if (status === "COMPLETED") className = "bg-success";
+//         else if (status === "PENDING") className = "bg-warning";
+//         else if (status === "CANCELLED" || status === "REJECTED") className = "bg-danger";
+//         else if (status === "CONFIRMED") className = "bg-primary";
+//
+//         return `<span class="badge ${className}">${status.charAt(0) + status.slice(1).toLowerCase()}</span>`;
+//     }
+// });

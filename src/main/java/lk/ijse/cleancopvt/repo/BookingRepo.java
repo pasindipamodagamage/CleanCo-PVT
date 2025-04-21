@@ -11,5 +11,6 @@ import java.util.UUID;
 @Repository
 public interface BookingRepo extends JpaRepository<Booking, UUID> {
     long countByBookingStatus(BookingStatus bookingStatus);
-    List<Booking> findByUserUserId(String userId);
+    List<Booking> findByUserId(UUID userId);
+    List<Booking> findByBookingStatus(BookingStatus bookingStatus);
 }

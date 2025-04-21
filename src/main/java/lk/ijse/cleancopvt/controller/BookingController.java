@@ -3,10 +3,7 @@ package lk.ijse.cleancopvt.controller;
 import io.jsonwebtoken.Claims;
 import lk.ijse.cleancopvt.Enum.BookingStatus;
 import lk.ijse.cleancopvt.Enum.Role;
-import lk.ijse.cleancopvt.dto.BookingDTO;
-import lk.ijse.cleancopvt.dto.BookingUpdateDTO;
-import lk.ijse.cleancopvt.dto.CategoryDTO;
-import lk.ijse.cleancopvt.dto.ResponseDTO;
+import lk.ijse.cleancopvt.dto.*;
 import lk.ijse.cleancopvt.repo.BookingRepo;
 import lk.ijse.cleancopvt.service.impl.BookingServiceImpl;
 import lk.ijse.cleancopvt.util.JwtUtil;
@@ -119,7 +116,7 @@ public class BookingController {
     }
 
 
-    @GetMapping("getAllBookings")
+    @GetMapping("/getAllBookings")
     public ResponseEntity<List<BookingDTO>> getAllCategories(@RequestHeader("Authorization") String authorization) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee,Role.Customer)) {
             return ResponseEntity.status(VarList.Forbidden).body(null);
@@ -127,6 +124,35 @@ public class BookingController {
 
         try {
             List<BookingDTO> bookings = bookingService.getAllBookings();
+            return ResponseEntity.status(VarList.OK).body(bookings);
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body(null);
+        }
+    }
+
+    @GetMapping("/getAllPendingBookings")
+    public ResponseEntity<List<PendingBooking>> getAllPendingBookings(@RequestHeader("Authorization") String authorization) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+            return ResponseEntity.status(VarList.Forbidden).body(null);
+        }
+
+        try {
+            List<PendingBooking> bookings = bookingService.getAllPendingBookings();
+            return ResponseEntity.status(VarList.OK).body(bookings);
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body(null);
+        }
+    }
+
+    @GetMapping("/getBookingsForUser")
+    public ResponseEntity<List<BookingCustomerTM>> getBookingsForUser(@RequestHeader("Authorization") String authorization,
+                                                               @RequestParam UUID userId) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee, Role.Customer)) {
+            return ResponseEntity.status(VarList.Forbidden).body(null);
+        }
+
+        try {
+            List<BookingCustomerTM> bookings = bookingService.getBookingsForUser(userId);
             return ResponseEntity.status(VarList.OK).body(bookings);
         } catch (Exception e) {
             return ResponseEntity.status(VarList.Internal_Server_Error).body(null);

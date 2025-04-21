@@ -55,6 +55,9 @@
                 <a href="#" class="sidebar-link active" data-section="account-summary">
                     <i class="fas fa-chart-line"></i> Account Summary
                 </a>
+                <a href="#" class="sidebar-link" data-section="manage-appointments">
+                    <i class="fas fa-calendar-alt"></i> Manage Appointments
+                </a>
                 <a href="#" class="sidebar-link" data-section="my-profile">
                     <i class="fas fa-user"></i> My Profile
                 </a>
@@ -66,9 +69,6 @@
                 </a>
                 <a href="#" class="sidebar-link" data-section="users">
                     <i class="fas fa-users"></i> Users
-                </a>
-                <a href="#" class="sidebar-link" data-section="manage-appointments">
-                    <i class="fas fa-calendar-alt"></i> Manage Appointments
                 </a>
                 <a href="#" class="sidebar-link" data-section="reviews">
                     <i class="fas fa-star"></i> Reviews
@@ -406,40 +406,15 @@
                                 <table class="table table-hover" id="pendingAppointmentsTable">
                                     <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Customer</th>
                                         <th>Service</th>
+                                        <th>Contact</th>
                                         <th>Date</th>
                                         <th>Time</th>
-                                        <th>Payment Status</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>APT001</td>
-                                        <td>John Doe</td>
-                                        <td>Regular Home Cleaning</td>
-                                        <td>15 Apr, 2025</td>
-                                        <td>10:00 AM</td>
-                                        <td><span class="badge bg-warning">Pending</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-success">Confirm</button>
-                                            <button class="btn btn-sm btn-danger">Reject</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>APT002</td>
-                                        <td>Jane Smith</td>
-                                        <td>Office Cleaning</td>
-                                        <td>16 Apr, 2025</td>
-                                        <td>2:00 PM</td>
-                                        <td><span class="badge bg-success">Paid</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-success">Confirm</button>
-                                            <button class="btn btn-sm btn-danger">Reject</button>
-                                        </td>
-                                    </tr>
+                                    <tbody id="pendingAppointmentsBody">
                                     </tbody>
                                 </table>
                             </div>

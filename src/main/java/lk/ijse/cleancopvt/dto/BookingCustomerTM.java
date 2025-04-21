@@ -6,11 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class BookingTM {
+public class BookingCustomerTM {
+    private UUID userid;
     private LocalDate bookingDate;
     private String categoryName;
     private BookingStatus bookingStatus;
