@@ -45,6 +45,27 @@ document.addEventListener('DOMContentLoaded', function () {
         showSection('dashboardContent');
     });
 
+    document.querySelectorAll('.cancel-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const row = this.closest('tr');
+            const statusCell = row.querySelector('td:nth-child(3)');
+            statusCell.innerHTML = '<span class="badge bg-danger">Cancelled</span>';
+            alert('Booking has been cancelled.');
+        });
+    });
+
+    document.querySelectorAll('.pay-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            showSection('paymentsContent');
+        });
+    });
+
+    document.querySelectorAll('.feedback-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            showSection('feedbackContent');
+        });
+    });
+
     const stars = document.querySelectorAll('.rating-stars i');
     stars.forEach(star => {
         star.addEventListener('click', function () {
@@ -165,13 +186,13 @@ $(document).ready(function () {
             url: "http://localhost:8082/api/v1/user/me",
             type: "GET",
             headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
+                "Authorization": "Bearer " + token
             },
             success: function (response) {
                 if (response && response.data) {
                     currentUserData = response.data;
 
+                    // Set input fields
                     $('#firstName').val(currentUserData.name?.firstName || '');
                     $('#lastName').val(currentUserData.name?.lastName || '');
                     $('#nicNumber').val(currentUserData.nicNumber || '');
@@ -184,10 +205,14 @@ $(document).ready(function () {
                     $('#city').val(currentUserData.address?.city || '');
                     $('#district').val(currentUserData.address?.district || '');
 
-                    // Optional: Set profile pic
-                    if (currentUserData.profilePic) {
-                        $('#profilePicPreview').attr('src', currentUserData.profilePic);
-                    }
+                    // Set avatar
+                    const profilePicUrl = currentUserData.profilePic || '/static/assets/user.png';
+                    $('#user-avatar').attr('src', profilePicUrl);
+                    $('#profilePicPreview').attr('src', profilePicUrl);
+
+                    // Set user name and role
+                    $('#user-name').text(`${currentUserData.name?.firstName || ''} ${currentUserData.name?.lastName || ''}`);
+                    $('#user-role').text(currentUserData.role || 'User');
                 } else {
                     console.error("Invalid response data format");
                     alert("Failed to load profile data.");
@@ -204,6 +229,10 @@ $(document).ready(function () {
         e.preventDefault();
 
         const token = localStorage.getItem("authToken");
+        if (!token) {
+            alert("Session expired. Please log in again.");
+            return;
+        }
 
         const updatedUserData = {
             name: {
@@ -218,11 +247,10 @@ $(document).ready(function () {
                 locationNumber: $('#locationNumber').val().trim() || currentUserData.address?.locationNumber,
                 street: $('#street').val().trim() || currentUserData.address?.street,
                 city: $('#city').val().trim() || currentUserData.address?.city,
-                district: $('#district').val() || currentUserData.address?.district
+                district: $('#district').val().trim() || currentUserData.address?.district
             }
         };
 
-        const currentPassword = $('#currentPassword').val().trim();
         const newPassword = $('#password').val().trim();
         const confirmPassword = $('#confirmPassword').val().trim();
 
@@ -230,7 +258,7 @@ $(document).ready(function () {
             if (newPassword === confirmPassword) {
                 updatedUserData.password = newPassword;
             } else {
-                alert("Passwords do not match.");
+                alert("New passwords do not match.");
                 return;
             }
         }
@@ -245,16 +273,23 @@ $(document).ready(function () {
             data: JSON.stringify(updatedUserData),
             success: function () {
                 alert("Profile updated successfully.");
+                $('#password').val('');
+                $('#confirmPassword').val('');
+                $('#currentPassword').val('');
                 loadUserProfile();
             },
             error: function (err) {
                 console.error("Profile update failed:", err);
-                alert("Profile update failed: " + (err.responseJSON?.message || err.responseText));
+                const errorMessage = err.responseJSON?.message || err.responseText || "Unknown error.";
+                alert("Profile update failed: " + errorMessage);
             }
         });
     });
 
-    checkUserRole();
+    // Load profile and validate role
+    if (typeof checkUserRole === "function") {
+        checkUserRole();
+    }
     loadUserProfile();
 });
 
@@ -275,10 +310,10 @@ $(document).ready(function () {
                 console.log("Received data:", response.data);
                 if (response.code === 200 && response.data) {
                     renderCartItems(response.data);
-                    $('#cartServiceList').removeAttr('hidden'); // Show the service list
+                    $('#cartServiceList').removeAttr('hidden');
                 } else {
                     $('#cartServiceList').html('<p class="text-danger">No services available at the moment.</p>');
-                    $('#cartServiceList').removeAttr('hidden'); // Ensure it is shown even if no services
+                    $('#cartServiceList').removeAttr('hidden');
                 }
             },
             error: function (xhr) {
@@ -300,9 +335,8 @@ $(document).ready(function () {
                 <div class="col-md-4 mb-4" data-aos="fade-up">
                     <div class="card pricing-card h-100 shadow rounded-4">
                         <div class="card-body p-4">
-                            <div class="text-muted mb-2 fw-semibold">${item.duration}</div>
-                            <div class="text-muted mb-2">Category ID: ${item.id}</div>
-                            <h5 class="card-title fw-bold">${item.categoryName}</h5>
+                            <h5 class="card-title fw-bold" style="font-size: 2rem; margin-right: 2px">${item.categoryName} /<span style="font-size: 0.8rem">${item.duration}</span> </h5>
+                            <div class="text-muted mb-2" hidden="hidden">Category ID: ${item.id}</div>
                             <div class="price text-success">Rs. ${item.total.toFixed(2)}</div>
                             <ul class="list-unstyled mt-4">
                                 ${servicesHtml}
@@ -316,7 +350,6 @@ $(document).ready(function () {
         $('#cartServiceList').html(html);
     }
 
-    // Opening the booking modal when a user clicks "Buy Plan"
     let selectedCategoryId = null;
 
     $(document).on('click', '.buy-plan-btn', function () {
@@ -327,7 +360,6 @@ $(document).ready(function () {
         $('#bookingModal').modal('show');
     });
 
-    // Handling form submission for booking
     $('#bookingForm').on('submit', function (e) {
         e.preventDefault();
 
@@ -340,8 +372,8 @@ $(document).ready(function () {
             return;
         }
 
-        const userId = localStorage.getItem("userId"); // <-- Ensure you save this during login
-        const currentTime = new Date().toISOString().slice(11, 19); // HH:MM:SS format
+        const userId = localStorage.getItem("userId");
+        const currentTime = new Date().toISOString().slice(11, 19);
 
         const bookingPayload = {
             userId: userId,
@@ -375,4 +407,48 @@ $(document).ready(function () {
 
     checkUserRole();
     loadServiceCartDetails();
+});
+
+$(document).ready(function () {
+    $.ajax({
+        url: 'http://localhost:8082/api/v1/booking/getBookingTableData',
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("authToken")
+        },
+        success: function (data) {
+            const tbody = $('#recentBookingsBody');
+            tbody.empty();
+
+            data.forEach(booking => {
+                const statusBadge = getStatusBadge(booking.bookingStatus);
+                const row = `
+                        <tr>
+                            <td>${booking.bookingDate}</td>
+                            <td>${booking.categoryName}</td>
+                            <td>${statusBadge}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1 feedback-btn">Feedback</button>
+                                <button class="btn btn-sm btn-outline-success me-1 pay-btn">Pay</button>
+                                <button class="btn btn-sm btn-outline-danger cancel-btn">Cancel</button>
+                            </td>
+                        </tr>
+                    `;
+                tbody.append(row);
+            });
+        },
+        error: function () {
+            alert("Failed to load bookings");
+        }
+    });
+
+    function getStatusBadge(status) {
+        let className = "bg-secondary";
+        if (status === "COMPLETED") className = "bg-success";
+        else if (status === "PENDING") className = "bg-warning";
+        else if (status === "CANCELLED" || status === "REJECTED") className = "bg-danger";
+        else if (status === "CONFIRMED") className = "bg-primary";
+
+        return `<span class="badge ${className}">${status.charAt(0) + status.slice(1).toLowerCase()}</span>`;
+    }
 });

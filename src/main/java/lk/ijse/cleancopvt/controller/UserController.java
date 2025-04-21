@@ -203,7 +203,7 @@ public class UserController {
 
         if (!"Administrator".equals(userRole)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(new ResponseDTO(VarList.Forbidden, "Only Administrators can create Employees.", null));
+                    .body(new ResponseDTO(VarList.Forbidden, "Only Administrators Can Manage Employees.", null));
         }
 
         userDTO.setRole(Role.Employee);

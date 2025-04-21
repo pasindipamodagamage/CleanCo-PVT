@@ -48,8 +48,9 @@
     <div class="row">
         <!-- User Profile and Navigation -->
         <div class="col-lg-3 mb-4">
+            <!-- User Profile Display -->
             <div class="user-profile text-center">
-                <img id="user-avatar" src="" alt="User Avatar"
+                <img id="user-avatar" src="/static/assets/user.png" alt="User Avatar"
                      class="user-avatar mb-3" style="height:100px; width:100px; object-fit:cover; border-radius:50%;">
                 <h4 id="user-name" class="fw-bold mb-0"></h4>
                 <p id="user-role" class="text-muted mb-0"></p>
@@ -63,7 +64,7 @@
                     <i class="fas fa-user-edit"></i> Update Profile
                 </a>
                 <a href="#" class="sidebar-link" id="newBookingLink">
-                    <i class="fas fa-plus-circle"></i> New Booking
+                    <i class="fas fa-plus-circle"></i> Booking
                 </a>
                 <a href="#" class="sidebar-link" id="paymentsLink">
                     <i class="fas fa-credit-card"></i> Payments
@@ -126,18 +127,12 @@
                                 <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Service</th>
+                                    <th>Description</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>April 5, 2025</td>
-                                    <td>Premium Cleaning</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td><button class="btn btn-sm btn-outline-primary feedback-btn">Feedback</button></td>
-                                </tr>
+                                <tbody id="recentBookingsBody"></tbody>
                                 </tbody>
                             </table>
                         </div>
@@ -157,7 +152,6 @@
                                          class="profile-picture mb-3" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
                                     <input type="file" id="profilePicInput" name="profilePicFile" accept="image/*" class="form-control mb-2">
                                     <input type="hidden" id="profilePic" name="profilePic">
-                                    <!--                                    <button type="button" id="uploadProfilePicBtn" class="btn btn-sm btn-primary">Upload</button>-->
                                 </div>
 
                                 <div class="col-md-9">
@@ -199,10 +193,32 @@
                                         <div class="col-md-6">
                                             <label for="district" class="form-label">District</label>
                                             <select class="form-select" id="district" name="address.district">
-                                                <option value="">Select District</option>
+                                                <option value="None">Select Your District</option>
+                                                <option value="Ampara">Ampara</option>
+                                                <option value="Anuradhapura">Anuradhapura</option>
+                                                <option value="Badulla">Badulla</option>
+                                                <option value="Batticaloa">Batticaloa</option>
                                                 <option value="Colombo">Colombo</option>
+                                                <option value="Galle">Galle</option>
                                                 <option value="Gampaha">Gampaha</option>
-                                                <!-- Add other districts as needed -->
+                                                <option value="Hambantota">Hambantota</option>
+                                                <option value="Jaffna">Jaffna</option>
+                                                <option value="Kalutara">Kalutara</option>
+                                                <option value="Kandy">Kandy</option>
+                                                <option value="Kilinochchi">Kilinochchi</option>
+                                                <option value="Kurunegala">Kurunegala</option>
+                                                <option value="Mannar">Mannar</option>
+                                                <option value="Matara">Matara</option>
+                                                <option value="Moneragala">Moneragala</option>
+                                                <option value="Mullaitivu">Mullaitivu</option>
+                                                <option value="Nuwara_Eliya">Nuwara Eliya</option>
+                                                <option value="Polonnaruwa">Polonnaruwa</option>
+                                                <option value="Puttalam">Puttalam</option>
+                                                <option value="Ratnapura">Ratnapura</option>
+                                                <option value="Trincomalee">Trincomalee</option>
+                                                <option value="Vavuniya">Vavuniya</option>
+                                                <option value="Matale">Matale</option>
+                                                <option value="Kegalle">Kegalle</option>
                                             </select>
                                         </div>
                                     </div>
@@ -257,7 +273,6 @@
             <!-- New Booking Form -->
             <div class="main-content d-none" id="newBookingContent">
                 <h2 class="fw-bold mb-4">New Booking</h2>
-
                 <div class="row g-4" id="cartServiceList">
                     <a href="#" class="btn btn-outline-primary w-100 mt-3 buy-plan-btn"
                        data-category-id="${item.id}"
@@ -265,7 +280,8 @@
             </div>
 
             <!-- Booking Modal -->
-            <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+            <div class="modal fade" id="bookingModal" tabindex="-1"
+                 aria-labelledby="bookingModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content p-3">
                         <div class="modal-header">
@@ -288,120 +304,23 @@
 
             <!-- Payments Section -->
             <div class="main-content d-none" id="paymentsContent">
-                <h2 class="fw-bold mb-4">Payment Methods</h2>
-
-                <div class="card mb-4">
+               <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Saved Payment Methods</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="list-group">
-                            <div class="list-group-item">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <i class="fab fa-cc-visa fa-2x me-3 text-primary"></i>
-                                        <span>Visa ending in 4242</span>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-danger">Remove</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-group-item">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <i class="fab fa-paypal fa-2x me-3 text-primary"></i>
-                                        <span>PayPal: lisa.smith@example.com</span>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-danger">Remove</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="mb-0">Add Payment Method</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="nav nav-tabs mb-4" id="paymentMethodTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="creditCard-tab" data-bs-toggle="tab" data-bs-target="#creditCard" type="button">Credit Card</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="paypal-tab" data-bs-toggle="tab" data-bs-target="#paypal" type="button">PayPal</button>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content" id="paymentMethodTabContent">
-                            <div class="tab-pane fade show active" id="creditCard" role="tabpanel">
-                                <form id="creditCardForm">
-                                    <div class="mb-3">
-                                        <label for="cardNumber" class="form-label">Card Number</label>
-                                        <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label for="expiryDate" class="form-label">Expiry Date</label>
-                                            <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="cvv" class="form-label">CVV</label>
-                                            <input type="text" class="form-control" id="cvv" placeholder="123" required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="cardName" class="form-label">Name on Card</label>
-                                        <input type="text" class="form-control" id="cardName" placeholder="Lisa Smith" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Save Card</button>
-                                </form>
-                            </div>
-                            <div class="tab-pane fade" id="paypal" role="tabpanel">
-                                <div class="text-center py-4">
-                                    <i class="fab fa-paypal fa-5x text-primary mb-3"></i>
-                                    <p class="mb-4">You'll be redirected to PayPal to complete your payment method setup.</p>
-                                    <button class="btn btn-primary">Connect with PayPal</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Payment History</h5>
+                        <h5 class="mb-0">Payments</h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
+                                    <th>Booking Id</th>
                                     <th>Date</th>
                                     <th>Amount</th>
-                                    <th>Service</th>
-                                    <th>Method</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>April 5, 2025</td>
-                                    <td>$120.00</td>
-                                    <td>Premium Cleaning</td>
-                                    <td>Visa 4242</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>March 22, 2025</td>
-                                    <td>$155.00</td>
-                                    <td>Premium + Windows</td>
-                                    <td>PayPal</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>

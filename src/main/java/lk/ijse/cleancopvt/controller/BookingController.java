@@ -1,23 +1,22 @@
 package lk.ijse.cleancopvt.controller;
 
 import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.HttpServletRequest;
 import lk.ijse.cleancopvt.Enum.BookingStatus;
 import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.BookingDTO;
+import lk.ijse.cleancopvt.dto.BookingUpdateDTO;
 import lk.ijse.cleancopvt.dto.CategoryDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
+import lk.ijse.cleancopvt.repo.BookingRepo;
 import lk.ijse.cleancopvt.service.impl.BookingServiceImpl;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.ResponseUtil;
 import lk.ijse.cleancopvt.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,6 +27,7 @@ public class BookingController {
     private final BookingServiceImpl bookingService;
     private final JwtUtil jwtUtil;
     private final ResponseDTO responseDTO;
+    private BookingRepo bookingRepo;
 
     @Autowired
     public BookingController(BookingServiceImpl bookingService, JwtUtil jwtUtil, ResponseDTO responseDTO) {
@@ -36,47 +36,8 @@ public class BookingController {
         this.responseDTO = responseDTO;
     }
 
-//    @PreAuthorize("hasRole('CUSTOMER')")
-//    @PostMapping("/addBooking")
-//    public ResponseEntity<?> addBooking(HttpServletRequest request, @RequestBody BookingDTO bookingDTO) {
-//        String authorization = request.getHeader("Authorization");
-//        if (!hasRequiredRole(authorization, Role.Customer)) {
-//            return ResponseEntity.status(403).body(new ResponseUtil(403, "Forbidden: User not authorized", null));
-//        }
-//
-//        // Get userId from the JWT token
-//        String token = authorization.substring(7); // Remove "Bearer " prefix
-//        Claims claims = jwtUtil.getUserRoleCodeFromToken(token);
-//        UUID userId = UUID.fromString(claims.getSubject()); // Assuming userId is stored as subject in the token
-//
-//        // Set booking details
-//        bookingDTO.setUserId(userId);
-//        bookingDTO.setBookingDate(LocalDate.now()); // Use the current date as booking date
-//        bookingDTO.setBookingTime(LocalTime.now()); // Use the current time as booking time
-//        bookingDTO.setBookingStatus(BookingStatus.PENDING); // Set status to PENDING
-//
-//        // Call the service to save the booking
-//        bookingService.addBooking(bookingDTO);
-//
-//        return ResponseEntity.ok(new ResponseUtil(200, "Booking Added Successfully", null));
-//    }
-
-//    @PostMapping("/addBooking")
-//    public ResponseEntity<String> addCategory(@RequestHeader("Authorization") String authorization, @RequestBody BookingDTO bookingDTO) {
-//        if (!hasRequiredRole(authorization, Role.Customer)) {
-//            return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
-//        }
-//
-//        try {
-//            bookingService.addBooking(bookingDTO);
-//            return ResponseEntity.status(VarList.Created).body("Booking created successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(VarList.Internal_Server_Error).body("Failed Booking " + e.getMessage());
-//        }
-//    }
-
     @PostMapping("/addBooking")
-    public ResponseEntity<ResponseUtil> addCategory(
+    public ResponseEntity<ResponseUtil> addBooking(
             @RequestHeader("Authorization") String authorization,
             @RequestBody BookingDTO bookingDTO) {
 
@@ -94,6 +55,99 @@ public class BookingController {
                     .body(new ResponseUtil(VarList.Internal_Server_Error, "Failed Booking: " + e.getMessage(), null));
         }
     }
+
+    @PutMapping("/confirmBooking/{id}")
+    public ResponseEntity<String> confirmBooking(@RequestHeader("Authorization") String authorization,
+                                                 @PathVariable("id") UUID id, @RequestBody BookingUpdateDTO bookingUpdateDTO) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+            return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
+        }
+
+        try {
+            bookingUpdateDTO.setBookingID(id);
+            bookingService.updateBooking(bookingUpdateDTO);
+            return ResponseEntity.status(VarList.OK).body("Booking is confirmed");
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body("Error updating: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/rejectBooking/{id}")
+    public ResponseEntity<String> rejectBooking(@RequestHeader("Authorization") String authorization,
+                                                @PathVariable("id") UUID id, @RequestBody BookingUpdateDTO bookingUpdateDTO) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+            return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
+        }
+
+        try {
+            bookingUpdateDTO.setBookingID(id);
+            bookingService.updateBooking(bookingUpdateDTO);
+            return ResponseEntity.status(VarList.OK).body("Booking is rejected");
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body("Error updating: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/cancelBooking/{id}")
+    public ResponseEntity<String> cancelBooking(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody BookingUpdateDTO bookingUpdateDTO) {
+        if (!hasRequiredRole(authorization, Role.Customer)) {
+            return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
+        }
+
+        try {
+            bookingUpdateDTO.setBookingID(id);
+            bookingService.updateBooking(bookingUpdateDTO);
+            return ResponseEntity.status(VarList.OK).body("Booking is cancelled");
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body("Error updating: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/completedBooking/{id}")
+    public ResponseEntity<String> completedBooking(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody BookingUpdateDTO bookingUpdateDTO) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
+            return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
+        }
+
+        try {
+            bookingUpdateDTO.setBookingID(id);
+            bookingService.updateBooking(bookingUpdateDTO);
+            return ResponseEntity.status(VarList.OK).body("Booking is completed");
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body("Error updating: " + e.getMessage());
+        }
+    }
+
+
+    @GetMapping("getAllBookings")
+    public ResponseEntity<List<BookingDTO>> getAllCategories(@RequestHeader("Authorization") String authorization) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee,Role.Customer)) {
+            return ResponseEntity.status(VarList.Forbidden).body(null);
+        }
+
+        try {
+            List<BookingDTO> bookings = bookingService.getAllBookings();
+            return ResponseEntity.status(VarList.OK).body(bookings);
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body(null);
+        }
+    }
+
+    @GetMapping("/countPendingBookings")
+    public ResponseEntity<ResponseUtil> getPendingBookingsCount() {
+        try {
+            long pendingBookingsCount = bookingService.countPendingBookings();
+            return ResponseEntity.ok(new ResponseUtil(VarList.OK, "Pending bookings count retrieved successfully", pendingBookingsCount));
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error)
+                    .body(new ResponseUtil(VarList.Internal_Server_Error, "Failed to retrieve pending bookings count: " + e.getMessage(), null));
+        }
+    }
+
+    public long countPendingBookings() {
+        return bookingRepo.countByBookingStatus(BookingStatus.PENDING);
+    }
+
 
     private boolean hasRequiredRole(String authorization, Role... roles) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {

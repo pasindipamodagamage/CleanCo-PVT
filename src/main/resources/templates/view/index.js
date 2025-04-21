@@ -103,8 +103,8 @@
             <div class="col-md-4 mb-4" data-aos="fade-up">
                 <div class="card pricing-card h-100 shadow rounded-4">
                     <div class="card-body p-4">
-                        <div class="text-muted mb-2 fw-semibold">${item.duration}</div>
-                        <h5 class="card-title fw-bold">${item.categoryName}</h5>
+                        <h5 class="card-title fw-bold" style="font-size: 2rem; margin-right: 2px">${item.categoryName} /<span style="font-size: 0.8rem">${item.duration}</span> </h5>
+                            <div class="text-muted mb-2" hidden="hidden">Category ID: ${item.id}</div>
                         <div class="price text-success">Rs. ${item.total.toFixed(2)}</div>
                         <ul class="list-unstyled mt-4">
                             ${servicesHtml}

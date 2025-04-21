@@ -30,6 +30,26 @@
             $('#userModalLabel').text('Add User');
             $('#userForm')[0].reset();
         });
+
+        let token = localStorage.getItem('authToken');
+        if (!token) {
+            console.error('JWT token not found!');
+            return;
+        }
+
+        $.ajax({
+            url: 'http://localhost:8082/api/v1/booking/countPendingBookings',
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function(response) {
+                $('#pendingBookingsCount').text(response.data);
+            },
+            error: function(error) {
+                console.error("Error fetching pending bookings count: ", error);
+            }
+        });
     });
 
     // logout
@@ -524,7 +544,6 @@
 
             const token = localStorage.getItem("authToken");
 
-            // Merge only non-empty fields, update password logic included
             const updatedUserData = {
                 name: {
                     firstName: $('#firstName').val().trim() || currentUserData.name?.firstName,
@@ -548,7 +567,7 @@
             const confirmPassword = $('#confirmPassword').val().trim();
 
             if (newPassword && newPassword === confirmPassword) {
-                updatedUserData.password = newPassword;  // Update password if entered and confirmed
+                updatedUserData.password = newPassword;
             } else if (newPassword && newPassword !== confirmPassword) {
                 alert("Passwords do not match.");
                 return;
@@ -586,7 +605,7 @@
 
             if (!token) {
                 alert("You are not logged in.");
-                window.location.href = "signIn.html";  // Redirect to login page if no token
+                window.location.href = "signIn.html";
                 return;
             }
 
@@ -602,9 +621,9 @@
                     const userRole = response.data;
                     if (userRole !== 'Employee' && userRole !== 'Administrator') {
                         alert("You do not have permission to manage users.");
-                        $('#manage-users').hide();  // Ensure that this element exists
+                        $('#manage-users').hide();
                     } else {
-                        loadUsers();  // Only load users if the role is correct
+                        loadUsers();
                     }
                 },
                 error: function () {
@@ -641,9 +660,6 @@
                             ${user.active ? 'Active' : 'Inactive'}
                         </span></td>
                         <td>
-                            <button class="btn btn-sm btn-info view-btn" data-bs-toggle="modal" data-bs-target="#userViewModal">
-                                <i class="fas fa-eye"></i>
-                            </button>
                             <button class="btn btn-sm btn-warning status-btn">
                                 <i class="fas fa-ban"></i>
                             </button>
@@ -658,8 +674,6 @@
                 }
             });
         }
-
-        // Call the function to check user role on page load
         checkUserRole();
     });
 
@@ -672,20 +686,6 @@
             window.location.href = "signIn.html";
             return;
         }
-
-        $.ajax({
-            url: `http://localhost:8082/api/v1/user/toggleStatus/${nicNumber}`,
-            type: "PUT",
-            headers: {
-                "Authorization": "Bearer " + token
-            },
-            success: function () {
-                loadUsers(); // Refresh the table after toggling
-            },
-            error: function () {
-                alert("Failed to toggle user status.");
-            }
-        });
     });
 
     // login data
@@ -705,16 +705,13 @@
                 .then(data => {
                     const user = data.data;
 
-                    // Set avatar
                     const avatar = document.getElementById("user-avatar");
                     avatar.src = user.profilePic ? user.profilePic : "static/assets/user.jpeg";
 
-                    // Set full name
                     const name = document.getElementById("user-name");
                     const fullName = user.name.firstName + " " + user.name.lastName;
                     name.textContent = fullName;
 
-                    // Set role
                     const role = document.getElementById("user-role");
                     role.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1).toLowerCase();
                 })
@@ -747,10 +744,9 @@
                         Swal.fire({
                             icon: 'warning',
                             title: 'Access Denied',
-                            text: 'Only administrators can register employees.',
+                            text: 'Only Administrators Can Manage Employees.',
                             confirmButtonText: 'Ok'
                         }).then(() => {
-                            // Disable form and buttons for non-employee users
                             $('#employeeRegister :input').prop('disabled', true);
                             $('.btn-create-account').prop('disabled', true);
                         });
