@@ -939,7 +939,7 @@
                     "Content-Type": "application/json"
                 },
                 data: JSON.stringify({
-                    bookingStatus: status // ✅ must match field in BookingUpdateDTO
+                    bookingStatus: status
                 }),
                 success: function (res) {
                     alert(res);
@@ -993,22 +993,19 @@
                     const table = $("#rejectedAppointmentsTable");
                     let tbody = table.find("tbody");
 
-                    // Check if tbody exists, otherwise create it
                     if (!tbody.length) {
                         tbody = $("<tbody></tbody>");
                         table.append(tbody);
                     }
 
-                    tbody.empty();  // Clear any existing rows
+                    tbody.empty();
 
-                    // Check if the bookings array is valid
                     if (!Array.isArray(bookings)) {
                         console.warn("Expected an array, got:", bookings);
                         return;
                     }
 
                     bookings.forEach(function (booking) {
-                        // Check if booking.name is not null or undefined
                         const fullName = booking.name && booking.name.firstName && booking.name.lastName
                             ? `${booking.name.firstName} ${booking.name.lastName}`
                             : "Unknown";
@@ -1031,7 +1028,7 @@
                             <td>${formattedTime}</td>
                         </tr>
                     `;
-                        tbody.append(row);  // Append the new row to tbody
+                        tbody.append(row);
                     });
                 },
                 error: function (xhr) {
@@ -1041,7 +1038,6 @@
             });
         }
 
-        // Call the loadRejectedBookings function to fetch and display rejected bookings
         loadRejectedBookings();
     });
 
