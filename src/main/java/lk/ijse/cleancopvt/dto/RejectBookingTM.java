@@ -10,13 +10,12 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class PendingBooking {
+@NoArgsConstructor
+public class RejectBookingTM {
     private UUID id;
     private Name name;
     private String categoryName;
-    private String customerContact;
     private LocalDate bookingDate;
     private LocalTime bookingTime;
 }

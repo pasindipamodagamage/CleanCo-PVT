@@ -138,13 +138,13 @@ public class BookingController {
     }
 
     @GetMapping("/getAllPendingBookings")
-    public ResponseEntity<List<PendingBooking>> getAllPendingBookings(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<List<PendingBookingTM>> getAllPendingBookings(@RequestHeader("Authorization") String authorization) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
             return ResponseEntity.status(VarList.Forbidden).body(null);
         }
 
         try {
-            List<PendingBooking> bookings = bookingService.getAllPendingBookings();
+            List<PendingBookingTM> bookings = bookingService.getAllPendingBookings();
             return ResponseEntity.status(VarList.OK).body(bookings);
         } catch (Exception e) {
             return ResponseEntity.status(VarList.Internal_Server_Error).body(null);
@@ -181,17 +181,17 @@ public class BookingController {
         return bookingRepo.countByBookingStatus(BookingStatus.PENDING);
     }
 
-    @GetMapping("/rejectedBookings")
-    public ResponseEntity<?> getRejectedBookings(@RequestHeader("Authorization") String authorization) {
-        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
-            return ResponseEntity.status(VarList.Forbidden).body("Access denied");
+    @GetMapping("/getAllRejectedBookings")
+    public ResponseEntity<List<RejectBookingTM>> getAllRejectedBookings(@RequestHeader("Authorization") String authorization) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee,Role.Customer)) {
+            return ResponseEntity.status(VarList.Forbidden).body(null);
         }
 
         try {
-            List<BookingDTO> rejectedList = bookingService.getBookingsByStatus(BookingStatus.REJECTED);
-            return ResponseEntity.status(VarList.OK).body(rejectedList);
+            List<RejectBookingTM> bookings = bookingService.getAllRejectBookings();
+            return ResponseEntity.status(VarList.OK).body(bookings);
         } catch (Exception e) {
-            return ResponseEntity.status(VarList.Internal_Server_Error).body("Error: " + e.getMessage());
+            return ResponseEntity.status(VarList.Internal_Server_Error).body(null);
         }
     }
 

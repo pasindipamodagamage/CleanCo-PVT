@@ -8,15 +8,12 @@ import lk.ijse.cleancopvt.entity.User;
 import lk.ijse.cleancopvt.repo.BookingRepo;
 import lk.ijse.cleancopvt.repo.CategoryRepo;
 import lk.ijse.cleancopvt.repo.UserRepo;
-import lk.ijse.cleancopvt.service.BookingService;
-import lk.ijse.cleancopvt.util.ResponseUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -43,11 +40,11 @@ public class BookingServiceImpl {
                 .collect(Collectors.toList());
     }
 
-    public List<PendingBooking> getAllPendingBookings() {
+    public List<PendingBookingTM> getAllPendingBookings() {
         List<Booking> pendingBookings = bookingRepo.findByBookingStatus(BookingStatus.PENDING);
 
         return pendingBookings.stream()
-                .map(booking -> new PendingBooking(
+                .map(booking -> new PendingBookingTM(
                         booking.getId(),
                         booking.getUser().getName(),
                         booking.getCategory().getName(),
@@ -58,6 +55,19 @@ public class BookingServiceImpl {
                 .collect(Collectors.toList());
     }
 
+    public List<RejectBookingTM> getAllRejectBookings() {
+        List<Booking> rejectBooking = bookingRepo.findByBookingStatus(BookingStatus.REJECTED);
+
+        return rejectBooking.stream()
+                .map(booking -> new RejectBookingTM(
+                        booking.getId(),
+                        booking.getUser().getName(),
+                        booking.getCategory().getName(),
+                        booking.getBookingDate(),
+                        booking.getBookingTime()
+                ))
+                .collect(Collectors.toList());
+    }
     public List<BookingDTO> getBookingsByStatus(BookingStatus status) {
         List<Booking> bookings = bookingRepo.findByBookingStatus(status);
         return bookings.stream()

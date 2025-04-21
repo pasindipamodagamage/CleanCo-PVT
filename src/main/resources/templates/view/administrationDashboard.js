@@ -925,7 +925,6 @@
             }
         });
 
-        // Handle confirm/reject buttons
         $("#pendingAppointmentsBody").on("click", ".confirm-btn, .reject-btn", function () {
             const $row = $(this).closest("tr");
             const bookingId = $row.data("id");
@@ -975,42 +974,76 @@
         });
     });
 
-    function loadRejectedBookings() {
+    $(document).ready(function () {
         const token = localStorage.getItem("authToken");
 
-        $.ajax({
-            url: "http://localhost:8082/api/v1/booking/rejectedBookings",
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-            success: function (bookings) {
-                const tbody = $("#rejectedAppointmentsTable tbody");
-                tbody.empty();
+        if (!token) {
+            alert("No token found. Please log in.");
+            return;
+        }
 
-                bookings.forEach(function (booking) {
-                    const fullName = booking.name
-                        ? `${booking.name.firstName} ${booking.name.lastName}`
-                        : (booking.userName || "Unknown");
+        function loadRejectedBookings() {
+            $.ajax({
+                url: "http://localhost:8082/api/v1/booking/getAllRejectedBookings",
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                success: function (bookings) {
+                    const table = $("#rejectedAppointmentsTable");
+                    let tbody = table.find("tbody");
 
-                    const formattedDate = new Date(booking.bookingDate).toLocaleDateString();
-                    const formattedTime = booking.bookingTime?.slice(0, 5) || "--:--";
+                    // Check if tbody exists, otherwise create it
+                    if (!tbody.length) {
+                        tbody = $("<tbody></tbody>");
+                        table.append(tbody);
+                    }
 
-                    const row = `
-                    <tr>
-                        <td>${booking.bookingId}</td>
-                        <td>${fullName}</td>
-                        <td>${booking.categoryName}</td>
-                        <td>${formattedDate}</td>
-                        <td>${formattedTime}</td>
-                    </tr>
-                `;
-                    tbody.append(row);
-                });
-            },
-            error: function (xhr) {
-                console.error("Error loading rejected bookings", xhr.responseText);
-                alert("Failed to load rejected bookings: " + xhr.status);
-            }
-        });
-    }
+                    tbody.empty();  // Clear any existing rows
+
+                    // Check if the bookings array is valid
+                    if (!Array.isArray(bookings)) {
+                        console.warn("Expected an array, got:", bookings);
+                        return;
+                    }
+
+                    bookings.forEach(function (booking) {
+                        // Check if booking.name is not null or undefined
+                        const fullName = booking.name && booking.name.firstName && booking.name.lastName
+                            ? `${booking.name.firstName} ${booking.name.lastName}`
+                            : "Unknown";
+
+                        const formattedDate = booking.bookingDate
+                            ? new Date(booking.bookingDate).toLocaleDateString()
+                            : "--/--/----";
+
+                        const formattedTime = booking.bookingTime
+                            ? booking.bookingTime.slice(0, 5)
+                            : "--:--";
+
+                        // Create a table row dynamically
+                        const row = `
+                        <tr>
+                            <td>${booking.id}</td>
+                            <td>${fullName}</td>
+                            <td>${booking.categoryName}</td>
+                            <td>${formattedDate}</td>
+                            <td>${formattedTime}</td>
+                        </tr>
+                    `;
+                        tbody.append(row);  // Append the new row to tbody
+                    });
+                },
+                error: function (xhr) {
+                    console.error("Error loading rejected bookings:", xhr);
+                    alert("Failed to load rejected bookings. Status: " + xhr.status);
+                }
+            });
+        }
+
+        // Call the loadRejectedBookings function to fetch and display rejected bookings
+        loadRejectedBookings();
+    });
+
+
+
