@@ -61,7 +61,7 @@ public class BookingController {
         }
 
         try {
-            bookingUpdateDTO.setBookingID(id);
+            bookingUpdateDTO.setBookingId(id);
             bookingService.updateBooking(bookingUpdateDTO);
             return ResponseEntity.status(VarList.OK).body("Booking is confirmed");
         } catch (Exception e) {
@@ -77,7 +77,7 @@ public class BookingController {
         }
 
         try {
-            bookingUpdateDTO.setBookingID(id);
+            bookingUpdateDTO.setBookingId(id);
             bookingService.updateBooking(bookingUpdateDTO);
             return ResponseEntity.status(VarList.OK).body("Booking is rejected");
         } catch (Exception e) {
@@ -86,19 +86,26 @@ public class BookingController {
     }
 
     @PutMapping("/cancelBooking/{id}")
-    public ResponseEntity<String> cancelBooking(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody BookingUpdateDTO bookingUpdateDTO) {
+    public ResponseEntity<String> cancelBooking(@RequestHeader("Authorization") String authorization,
+                                                @PathVariable("id") UUID id,
+                                                @RequestBody BookingUpdateDTO bookingUpdateDTO) {
         if (!hasRequiredRole(authorization, Role.Customer)) {
             return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
         }
 
         try {
-            bookingUpdateDTO.setBookingID(id);
+            if (bookingUpdateDTO.getBookingStatus() == null) {
+                bookingUpdateDTO.setBookingStatus(BookingStatus.CANCELLED); // Make sure you are using the correct enum
+            }
+
+            bookingUpdateDTO.setBookingId(id);
             bookingService.updateBooking(bookingUpdateDTO);
             return ResponseEntity.status(VarList.OK).body("Booking is cancelled");
         } catch (Exception e) {
             return ResponseEntity.status(VarList.Internal_Server_Error).body("Error updating: " + e.getMessage());
         }
     }
+
 
     @PutMapping("/completedBooking/{id}")
     public ResponseEntity<String> completedBooking(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody BookingUpdateDTO bookingUpdateDTO) {
@@ -107,7 +114,7 @@ public class BookingController {
         }
 
         try {
-            bookingUpdateDTO.setBookingID(id);
+            bookingUpdateDTO.setBookingId(id);
             bookingService.updateBooking(bookingUpdateDTO);
             return ResponseEntity.status(VarList.OK).body("Booking is completed");
         } catch (Exception e) {

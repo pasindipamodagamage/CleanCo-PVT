@@ -597,85 +597,6 @@
         loadUserProfile();
     });
 
-    // user deactivated
-    $(document).ready(function () {
-        // Check if the user is logged in and has the correct role
-        function checkUserRole() {
-            const token = localStorage.getItem("authToken");
-
-            if (!token) {
-                alert("You are not logged in.");
-                window.location.href = "signIn.html";
-                return;
-            }
-
-            const headers = {
-                "Authorization": "Bearer " + token
-            };
-
-            $.ajax({
-                url: "http://localhost:8082/api/v1/user/getRole",
-                type: "GET",
-                headers: headers,
-                success: function (response) {
-                    const userRole = response.data;
-                    if (userRole !== 'Employee' && userRole !== 'Administrator') {
-                        alert("You do not have permission to manage users.");
-                        $('#manage-users').hide();
-                    } else {
-                        loadUsers();
-                    }
-                },
-                error: function () {
-                    alert("Failed to fetch user role.");
-                }
-            });
-        }
-
-        function loadUsers() {
-            const token = localStorage.getItem("authToken");
-            if (!token) {
-                alert("You are not logged in.");
-                window.location.href = "signIn.html";  // Redirect to login page
-                return;
-            }
-
-            $.ajax({
-                url: "http://localhost:8082/api/v1/user/getAllUsers",  // Correct endpoint to get users
-                type: "GET",
-                headers: {
-                    "Authorization": "Bearer " + token
-                },
-                success: function (response) {
-                    const users = response.data;
-                    let tbody = '';
-                    users.forEach(user => {
-                        tbody += `
-                    <tr data-id="${user.nicNumber}">
-                        <td>${user.nicNumber}</td>
-                        <td>${user.name.firstName} ${user.name.lastName}</td>
-                        <td>${user.email}</td>
-                        <td>${user.role}</td>
-                        <td><span class="badge ${user.active ? 'bg-success' : 'bg-danger'}">
-                            ${user.active ? 'Active' : 'Inactive'}
-                        </span></td>
-                        <td>
-                            <button class="btn btn-sm btn-warning status-btn">
-                                <i class="fas fa-ban"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-                    });
-                    $('#usersTable tbody').html(tbody);
-                },
-                error: function () {
-                    alert("Failed to load users.");
-                }
-            });
-        }
-        checkUserRole();
-    });
 
     $('#usersTable').on('click', '.status-btn', function () {
         const nicNumber = $(this).closest('tr').data('id');
@@ -803,12 +724,14 @@
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function (response) {
-                    // handle success
                     Swal.fire({
                         icon: 'success',
                         title: 'Employee Created',
                         text: response.message,
                         confirmButtonText: 'Ok'
+                    });then(() =>{
+                        window.location.href = "administrationDashboard.html#usersTable";
+                        window.location.reload();
                     });
                 },
                 error: function (xhr) {
@@ -825,6 +748,179 @@
 
         checkUserRoleAndEnableSignup();
     });
+
+    $(document).ready(function () {
+
+        function checkUserRole() {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "signIn.html";
+                return;
+            }
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/getRole",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (response) {
+                    const userRole = response.data;
+                    if (userRole !== 'Employee' && userRole !== 'Administrator') {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Access Denied',
+                            text: 'Only Employees and Administrators can manage users.',
+                            confirmButtonText: 'Ok'
+                        }).then(() => {
+                            $('#manage-users').hide();
+                        });
+                    } else {
+                        loadUsers();
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to fetch user role.',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            });
+        }
+
+        function loadUsers() {
+            const token = localStorage.getItem("authToken");
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/user/getAllUsers",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (response) {
+                    const users = response.data;
+                    let tbody = '';
+                    users.forEach(user => {
+                        tbody += `
+                        <tr data-id="${user.nicNumber}">
+                            <td>${user.nicNumber}</td>
+                            <td>${user.name.firstName} ${user.name.lastName}</td>
+                            <td>${user.email}</td>
+                            <td>${user.role}</td>
+                            <td>
+                                <span class="badge ${user.active ? 'bg-success' : 'bg-danger'}">
+                                    ${user.active ? 'Active' : 'Inactive'}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-warning status-btn" data-email="${user.email}">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    });
+                    $('#usersTable tbody').html(tbody);
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to load users.',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            });
+        }
+
+        // 🔄 Toggle deactivate on status button click
+        $('#usersTable').on('click', '.status-btn', function () {
+            const token = localStorage.getItem("authToken");
+            const userEmail = $(this).data("email");
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to deactivate this user account.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Yes, deactivate!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'http://localhost:8082/api/v1/user/deleteAccountByAdmin/' + userEmail,
+                        type: 'PUT',
+                        headers: {
+                            "Authorization": "Bearer " + token
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deactivated!',
+                                text: response.message,
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                loadUsers();
+                            });
+                        },
+                        error: function (xhr) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: xhr.responseJSON?.message || 'Failed to deactivate account.',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        checkUserRole();
+    });
+    // $(document).ready(function () {
+    //     const token = localStorage.getItem("authToken");
+    //
+    //     $.ajax({
+    //         url: "http://localhost:8082/api/v1/booking/getAllPendingBookings",
+    //         method: "GET",
+    //         headers: {
+    //             Authorization: `Bearer ${token}`
+    //         },
+    //         success: function (data) {
+    //             let tableBody = $("#pendingAppointmentsBody");
+    //             tableBody.empty();
+    //
+    //             data.forEach(booking => {
+    //                 const fullName = `${booking.name.firstName} ${booking.name.lastName}`;
+    //                 const formattedDate = new Date(booking.bookingDate).toLocaleDateString();
+    //                 const formattedTime = booking.bookingTime.slice(0, 5);
+    //
+    //                 tableBody.append(`
+    //                 <tr>
+    //                     <td>${fullName}</td>
+    //                     <td>${booking.categoryName}</td>
+    //                     <td>${booking.customerContact}</td>
+    //                     <td>${formattedDate}</td>
+    //                     <td>${formattedTime}</td>
+    //                     <td>
+    //                         <button class="btn btn-sm btn-success">Confirm</button>
+    //                         <button class="btn btn-sm btn-danger">Reject</button>
+    //                     </td>
+    //                 </tr>
+    //             `);
+    //             });
+    //         },
+    //         error: function () {
+    //             alert("Failed to fetch pending bookings.");
+    //         }
+    //     });
+    // });
 
     $(document).ready(function () {
         const token = localStorage.getItem("authToken");
@@ -934,6 +1030,26 @@
             },
             error: function (xhr) {
                 alert("Error: " + (xhr.responseText || "Could not update booking."));
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8082/api/v1/user/countCustomers",
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("authToken")
+            },
+            success: function (res) {
+                if (res.code === "00") {
+                    $('#customerCount').text(res.data);
+                } else {
+                    console.error("Error: " + res.message);
+                }
+            },
+            error: function (xhr) {
+                console.error("Request failed: ", xhr.responseText);
             }
         });
     });

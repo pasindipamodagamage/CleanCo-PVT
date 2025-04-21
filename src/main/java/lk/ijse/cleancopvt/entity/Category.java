@@ -23,10 +23,10 @@ public class Category {
     private String description;
     private Duration duration;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     private List<ServicesSet> servicesSets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
 
 }

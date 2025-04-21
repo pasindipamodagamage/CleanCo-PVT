@@ -1,5 +1,7 @@
 package lk.ijse.cleancopvt.service.impl;
 
+import lk.ijse.cleancopvt.Enum.BookingStatus;
+import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.UpdateUserDTO;
 import lk.ijse.cleancopvt.dto.UserDTO;
 import lk.ijse.cleancopvt.entity.User;
@@ -140,6 +142,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             user.setActive(!user.isActive());
             userRepository.save(user);
             return VarList.OK;
+        }
+        return VarList.Not_Found;
+    }
+
+//    @Override
+    public long countCustomer() {
+        return userRepository.countCustomer(Role.Customer);
+    }
+
+    public int deactivateUserByNic(String nic) {
+        User user = userRepository.findByNicNumber(nic);
+        if (user != null) {
+            user.setActive(false);
+            user.setPassword(null);
+            userRepository.save(user);
+            return VarList.Created;
         }
         return VarList.Not_Found;
     }

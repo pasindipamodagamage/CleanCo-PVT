@@ -89,13 +89,12 @@ public class BookingServiceImpl {
     }
 
     public void updateBooking(BookingUpdateDTO dto) {
-        Booking booking = bookingRepo.findById(dto.getBookingID())
+        Booking booking = bookingRepo.findById(dto.getBookingId())
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
-        booking.setBookingStatus(dto.getStatus());
+        booking.setBookingStatus(dto.getBookingStatus());
         bookingRepo.save(booking);
     }
-
 
     public long countPendingBookings() {
         return bookingRepo.countByBookingStatus(BookingStatus.PENDING);

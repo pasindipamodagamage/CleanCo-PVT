@@ -4,10 +4,13 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lk.ijse.cleancopvt.Enum.BookingStatus;
 import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.*;
+import lk.ijse.cleancopvt.repo.UserRepo;
 import lk.ijse.cleancopvt.service.impl.UserServiceImpl;
 import lk.ijse.cleancopvt.util.JwtUtil;
+import lk.ijse.cleancopvt.util.ResponseUtil;
 import lk.ijse.cleancopvt.util.VarList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -221,5 +224,30 @@ public class UserController {
                     .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
     }
+
+    @GetMapping("/countCustomers")
+    public ResponseEntity<ResponseUtil> getCustomerCount() {
+        try {
+            long countCustomer = userService.countCustomer();
+            return ResponseEntity.ok(new ResponseUtil(VarList.OK, "Customer count fetched successfully", countCustomer));
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error)
+                    .body(new ResponseUtil(VarList.Internal_Server_Error, "Failed to retrieve customer count: " + e.getMessage(), null));
+        }
+    }
+
+    @PutMapping("/deleteAccountByAdmin/{email}")
+    public ResponseEntity<ResponseDTO> deleteAccountByAdmin(@PathVariable String email) {
+        int result = userService.deleteAccount(email);
+
+        if (result == VarList.Created) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseDTO(VarList.Created, "Account deactivated successfully", null));
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ResponseDTO(VarList.Not_Found, "User not found", null));
+    }
+
 
 }

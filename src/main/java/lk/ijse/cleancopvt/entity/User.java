@@ -23,8 +23,11 @@ public class User {
 
     private String profilePic;
     private String nicNumber;
+    @Embedded
     private Name name;
+    @Embedded
     private Address address;
+    @Enumerated(EnumType.STRING)
     private Role role;
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean active = true;
