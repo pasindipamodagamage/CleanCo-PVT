@@ -1,10 +1,11 @@
 package lk.ijse.cleancopvt.controller;
 
+import io.jsonwebtoken.Claims;
+import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.FeedbackDTO;
 import lk.ijse.cleancopvt.dto.ResponseDTO;
 import lk.ijse.cleancopvt.service.impl.FeedbackServiceImpl;
 import lk.ijse.cleancopvt.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,10 @@ import java.util.UUID;
 @CrossOrigin("*")
 public class FeedbackController {
 
-    @Autowired
     private final FeedbackServiceImpl feedbackService;
 
-    @Autowired
     private final JwtUtil jwtUtil;
 
-    @Autowired
     private final ResponseDTO responseDTO;
 
     public FeedbackController(FeedbackServiceImpl feedbackService, JwtUtil jwtUtil, ResponseDTO responseDTO) {
@@ -53,5 +51,23 @@ public class FeedbackController {
     public ResponseEntity<List<FeedbackDTO>> viewAllFeedbacks() {
         List<FeedbackDTO> feedbacks = feedbackService.viewAllFeedbacks();
         return ResponseEntity.ok(feedbacks);
+    }
+
+    private boolean hasRequiredRole(String authorization, Role... roles) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return false;
+        }
+
+        String token = authorization.substring(7);
+        Claims claims = jwtUtil.getUserRoleCodeFromToken(token);
+        String userRole = claims.get("role", String.class);
+
+        for (Role role : roles) {
+            if (role.name().equalsIgnoreCase(userRole)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

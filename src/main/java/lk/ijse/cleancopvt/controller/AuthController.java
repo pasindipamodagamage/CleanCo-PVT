@@ -21,7 +21,7 @@ public class AuthController {
 
     private final UserServiceImpl userService;
 
-    public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserServiceImpl userService, ResponseDTO responseDTO) {
+    public AuthController(JwtUtil jwtUtil, UserServiceImpl userService, ResponseDTO responseDTO) {
         this.jwtUtil = jwtUtil;
         this.userService = userService;
     }

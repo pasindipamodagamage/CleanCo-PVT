@@ -192,7 +192,6 @@ $(document).ready(function () {
                 if (response && response.data) {
                     currentUserData = response.data;
 
-                    // Set input fields
                     $('#firstName').val(currentUserData.name?.firstName || '');
                     $('#lastName').val(currentUserData.name?.lastName || '');
                     $('#nicNumber').val(currentUserData.nicNumber || '');
@@ -205,12 +204,10 @@ $(document).ready(function () {
                     $('#city').val(currentUserData.address?.city || '');
                     $('#district').val(currentUserData.address?.district || '');
 
-                    // Set avatar
                     const profilePicUrl = currentUserData.profilePic || '/static/assets/user.png';
                     $('#user-avatar').attr('src', profilePicUrl);
                     $('#profilePicPreview').attr('src', profilePicUrl);
 
-                    // Set user name and role
                     $('#user-name').text(`${currentUserData.name?.firstName || ''} ${currentUserData.name?.lastName || ''}`);
                     $('#user-role').text(currentUserData.role || 'User');
                 } else {
@@ -286,7 +283,6 @@ $(document).ready(function () {
         });
     });
 
-    // Load profile and validate role
     if (typeof checkUserRole === "function") {
         checkUserRole();
     }
@@ -319,7 +315,7 @@ $(document).ready(function () {
             error: function (xhr) {
                 console.error("Failed to load service cart details:", xhr);
                 $('#cartServiceList').html('<p class="text-danger">Failed to load services.</p>');
-                $('#cartServiceList').removeAttr('hidden'); // Ensure it is shown even if there's an error
+                $('#cartServiceList').removeAttr('hidden');
             }
         });
     }
@@ -341,7 +337,8 @@ $(document).ready(function () {
                             <ul class="list-unstyled mt-4">
                                 ${servicesHtml}
                             </ul>
-                            <a href="#" class="btn btn-outline-primary w-100 mt-3 buy-plan-btn" data-category-id="${item.id}" data-category-name="${item.categoryName}">Buy Plan</a>
+                            <a href="#" class="btn btn-outline-primary w-100 mt-3 buy-plan-btn" 
+                            data-category-id="${item.id}" data-category-name="${item.categoryName}">Buy Plan</a>
                         </div>
                     </div>
                 </div>`;
@@ -409,110 +406,208 @@ $(document).ready(function () {
     loadServiceCartDetails();
 });
 
-// /////////////////////////////////////////////
+// $(document).ready(function () {
+//     const userId = localStorage.getItem("userId");
+//
+//     $.ajax({
+//         url: `http://localhost:8082/api/v1/booking/getBookingsForUser?userId=${userId}`,
+//         method: 'GET',
+//         headers: {
+//             'Authorization': 'Bearer ' + localStorage.getItem("authToken")
+//         },
+//         success: function (data) {
+//             const tbody = $('#recentBookingsBody');
+//             tbody.empty();
+//
+//             data.forEach(booking => {
+//                 const statusBadge = getStatusBadge(booking.bookingStatus);
+//                 const isRejectedOrCancelled = booking.bookingStatus === "REJECTED" || booking.bookingStatus === "CANCELLED";
+//
+//                 const row = `
+//                     <tr data-booking-id="${booking.bookingID}">
+//                         <td>${booking.bookingDate}</td>
+//                         <td>${booking.categoryName}</td>
+//                         <td class="status-badge">${statusBadge}</td>
+//                         <td>
+//                             <button class="btn btn-sm btn-outline-primary me-1 feedback-btn" ${isRejectedOrCancelled ? "disabled" : ""}>Feedback</button>
+//                             <button class="btn btn-sm btn-outline-success me-1 pay-btn" ${isRejectedOrCancelled ? "disabled" : ""}>Pay</button>
+//                             <button class="btn btn-sm btn-outline-danger cancel-btn" ${isRejectedOrCancelled ? "disabled" : ""}>Cancel</button>
+//                         </td>
+//                     </tr>
+//                 `;
+//                 tbody.append(row);
+//             });
+//
+//             $('.cancel-btn').on('click', function () {
+//                 const row = $(this).closest('tr');
+//                 const bookingId = row.data('booking-id');
+//
+//                 if (!bookingId) {
+//                     alert("Booking ID is missing.");
+//                     return;
+//                 }
+//
+//                 const token = localStorage.getItem("authToken");
+//                 if (!token) {
+//                     alert("You are not logged in.");
+//                     window.location.href = "signIn.html";
+//                     return;
+//                 }
+//
+//                 // Check the user's role
+//                 $.ajax({
+//                     url: "http://localhost:8082/api/v1/user/getRole",
+//                     type: "GET",
+//                     headers: {
+//                         "Authorization": "Bearer " + token
+//                     },
+//                     success: function (response) {
+//                         const userRole = response.data;
+//                         if (userRole !== "Customer") {
+//                             alert("Only customers can cancel bookings.");
+//                             return;
+//                         }
+//
+//                         // Proceed to cancel
+//                         $.ajax({
+//                             url: `http://localhost:8082/api/v1/booking/cancelBooking/${bookingId}`,
+//                             type: "PUT",
+//                             headers: {
+//                                 "Authorization": "Bearer " + token
+//                             },
+//                             success: function () {
+//                                 row.find('.status-badge').html(getStatusBadge("CANCELLED"));
+//                                 row.find('.feedback-btn').prop('disabled', true);
+//                                 row.find('.pay-btn').prop('disabled', true);
+//                                 row.find('.cancel-btn').prop('disabled', true);
+//                                 alert("Booking successfully cancelled.");
+//                             },
+//                             error: function (xhr) {
+//                                 console.error("Cancel error:", xhr.responseText);
+//                                 alert(xhr.responseText || "Failed to cancel booking.");
+//                             }
+//                         });
+//
+//                     },
+//                     error: function () {
+//                         alert("Failed to fetch user role.");
+//                     }
+//                 });
+//             });
+//         },
+//         error: function () {
+//             alert("Failed to load bookings.");
+//         }
+//     });
+//
+//     // Function to get the status badge
+//     function getStatusBadge(status) {
+//         let className = "bg-secondary";
+//         if (status === "COMPLETED") className = "bg-success";
+//         else if (status === "PENDING") className = "bg-warning";
+//         else if (status === "CANCELLED" || status === "REJECTED") className = "bg-danger";
+//         else if (status === "CONFIRMED") className = "bg-primary";
+//
+//         return `<span class="badge ${className}">${status.charAt(0) + status.slice(1).toLowerCase()}</span>`;
+//     }
+// });
+
 $(document).ready(function () {
     const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("authToken");
 
+    if (!token || !userId) {
+        alert("You are not logged in.");
+        window.location.href = "signIn.html";
+        return;
+    }
+
+    // Step 1: Get user role first
     $.ajax({
-        url: `http://localhost:8082/api/v1/booking/getBookingsForUser?userId=${userId}`,
-        method: 'GET',
+        url: "http://localhost:8082/api/v1/user/getRole",
+        type: "GET",
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem("authToken")
+            "Authorization": "Bearer " + token
         },
-        success: function (data) {
-            const tbody = $('#recentBookingsBody');
-            tbody.empty();
+        success: function (roleResponse) {
+            const userRole = roleResponse.data;
 
-            data.forEach(booking => {
-                const statusBadge = getStatusBadge(booking.bookingStatus);
-                const isRejectedOrCancelled = booking.bookingStatus === "REJECTED" || booking.bookingStatus === "CANCELLED";
+            // Step 2: Load bookings after role is known
+            $.ajax({
+                url: `http://localhost:8082/api/v1/booking/getBookingsForUser?userId=${userId}`,
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function (data) {
+                    const tbody = $('#recentBookingsBody');
+                    tbody.empty();
 
-                const row = `
-                        <tr data-booking-id="${booking.bookingID}">
-                            <td>${booking.bookingDate}</td>
-                            <td>${booking.categoryName}</td>
-                            <td class="status-badge">${statusBadge}</td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary me-1 feedback-btn" ${isRejectedOrCancelled ? "disabled" : ""}>Feedback</button>
-                                <button class="btn btn-sm btn-outline-success me-1 pay-btn" ${isRejectedOrCancelled ? "disabled" : ""}>Pay</button>
-                                <button class="btn btn-sm btn-outline-danger cancel-btn" ${isRejectedOrCancelled ? "disabled" : ""}>Cancel</button>
-                            </td>
-                    </tr>
-                `;
-                tbody.append(row);
-            });
+                    data.forEach(booking => {
+                        const statusBadge = getStatusBadge(booking.bookingStatus);
+                        const isRejectedOrCancelled = booking.bookingStatus === "REJECTED" || booking.bookingStatus === "CANCELLED";
 
-            // Cancel button click handler
-            $('.cancel-btn').on('click', function () {
-                const row = $(this).closest('tr');
-                const bookingId = row.data('booking-id'); // Get the booking ID
+                        // Only show cancel button for CUSTOMERS
+                        const cancelButton = (userRole === "CUSTOMER" && !isRejectedOrCancelled)
+                            ? `<button class="btn btn-sm btn-outline-danger cancel-btn">Cancel</button>`
+                            : `<button class="btn btn-sm btn-outline-danger cancel-btn" disabled>Cancel</button>`;
 
-                if (!bookingId) {
-                    alert("Booking ID is missing.");
-                    return;
-                }
+                        const row = `
+                            <tr data-booking-id="${booking.bookingID}">
+                                <td>${booking.bookingDate}</td>
+                                <td>${booking.categoryName}</td>
+                                <td class="status-badge">${statusBadge}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1 feedback-btn" ${isRejectedOrCancelled ? "disabled" : ""}>Feedback</button>
+                                    <button class="btn btn-sm btn-outline-success me-1 pay-btn" ${isRejectedOrCancelled ? "disabled" : ""}>Pay</button>
+                                    ${cancelButton}
+                                </td>
+                            </tr>
+                        `;
+                        tbody.append(row);
+                    });
 
-                const token = localStorage.getItem("authToken");
-                if (!token) {
-                    alert("You are not logged in.");
-                    window.location.href = "signIn.html";
-                    return;
-                }
+                    if (userRole === "CUSTOMER") {
+                        $('.cancel-btn').on('click', function () {
+                            const row = $(this).closest('tr');
+                            const bookingId = row.data('booking-id');
 
-                $.ajax({
-                    url: "http://localhost:8082/api/v1/user/getRole",
-                    type: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + token
-                    },
-                    success: function (response) {
-                        const userRole = response.data;
-
-                        if (userRole !== "Customer") {
-                            alert("Only customers can cancel bookings.");
-                            return;
-                        }
-
-                        // Create the BookingUpdateDTO object
-                        const bookingUpdateDTO = {
-                            status: "CANCELLED"
-                        };
-
-                        $.ajax({
-                            url: `http://localhost:8082/api/v1/booking/cancelBooking/${bookingId}`,
-                            method: 'PUT',
-                            headers: {
-                                'Authorization': 'Bearer ' + token,
-                                'Content-Type': 'application/json'
-                            },
-                            data: JSON.stringify(bookingUpdateDTO), // Pass the status in the request body
-                            success: function () {
-                                // Disable buttons and update status in UI
-                                row.find('.status-badge').html(getStatusBadge("CANCELLED"));
-                                row.find('.feedback-btn').prop('disabled', true);
-                                row.find('.pay-btn').prop('disabled', true);
-                                row.find('.cancel-btn').prop('disabled', true);
-
-                                alert("Booking successfully cancelled.");
-                            },
-                            error: function (error) {
-                                console.error("Error:", error);
-                                alert("Failed to cancel the booking.");
+                            if (!bookingId) {
+                                alert("Booking ID is missing.");
+                                return;
                             }
+
+                            $.ajax({
+                                url: `http://localhost:8082/api/v1/booking/cancelBooking/${bookingId}`,
+                                type: "PUT",
+                                headers: {
+                                    "Authorization": "Bearer " + token
+                                },
+                                success: function () {
+                                    row.find('.status-badge').html(getStatusBadge("CANCELLED"));
+                                    row.find('.feedback-btn').prop('disabled', true);
+                                    row.find('.pay-btn').prop('disabled', true);
+                                    row.find('.cancel-btn').prop('disabled', true);
+                                    alert("Booking successfully cancelled.");
+                                },
+                                error: function (xhr) {
+                                    console.error("Cancel error:", xhr.responseText);
+                                    alert(xhr.responseText || "Failed to cancel booking.");
+                                }
+                            });
                         });
-                    },
-                    error: function () {
-                        alert("Failed to check your role.");
                     }
-                });
+                },
+                error: function () {
+                    alert("Failed to load bookings.");
+                }
             });
         },
         error: function () {
-            alert("Failed to load bookings");
+            alert("Failed to fetch user role.");
         }
     });
 
-    // Function to get status badge
     function getStatusBadge(status) {
         let className = "bg-secondary";
         if (status === "COMPLETED") className = "bg-success";
@@ -523,4 +618,3 @@ $(document).ready(function () {
         return `<span class="badge ${className}">${status.charAt(0) + status.slice(1).toLowerCase()}</span>`;
     }
 });
-// /////////////////////////////////////////////

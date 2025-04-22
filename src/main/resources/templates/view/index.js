@@ -1,7 +1,6 @@
      document.addEventListener('DOMContentLoaded', function () {
     AOS.init();
 
-    // Animate elements on scroll
     const animateElements = document.querySelectorAll('.service-card, .pricing-card');
     window.addEventListener('scroll', checkScroll);
     checkScroll();
@@ -16,13 +15,11 @@
 });
 }
 
-    // Navbar scroll effect
     const navbar = document.querySelector(".navbar");
     window.addEventListener("scroll", () => {
     navbar.classList.toggle("scrolled", window.scrollY > 50);
 });
 
-    // Pulse animation for "Get Started" button
     const getStartedBtn = document.querySelector('.get-started-btn');
     if (getStartedBtn) {
     setTimeout(() => {
@@ -40,7 +37,6 @@
 });
 }
 
-    // Review toggle
     const viewAllBtn = document.getElementById('viewAllReviews');
     const reviewsContainer = document.querySelector('.reviews-container');
     if (viewAllBtn && reviewsContainer) {
@@ -56,7 +52,6 @@
 });
 }
 
-    // Active nav-link styling
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
     link.addEventListener('click', function () {
@@ -65,7 +60,6 @@
 });
 });
 
-    // Load service cart details from backend
     loadServiceCartDetails();
 });
 
@@ -78,16 +72,16 @@
                  console.log("Received data:", response.data);
                  if (response.code === 200 && response.data) {
                      renderCartItems(response.data);
-                     $('#cartServiceList').removeAttr('hidden'); // Show the service list
+                     $('#cartServiceList').removeAttr('hidden');
                  } else {
                      $('#cartServiceList').html('<p class="text-danger">No services available at the moment.</p>');
-                     $('#cartServiceList').removeAttr('hidden'); // Ensure it is shown even if no services
+                     $('#cartServiceList').removeAttr('hidden');
                  }
              },
              error: function (xhr) {
                  console.error("Failed to load service cart details:", xhr);
                  $('#cartServiceList').html('<p class="text-danger">Failed to load services.</p>');
-                 $('#cartServiceList').removeAttr('hidden'); // Ensure it is shown even if there's an error
+                 $('#cartServiceList').removeAttr('hidden');
              }
          });
      }
@@ -103,13 +97,15 @@
             <div class="col-md-4 mb-4" data-aos="fade-up">
                 <div class="card pricing-card h-100 shadow rounded-4">
                     <div class="card-body p-4">
-                        <h5 class="card-title fw-bold" style="font-size: 2rem; margin-right: 2px">${item.categoryName} /<span style="font-size: 0.8rem">${item.duration}</span> </h5>
+                        <h5 class="card-title fw-bold" style="font-size: 2rem; margin-right: 2px">${item.categoryName} /<span 
+                        style="font-size: 0.8rem">${item.duration}</span> </h5>
                             <div class="text-muted mb-2" hidden="hidden">Category ID: ${item.id}</div>
                         <div class="price text-success">Rs. ${item.total.toFixed(2)}</div>
                         <ul class="list-unstyled mt-4">
                             ${servicesHtml}
                         </ul>
-                        <a href="customerDashboard.html#newBookingLink" class="btn btn-outline-primary w-100 mt-3">Buy Plan</a>
+                        <a href="customerDashboard.html#newBookingLink" class="btn btn-outline-primary w-100 mt-3">
+                        Buy Plan</a>
                     </div>
                 </div>
             </div>`;

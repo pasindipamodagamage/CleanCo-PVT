@@ -23,12 +23,9 @@ public class CategoryController {
 
     private final JwtUtil jwtUtil;
 
-    private final ResponseDTO responseDTO;
-
-    public CategoryController(CategoryService categoryService, JwtUtil jwtUtil, ResponseDTO responseDTO) {
+    public CategoryController(CategoryService categoryService, JwtUtil jwtUtil) {
         this.categoryService = categoryService;
         this.jwtUtil = jwtUtil;
-        this.responseDTO = responseDTO;
     }
 
     @PostMapping("/saveCategory")
@@ -46,7 +43,8 @@ public class CategoryController {
     }
 
     @PutMapping("/updateCategory/{id}")
-    public ResponseEntity<String> updateCategory(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id, @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<String> updateCategory(@RequestHeader("Authorization") String authorization,
+                                                 @PathVariable("id") UUID id, @RequestBody CategoryDTO categoryDTO) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
             return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
         }
@@ -61,7 +59,8 @@ public class CategoryController {
     }
 
     @DeleteMapping("/removeCategory/{id}")
-    public ResponseEntity<String> deleteCategory(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id) {
+    public ResponseEntity<String> deleteCategory(@RequestHeader("Authorization") String authorization,
+                                                 @PathVariable("id") UUID id) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
             return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
         }
@@ -89,7 +88,8 @@ public class CategoryController {
     }
 
     @GetMapping("/getEachOneCategory/{id}")
-    public ResponseEntity<CategoryDTO> getCategoryById(@RequestHeader("Authorization") String authorization, @PathVariable("id") UUID id) {
+    public ResponseEntity<CategoryDTO> getCategoryById(@RequestHeader("Authorization") String authorization,
+                                                       @PathVariable("id") UUID id) {
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee,Role.Customer)) {
             return ResponseEntity.status(VarList.Forbidden).body(null);
         }
@@ -125,7 +125,7 @@ public class CategoryController {
     }
 
     @GetMapping("/getCategoryNames")
-    public ResponseEntity<List<CategoryNameDTO>> getCategoryNames(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<List<CategoryNameDTO>> getCategoryNames(@RequestHeader("Authorization") String authorization){
         if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee)) {
             return ResponseEntity.status(VarList.Forbidden).body(null);
         }

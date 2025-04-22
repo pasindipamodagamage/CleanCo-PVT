@@ -8,6 +8,7 @@ import lk.ijse.cleancopvt.entity.User;
 import lk.ijse.cleancopvt.repo.BookingRepo;
 import lk.ijse.cleancopvt.repo.CategoryRepo;
 import lk.ijse.cleancopvt.repo.UserRepo;
+import lk.ijse.cleancopvt.service.BookingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class BookingServiceImpl {
+public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingRepo bookingRepo;

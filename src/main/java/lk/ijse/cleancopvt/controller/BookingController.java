@@ -4,12 +4,14 @@ import io.jsonwebtoken.Claims;
 import lk.ijse.cleancopvt.Enum.BookingStatus;
 import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.*;
+import lk.ijse.cleancopvt.entity.Booking;
 import lk.ijse.cleancopvt.repo.BookingRepo;
 import lk.ijse.cleancopvt.service.impl.BookingServiceImpl;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.ResponseUtil;
 import lk.ijse.cleancopvt.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,25 +87,24 @@ public class BookingController {
         }
     }
 
-    @PutMapping("/cancelBooking/{id}")
-    public ResponseEntity<String> cancelBooking(@RequestHeader("Authorization") String authorization,
-                                                @PathVariable("id") UUID id,
-                                                @RequestBody BookingUpdateDTO bookingUpdateDTO) {
+    @PutMapping("/cancelBooking/{bookingId}")
+    public ResponseEntity<?> cancelBooking(@RequestHeader("Authorization") String authorization, @PathVariable("bookingId") UUID bookingId) {
         if (!hasRequiredRole(authorization, Role.Customer)) {
-            return ResponseEntity.status(VarList.Forbidden).body("Access denied: You do not have the required role.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only customers can cancel bookings.");
         }
 
-        try {
-            if (bookingUpdateDTO.getBookingStatus() == null) {
-                bookingUpdateDTO.setBookingStatus(BookingStatus.CANCELLED); // Make sure you are using the correct enum
-            }
+        Booking booking = bookingRepo.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
 
-            bookingUpdateDTO.setBookingId(id);
-            bookingService.updateBooking(bookingUpdateDTO);
-            return ResponseEntity.status(VarList.OK).body("Booking is cancelled");
-        } catch (Exception e) {
-            return ResponseEntity.status(VarList.Internal_Server_Error).body("Error updating: " + e.getMessage());
+        if (booking.getBookingStatus().equals("CANCELLED") || booking.getBookingStatus().equals("REJECTED")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This booking has already been canceled or rejected.");
         }
+
+        // Update the booking status to CANCELLED
+        booking.setBookingStatus(BookingStatus.CANCELLED);
+        bookingRepo.save(booking);
+
+        return ResponseEntity.ok("Booking successfully cancelled.");
     }
 
 
