@@ -3,11 +3,13 @@
         e.preventDefault();
 
         var formData = {
-            firstName: $('#firstName').val(),
-            lastName: $('#lastName').val(),
+            name:{
+                firstName: $('#firstName').val(),
+                lastName: $('#lastName').val(),
+            },
             email: $('#email').val(),
             password: $('#password').val(),
-            contact: $('#contact-1').val(),
+            primaryContact: $('#contact-1').val(),
             address: {
                 locationNumber: $('#locationNumber').val(),
                 street: $('#street').val(),
@@ -15,10 +17,10 @@
                 district: $('#district').val()
             },
             profilePic: "/static/assets/user.png",
-            nicNumber: "null",
+            nicNumber: "",
             role: "Customer",
             active: true,
-            secondaryContact: "null"
+            secondaryContact: ""
         };
 
         // console.log("Sending data:", formData);

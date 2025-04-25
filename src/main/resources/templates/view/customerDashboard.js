@@ -204,7 +204,7 @@ $(document).ready(function () {
                     $('#city').val(currentUserData.address?.city || '');
                     $('#district').val(currentUserData.address?.district || '');
 
-                    const profilePicUrl = currentUserData.profilePic || '/static/assets/user.png';
+                    const profilePicUrl = currentUserData.profilePic;
                     $('#user-avatar').attr('src', profilePicUrl);
                     $('#profilePicPreview').attr('src', profilePicUrl);
 
