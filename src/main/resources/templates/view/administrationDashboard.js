@@ -605,7 +605,7 @@
                     const user = data.data;
 
                     const avatar = document.getElementById("user-avatar");
-                    avatar.src = user.profilePic ? user.profilePic : "static/assets/user.jpeg";
+                    // avatar.src = user.profilePic ? user.profilePic : "static/assets/user.jpeg";
 
                     const name = document.getElementById("user-name");
                     const fullName = user.name.firstName + " " + user.name.lastName;
