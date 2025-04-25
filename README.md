@@ -4,6 +4,7 @@ Welcome to **CleanCo**, a modern, role-based full-stack web application built to
 
 > Empowering customers to book services effortlessly, while enabling administrators and employees to manage categories, services, and bookings effectively.
 
+🎥 **Project Mockup Video**: [Watch the Demo on YouTube](https://www.youtube.com/playlist?list=PLxbZZ2kRAIyiHVPn1uDzi5KW9CWcIh3NS)
 ---
 
 ## 🚀 Features
