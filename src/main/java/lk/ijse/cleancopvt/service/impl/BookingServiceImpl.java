@@ -69,6 +69,7 @@ public class BookingServiceImpl implements BookingService {
                 ))
                 .collect(Collectors.toList());
     }
+
     public List<BookingDTO> getBookingsByStatus(BookingStatus status) {
         List<Booking> bookings = bookingRepo.findByBookingStatus(status);
         return bookings.stream()
@@ -118,4 +119,17 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepo.countByBookingStatus(BookingStatus.PENDING);
     }
 
+    public List<RejectBookingTM> getAllCompleteBookings() {
+        List<Booking> rejectBooking = bookingRepo.findByBookingStatus(BookingStatus.COMPLETED);
+
+        return rejectBooking.stream()
+                .map(booking -> new RejectBookingTM(
+                        booking.getId(),
+                        booking.getUser().getName(),
+                        booking.getCategory().getName(),
+                        booking.getBookingDate(),
+                        booking.getBookingTime()
+                ))
+                .collect(Collectors.toList());
+    }
 }

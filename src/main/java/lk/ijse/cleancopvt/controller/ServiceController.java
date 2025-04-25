@@ -106,6 +106,17 @@ public class ServiceController {
         }
     }
 
+    @GetMapping("/serviceCartDetail")
+    public ResponseEntity<ResponseDTO> getServiceCartDetails() {
+        try {
+            List<CategoryServiceCartDTO> details = serviceManagementService.getAllServiceCartDetails();
+            return ResponseEntity.ok(new ResponseDTO(200, "Success", details));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new ResponseDTO(500, "Server Error", null));
+        }
+    }
+
+
     private boolean hasRequiredRole(String authorization, Role... roles) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             return false;
@@ -123,16 +134,4 @@ public class ServiceController {
 
         return false;
     }
-
-    @GetMapping("/serviceCartDetail")
-    public ResponseEntity<ResponseDTO> getServiceCartDetails() {
-        try {
-            List<CategoryServiceCartDTO> details = serviceManagementService.getAllServiceCartDetails();
-            return ResponseEntity.ok(new ResponseDTO(200, "Success", details));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(new ResponseDTO(500, "Server Error", null));
-        }
-    }
-
-
 }

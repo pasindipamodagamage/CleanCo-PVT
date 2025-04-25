@@ -1,5 +1,4 @@
     $(document).ready(function() {
-        // Initialize DataTables
         $('#pendingBookingsTable').DataTable();
         $('#categoriesTable').DataTable();
         $('#servicesTable').DataTable();
@@ -9,22 +8,16 @@
         $('#completedAppointmentsTable').DataTable();
         $('#rejectedAppointmentsTable').DataTable();
 
-        // Sidebar navigation
         $('.sidebar-link').click(function (e) {
             e.preventDefault();
 
-            // Remove active class from all links and sections
             $('.sidebar-link').removeClass('active');
             $('.content-section').removeClass('active');
 
-            // Add active class to clicked link
             $(this).addClass('active');
 
-            // Show corresponding section
             $('#' + $(this).data('section')).addClass('active');
         });
-
-        // Reset modals when hidden
 
         $('#userModal').on('hidden.bs.modal', function () {
             $('#userModalLabel').text('Add User');
@@ -56,7 +49,7 @@
     document.getElementById("logoutBtn").addEventListener("click", function () {
         fetch('http://localhost:8082/api/v1/user/logout', {
             method: 'POST',
-            credentials: 'include', // This sends cookies/session
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -75,13 +68,12 @@
 
     // category
     $(document).ready(function () {
-        // Check if the user is logged in and has the correct role
         function checkUserRole() {
             const token = localStorage.getItem("authToken");
 
             if (!token) {
                 alert("You are not logged in.");
-                window.location.href = "signIn.html";  // Redirect to login page if no token
+                window.location.href = "signIn.html";
                 return;
             }
 
@@ -107,10 +99,8 @@
 
         }
 
-        // Load categories initially
         loadCategories();
 
-        // Save category button click
         $('#saveCategoryBtn').click(function () {
             if (!$('#categoryForm')[0].checkValidity()) {
                 $('#categoryForm')[0].reportValidity();
@@ -136,14 +126,13 @@
             };
 
             if (id) {
-                // Update category
                 $.ajax({
                     url: `http://localhost:8082/api/v1/category/updateCategory/${id}`,
                     type: 'PUT',
                     headers: headers,
                     data: JSON.stringify(categoryData),
                     success: function () {
-                        loadCategories(); // Reload list
+                        loadCategories();
                         $('#categoryModal').modal('hide');
                     },
                     error: function (err) {
@@ -151,14 +140,13 @@
                     }
                 });
             } else {
-                // Add new category
                 $.ajax({
                     url: "http://localhost:8082/api/v1/category/saveCategory",
                     type: 'POST',
                     headers: headers,
                     data: JSON.stringify(categoryData),
                     success: function () {
-                        loadCategories(); // Reload list
+                        loadCategories();
                         $('#categoryModal').modal('hide');
                     },
                     error: function (err) {
@@ -168,14 +156,12 @@
             }
         });
 
-        // Reset modal when hidden
         $('#categoryModal').on('hidden.bs.modal', function () {
             $('#categoryModalLabel').text('Add Category');
             $('#categoryForm')[0].reset();
             $('#categoryId').val('');
         });
 
-        // Edit category button click
         $('#categoriesTable').on('click', '.edit-btn', function () {
             const row = $(this).closest('tr');
             const id = row.data('id');
@@ -192,7 +178,6 @@
             $('#categoryModal').modal('show');
         });
 
-        // Delete category button click
         $('#categoriesTable').on('click', '.delete-btn', function (e) {
             e.stopPropagation();
             const row = $(this).closest('tr');
@@ -215,12 +200,11 @@
             }
         });
 
-        // Function to load categories into the table
         function loadCategories() {
             const token = localStorage.getItem("authToken");
             if (!token) {
                 alert("You are not logged in.");
-                window.location.href = "signIn.html";  // Redirect to login page
+                window.location.href = "signIn.html";
                 return;
             }
 
@@ -253,8 +237,6 @@
                 }
             });
         }
-
-        // Call the function to check user role on page load
         checkUserRole();
     });
 
@@ -282,7 +264,7 @@
                     const userRole = response.data;
                     if (userRole !== 'Employee' && userRole !== 'Administrator') {
                         alert("You do not have permission to manage services.");
-                        $('#manage-services').hide();  // Hide management section if no permission
+                        $('#manage-services').hide();
                     }
                 },
                 error: function () {
@@ -342,7 +324,7 @@
                 "Content-Type": "application/json"
             };
 
-            const categoryIds = $('#serviceCategory').val(); // <-- returns array of selected category IDs
+            const categoryIds = $('#serviceCategory').val();
 
             const serviceData = {
                 id: $('#serviceId').val() || null,
@@ -359,7 +341,7 @@
                 data: JSON.stringify(serviceData),
                 success: function () {
                     $('#serviceModal').modal('hide');
-                    loadServices(); // Reload services after saving
+                    loadServices();
                 },
                 error: function (err) {
                     alert("Failed to save service: " + err.responseText);
@@ -388,7 +370,6 @@
             $('#servicePrice').val(price);
             $('#serviceDescription').val(description);
 
-            // Load dropdown with selected options
             loadCategoryDropdown(categoryNames);
 
             $('#serviceModal').modal('show');
@@ -467,7 +448,7 @@
 
 //     user update
     $(document).ready(function () {
-        let currentUserData = {}; // Store the loaded data
+        let currentUserData = {};
 
         function checkUserRole() {
             const token = localStorage.getItem("authToken");
@@ -521,7 +502,6 @@
                         $('#secondaryContact').val(currentUserData.secondaryContact || '');
                         $('#email').val(currentUserData.email || '');
 
-                        // Handle address fields if needed:
                         $('#locationNumber1').val(currentUserData.address?.locationNumber || '');
                         $('#street1').val(currentUserData.address?.street || '');
                         $('#city1').val(currentUserData.address?.city || '');
@@ -561,7 +541,6 @@
                 }
             };
 
-            // Password handling - only update if provided
             const currentPassword = $('#currentPassword').val().trim();
             const newPassword = $('#password1').val().trim();
             const confirmPassword = $('#confirmPassword').val().trim();
@@ -573,7 +552,6 @@
                 return;
             }
 
-            // Send updated data to backend
             $.ajax({
                 url: "http://localhost:8082/api/v1/user/updateProfile",
                 type: "PUT",
@@ -584,7 +562,7 @@
                 data: JSON.stringify(updatedUserData),
                 success: function () {
                     alert("Profile updated successfully.");
-                    loadUserProfile();  // Reload updated profile data
+                    loadUserProfile();
                 },
                 error: function (err) {
                     console.error("Profile update failed:", err);
@@ -611,7 +589,7 @@
 
     // login data
     document.addEventListener("DOMContentLoaded", function () {
-        const token = localStorage.getItem("authToken"); // Or sessionStorage.getItem
+        const token = localStorage.getItem("authToken");
 
         if (token) {
             fetch("http://localhost:8082/api/v1/user/me", {
@@ -943,7 +921,6 @@
                 }),
                 success: function (res) {
                     alert(res);
-                    // Disable both buttons after one action
                     $row.find("button").prop("disabled", true);
                     $row.find("td:last").append(`<span class="ms-2 badge ${isConfirm ? 'bg-success' : 'bg-danger'}">${status}</span>`);
                 },
@@ -1018,7 +995,6 @@
                             ? booking.bookingTime.slice(0, 5)
                             : "--:--";
 
-                        // Create a table row dynamically
                         const row = `
                         <tr>
                             <td>${booking.id}</td>
@@ -1041,5 +1017,68 @@
         loadRejectedBookings();
     });
 
+    $(document).ready(function () {
+        const token = localStorage.getItem("authToken");
 
+        if (!token) {
+            alert("No token found. Please log in.");
+            return;
+        }
 
+        function loadRejectedBookings() {
+            $.ajax({
+                url: "http://localhost:8082/api/v1/booking/getAllCompletedBookings",
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                success: function (bookings) {
+                    const table = $("#completedAppointmentsTable");
+                    let tbody = table.find("tbody");
+
+                    if (!tbody.length) {
+                        tbody = $("<tbody></tbody>");
+                        table.append(tbody);
+                    }
+
+                    tbody.empty();
+
+                    if (!Array.isArray(bookings)) {
+                        console.warn("Expected an array, got:", bookings);
+                        return;
+                    }
+
+                    bookings.forEach(function (booking) {
+                        const fullName = booking.name && booking.name.firstName && booking.name.lastName
+                            ? `${booking.name.firstName} ${booking.name.lastName}`
+                            : "Unknown";
+
+                        const formattedDate = booking.bookingDate
+                            ? new Date(booking.bookingDate).toLocaleDateString()
+                            : "--/--/----";
+
+                        const formattedTime = booking.bookingTime
+                            ? booking.bookingTime.slice(0, 5)
+                            : "--:--";
+
+                        const row = `
+                        <tr>
+                            <td>${booking.id}</td>
+                            <td>${fullName}</td>
+                            <td>${booking.categoryName}</td>
+                            <td>${formattedDate}</td>
+                            <td>${formattedTime}</td>
+                        </tr>
+                    `;
+                        tbody.append(row);
+                    });
+                },
+                error: function (xhr) {
+                    console.error("Error loading rejected bookings:", xhr);
+                    alert("Failed to load rejected bookings. Status: " + xhr.status);
+                }
+            });
+        }
+
+        loadRejectedBookings();
+    });

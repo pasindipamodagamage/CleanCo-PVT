@@ -1,6 +1,5 @@
 package lk.ijse.cleancopvt.service.impl;
 
-import lk.ijse.cleancopvt.Enum.BookingStatus;
 import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.UpdateUserDTO;
 import lk.ijse.cleancopvt.dto.UserDTO;

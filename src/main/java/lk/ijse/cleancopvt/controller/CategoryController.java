@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import lk.ijse.cleancopvt.Enum.Role;
 import lk.ijse.cleancopvt.dto.CategoryDTO;
 import lk.ijse.cleancopvt.dto.CategoryNameDTO;
-import lk.ijse.cleancopvt.dto.ResponseDTO;
 import lk.ijse.cleancopvt.service.CategoryService;
 import lk.ijse.cleancopvt.util.JwtUtil;
 import lk.ijse.cleancopvt.util.VarList;

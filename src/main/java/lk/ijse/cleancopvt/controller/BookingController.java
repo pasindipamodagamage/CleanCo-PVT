@@ -100,7 +100,6 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This booking has already been canceled or rejected.");
         }
 
-        // Update the booking status to CANCELLED
         booking.setBookingStatus(BookingStatus.CANCELLED);
         bookingRepo.save(booking);
 
@@ -190,6 +189,20 @@ public class BookingController {
 
         try {
             List<RejectBookingTM> bookings = bookingService.getAllRejectBookings();
+            return ResponseEntity.status(VarList.OK).body(bookings);
+        } catch (Exception e) {
+            return ResponseEntity.status(VarList.Internal_Server_Error).body(null);
+        }
+    }
+
+    @GetMapping("/getAllCompletedBookings")
+    public ResponseEntity<List<RejectBookingTM>> getAllCompletedBookings(@RequestHeader("Authorization") String authorization) {
+        if (!hasRequiredRole(authorization, Role.Administrator, Role.Employee,Role.Customer)) {
+            return ResponseEntity.status(VarList.Forbidden).body(null);
+        }
+
+        try {
+            List<RejectBookingTM> bookings = bookingService.getAllCompleteBookings();
             return ResponseEntity.status(VarList.OK).body(bookings);
         } catch (Exception e) {
             return ResponseEntity.status(VarList.Internal_Server_Error).body(null);
